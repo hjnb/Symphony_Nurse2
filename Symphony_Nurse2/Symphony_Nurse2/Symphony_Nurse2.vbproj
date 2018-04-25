@@ -94,6 +94,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="体重管理.Designer.vb">
+      <DependentUpon>体重管理.vb</DependentUpon>
+    </Compile>
+    <Compile Include="体重管理.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="健康診断.Designer.vb">
       <DependentUpon>健康診断.vb</DependentUpon>
     </Compile>
