@@ -1,0 +1,9 @@
+C:\Users\yoshi\AppData\Local\Temporary Projects\Symphony_Nurse2\bin\Debug\Symphony_Nurse2.exe
+C:\Users\yoshi\AppData\Local\Temporary Projects\Symphony_Nurse2\bin\Debug\Symphony_Nurse2.pdb
+C:\Users\yoshi\AppData\Local\Temporary Projects\Symphony_Nurse2\bin\Debug\Symphony_Nurse2.xml
+C:\Users\yoshi\AppData\Local\Temporary Projects\Symphony_Nurse2\obj\x86\Debug\Symphony_Nurse2.TopForm.resources
+C:\Users\yoshi\AppData\Local\Temporary Projects\Symphony_Nurse2\obj\x86\Debug\Symphony_Nurse2.Resources.resources
+C:\Users\yoshi\AppData\Local\Temporary Projects\Symphony_Nurse2\obj\x86\Debug\Symphony_Nurse2.vbproj.GenerateResource.Cache
+C:\Users\yoshi\AppData\Local\Temporary Projects\Symphony_Nurse2\obj\x86\Debug\Symphony_Nurse2.exe
+C:\Users\yoshi\AppData\Local\Temporary Projects\Symphony_Nurse2\obj\x86\Debug\Symphony_Nurse2.xml
+C:\Users\yoshi\AppData\Local\Temporary Projects\Symphony_Nurse2\obj\x86\Debug\Symphony_Nurse2.pdb
