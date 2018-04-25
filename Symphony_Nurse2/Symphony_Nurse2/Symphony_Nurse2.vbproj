@@ -123,6 +123,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="体重管理.resx">
+      <DependentUpon>体重管理.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="利用者選択.resx">
       <DependentUpon>利用者選択.vb</DependentUpon>
     </EmbeddedResource>
