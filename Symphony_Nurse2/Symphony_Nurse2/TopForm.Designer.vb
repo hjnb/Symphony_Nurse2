@@ -25,11 +25,14 @@ Partial Class TopForm
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.利用者選択ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.看護日誌ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.尿バランスToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.温度板ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.内服病名ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.体重管理ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.健康診断ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.死亡診断書ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.マスタ登録ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.利用者ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.処置ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ユニット居室ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.画面印刷ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ＤＢ整理ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.印刷設定ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -39,7 +42,7 @@ Partial Class TopForm
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.利用者選択ToolStripMenuItem, Me.看護日誌ToolStripMenuItem, Me.尿バランスToolStripMenuItem, Me.体重管理ToolStripMenuItem, Me.健康診断ToolStripMenuItem, Me.死亡診断書ToolStripMenuItem, Me.マスタ登録ToolStripMenuItem, Me.画面印刷ToolStripMenuItem, Me.ＤＢ整理ToolStripMenuItem, Me.印刷設定ToolStripMenuItem, Me.終了ToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.利用者選択ToolStripMenuItem, Me.看護日誌ToolStripMenuItem, Me.体重管理ToolStripMenuItem, Me.健康診断ToolStripMenuItem, Me.マスタ登録ToolStripMenuItem, Me.画面印刷ToolStripMenuItem, Me.ＤＢ整理ToolStripMenuItem, Me.印刷設定ToolStripMenuItem, Me.終了ToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(817, 24)
@@ -54,15 +57,22 @@ Partial Class TopForm
         '
         '看護日誌ToolStripMenuItem
         '
+        Me.看護日誌ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.温度板ToolStripMenuItem, Me.内服病名ToolStripMenuItem})
         Me.看護日誌ToolStripMenuItem.Name = "看護日誌ToolStripMenuItem"
         Me.看護日誌ToolStripMenuItem.Size = New System.Drawing.Size(67, 20)
         Me.看護日誌ToolStripMenuItem.Text = "看護日誌"
         '
-        '尿バランスToolStripMenuItem
+        '温度板ToolStripMenuItem
         '
-        Me.尿バランスToolStripMenuItem.Name = "尿バランスToolStripMenuItem"
-        Me.尿バランスToolStripMenuItem.Size = New System.Drawing.Size(67, 20)
-        Me.尿バランスToolStripMenuItem.Text = "尿バランス"
+        Me.温度板ToolStripMenuItem.Name = "温度板ToolStripMenuItem"
+        Me.温度板ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.温度板ToolStripMenuItem.Text = "温度板"
+        '
+        '内服病名ToolStripMenuItem
+        '
+        Me.内服病名ToolStripMenuItem.Name = "内服病名ToolStripMenuItem"
+        Me.内服病名ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.内服病名ToolStripMenuItem.Text = "内服病名"
         '
         '体重管理ToolStripMenuItem
         '
@@ -76,17 +86,30 @@ Partial Class TopForm
         Me.健康診断ToolStripMenuItem.Size = New System.Drawing.Size(67, 20)
         Me.健康診断ToolStripMenuItem.Text = "健康診断"
         '
-        '死亡診断書ToolStripMenuItem
-        '
-        Me.死亡診断書ToolStripMenuItem.Name = "死亡診断書ToolStripMenuItem"
-        Me.死亡診断書ToolStripMenuItem.Size = New System.Drawing.Size(79, 20)
-        Me.死亡診断書ToolStripMenuItem.Text = "死亡診断書"
-        '
         'マスタ登録ToolStripMenuItem
         '
+        Me.マスタ登録ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.利用者ToolStripMenuItem, Me.処置ToolStripMenuItem, Me.ユニット居室ToolStripMenuItem})
         Me.マスタ登録ToolStripMenuItem.Name = "マスタ登録ToolStripMenuItem"
         Me.マスタ登録ToolStripMenuItem.Size = New System.Drawing.Size(70, 20)
         Me.マスタ登録ToolStripMenuItem.Text = "マスタ登録"
+        '
+        '利用者ToolStripMenuItem
+        '
+        Me.利用者ToolStripMenuItem.Name = "利用者ToolStripMenuItem"
+        Me.利用者ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.利用者ToolStripMenuItem.Text = "利用者"
+        '
+        '処置ToolStripMenuItem
+        '
+        Me.処置ToolStripMenuItem.Name = "処置ToolStripMenuItem"
+        Me.処置ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.処置ToolStripMenuItem.Text = "処置"
+        '
+        'ユニット居室ToolStripMenuItem
+        '
+        Me.ユニット居室ToolStripMenuItem.Name = "ユニット居室ToolStripMenuItem"
+        Me.ユニット居室ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ユニット居室ToolStripMenuItem.Text = "ユニット居室"
         '
         '画面印刷ToolStripMenuItem
         '
@@ -116,6 +139,7 @@ Partial Class TopForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(171, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(171, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(817, 524)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Name = "TopForm"
@@ -129,14 +153,17 @@ Partial Class TopForm
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents 利用者選択ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 看護日誌ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents 尿バランスToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 体重管理ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 健康診断ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents 死亡診断書ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents マスタ登録ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 画面印刷ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ＤＢ整理ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 印刷設定ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 終了ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents 温度板ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents 内服病名ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents 利用者ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents 処置ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ユニット居室ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class
