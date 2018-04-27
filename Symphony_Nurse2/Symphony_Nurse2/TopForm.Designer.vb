@@ -33,10 +33,18 @@ Partial Class TopForm
         Me.利用者ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.処置ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ユニット居室ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.諸ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.画面印刷ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ＤＢ整理ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.印刷設定ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.終了ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.userId = New System.Windows.Forms.TextBox()
+        Me.userNam = New System.Windows.Forms.TextBox()
+        Me.userDsp = New System.Windows.Forms.TextBox()
+        Me.userKana = New System.Windows.Forms.TextBox()
+        Me.userBirth = New System.Windows.Forms.TextBox()
+        Me.userSex = New System.Windows.Forms.TextBox()
+        Me.userKaigo = New System.Windows.Forms.TextBox()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -65,13 +73,13 @@ Partial Class TopForm
         '温度板ToolStripMenuItem
         '
         Me.温度板ToolStripMenuItem.Name = "温度板ToolStripMenuItem"
-        Me.温度板ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.温度板ToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
         Me.温度板ToolStripMenuItem.Text = "温度板"
         '
         '内服病名ToolStripMenuItem
         '
         Me.内服病名ToolStripMenuItem.Name = "内服病名ToolStripMenuItem"
-        Me.内服病名ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.内服病名ToolStripMenuItem.Size = New System.Drawing.Size(122, 22)
         Me.内服病名ToolStripMenuItem.Text = "内服病名"
         '
         '体重管理ToolStripMenuItem
@@ -88,7 +96,7 @@ Partial Class TopForm
         '
         'マスタ登録ToolStripMenuItem
         '
-        Me.マスタ登録ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.利用者ToolStripMenuItem, Me.処置ToolStripMenuItem, Me.ユニット居室ToolStripMenuItem})
+        Me.マスタ登録ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.利用者ToolStripMenuItem, Me.処置ToolStripMenuItem, Me.ユニット居室ToolStripMenuItem, Me.諸ToolStripMenuItem})
         Me.マスタ登録ToolStripMenuItem.Name = "マスタ登録ToolStripMenuItem"
         Me.マスタ登録ToolStripMenuItem.Size = New System.Drawing.Size(70, 20)
         Me.マスタ登録ToolStripMenuItem.Text = "マスタ登録"
@@ -96,20 +104,26 @@ Partial Class TopForm
         '利用者ToolStripMenuItem
         '
         Me.利用者ToolStripMenuItem.Name = "利用者ToolStripMenuItem"
-        Me.利用者ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.利用者ToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
         Me.利用者ToolStripMenuItem.Text = "利用者"
         '
         '処置ToolStripMenuItem
         '
         Me.処置ToolStripMenuItem.Name = "処置ToolStripMenuItem"
-        Me.処置ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.処置ToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
         Me.処置ToolStripMenuItem.Text = "処置"
         '
         'ユニット居室ToolStripMenuItem
         '
         Me.ユニット居室ToolStripMenuItem.Name = "ユニット居室ToolStripMenuItem"
-        Me.ユニット居室ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ユニット居室ToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
         Me.ユニット居室ToolStripMenuItem.Text = "ユニット居室"
+        '
+        '諸ToolStripMenuItem
+        '
+        Me.諸ToolStripMenuItem.Name = "諸ToolStripMenuItem"
+        Me.諸ToolStripMenuItem.Size = New System.Drawing.Size(133, 22)
+        Me.諸ToolStripMenuItem.Text = "諸"
         '
         '画面印刷ToolStripMenuItem
         '
@@ -135,12 +149,68 @@ Partial Class TopForm
         Me.終了ToolStripMenuItem.Size = New System.Drawing.Size(43, 20)
         Me.終了ToolStripMenuItem.Text = "終了"
         '
+        'userId
+        '
+        Me.userId.Location = New System.Drawing.Point(624, 225)
+        Me.userId.Name = "userId"
+        Me.userId.Size = New System.Drawing.Size(100, 19)
+        Me.userId.TabIndex = 1
+        '
+        'userNam
+        '
+        Me.userNam.Location = New System.Drawing.Point(624, 259)
+        Me.userNam.Name = "userNam"
+        Me.userNam.Size = New System.Drawing.Size(100, 19)
+        Me.userNam.TabIndex = 2
+        '
+        'userDsp
+        '
+        Me.userDsp.Location = New System.Drawing.Point(624, 327)
+        Me.userDsp.Name = "userDsp"
+        Me.userDsp.Size = New System.Drawing.Size(100, 19)
+        Me.userDsp.TabIndex = 4
+        '
+        'userKana
+        '
+        Me.userKana.Location = New System.Drawing.Point(624, 293)
+        Me.userKana.Name = "userKana"
+        Me.userKana.Size = New System.Drawing.Size(100, 19)
+        Me.userKana.TabIndex = 3
+        '
+        'userBirth
+        '
+        Me.userBirth.Location = New System.Drawing.Point(624, 398)
+        Me.userBirth.Name = "userBirth"
+        Me.userBirth.Size = New System.Drawing.Size(100, 19)
+        Me.userBirth.TabIndex = 6
+        '
+        'userSex
+        '
+        Me.userSex.Location = New System.Drawing.Point(624, 363)
+        Me.userSex.Name = "userSex"
+        Me.userSex.Size = New System.Drawing.Size(100, 19)
+        Me.userSex.TabIndex = 5
+        '
+        'userKaigo
+        '
+        Me.userKaigo.Location = New System.Drawing.Point(624, 433)
+        Me.userKaigo.Name = "userKaigo"
+        Me.userKaigo.Size = New System.Drawing.Size(100, 19)
+        Me.userKaigo.TabIndex = 7
+        '
         'TopForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(171, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(171, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(817, 524)
+        Me.Controls.Add(Me.userKaigo)
+        Me.Controls.Add(Me.userBirth)
+        Me.Controls.Add(Me.userSex)
+        Me.Controls.Add(Me.userDsp)
+        Me.Controls.Add(Me.userKana)
+        Me.Controls.Add(Me.userNam)
+        Me.Controls.Add(Me.userId)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Name = "TopForm"
         Me.Text = "Nurse2"
@@ -165,5 +235,13 @@ Partial Class TopForm
     Friend WithEvents 利用者ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 処置ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ユニット居室ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents 諸ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents userId As System.Windows.Forms.TextBox
+    Friend WithEvents userNam As System.Windows.Forms.TextBox
+    Friend WithEvents userDsp As System.Windows.Forms.TextBox
+    Friend WithEvents userKana As System.Windows.Forms.TextBox
+    Friend WithEvents userBirth As System.Windows.Forms.TextBox
+    Friend WithEvents userSex As System.Windows.Forms.TextBox
+    Friend WithEvents userKaigo As System.Windows.Forms.TextBox
 
 End Class
