@@ -15,6 +15,7 @@ Public Class TopForm
     Private fForm As 処置マスタ
     Private gForm As ユニット居室
     Private hForm As 諸マスタ
+    Private iForm As 印刷設定
 
     ''' <summary>
     ''' コントロールのDoubleBufferedプロパティをTrueにする
@@ -120,7 +121,7 @@ Public Class TopForm
     End Sub
 
     Private Sub 画面印刷ToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles 画面印刷ToolStripMenuItem.Click
-
+        
     End Sub
 
     Private Sub ＤＢ整理ToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ＤＢ整理ToolStripMenuItem.Click
@@ -128,7 +129,11 @@ Public Class TopForm
     End Sub
 
     Private Sub 印刷設定ToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles 印刷設定ToolStripMenuItem.Click
-
+        If IsNothing(iForm) OrElse iForm.IsDisposed Then
+            iForm = New 印刷設定()
+            iForm.Owner = Me
+            iForm.Show()
+        End If
     End Sub
 
 End Class

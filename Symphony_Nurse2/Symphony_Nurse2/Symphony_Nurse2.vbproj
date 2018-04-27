@@ -136,6 +136,12 @@
     <Compile Include="利用者選択.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="印刷設定.Designer.vb">
+      <DependentUpon>印刷設定.vb</DependentUpon>
+    </Compile>
+    <Compile Include="印刷設定.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="温度板.Designer.vb">
       <DependentUpon>温度板.vb</DependentUpon>
     </Compile>
@@ -170,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="利用者選択.resx">
       <DependentUpon>利用者選択.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="印刷設定.resx">
+      <DependentUpon>印刷設定.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="諸マスタ.resx">
       <DependentUpon>諸マスタ.vb</DependentUpon>
