@@ -6,10 +6,6 @@ Public Class 利用者選択
         searchIdBox.Focus()
 
         '入力されたid, Namでエンターで検索する部分作成
-        '
-        '
-        '
-        '
 
         'フォームの設定
         Me.MaximizeBox = False

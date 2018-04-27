@@ -168,6 +168,9 @@
     <EmbeddedResource Include="利用者選択.resx">
       <DependentUpon>利用者選択.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="諸マスタ.resx">
+      <DependentUpon>諸マスタ.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="My Project\Application.myapp">
