@@ -165,6 +165,9 @@
     <EmbeddedResource Include="健康診断.resx">
       <DependentUpon>健康診断.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="処置マスタ.resx">
+      <DependentUpon>処置マスタ.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="利用者選択.resx">
       <DependentUpon>利用者選択.vb</DependentUpon>
     </EmbeddedResource>
