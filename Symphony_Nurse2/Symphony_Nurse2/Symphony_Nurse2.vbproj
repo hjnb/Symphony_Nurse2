@@ -58,6 +58,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="ymdBox">
+      <HintPath>..\..\..\..\..\Documents\Visual Studio 2010\ymdBox.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -173,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="処置マスタ.resx">
       <DependentUpon>処置マスタ.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="利用者マスタ.resx">
+      <DependentUpon>利用者マスタ.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="利用者選択.resx">
       <DependentUpon>利用者選択.vb</DependentUpon>
