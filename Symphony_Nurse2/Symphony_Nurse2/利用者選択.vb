@@ -31,7 +31,7 @@ Public Class 利用者選択
             .MultiSelect = False
             .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
             .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-            .RowTemplate.Height = 17
+            .RowTemplate.Height = 18
             .BackgroundColor = Color.FromKnownColor(KnownColor.Control)
         End With
 
@@ -40,7 +40,7 @@ Public Class 利用者選択
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
         Dim Adapter As New OleDbDataAdapter(SQLCm)
         Dim Table As New DataTable
-        SQLCm.CommandText = "select Id, Nam, Kana, Dsp, Sex, Birth, Kaigo from KihonM order by Kana"
+        SQLCm.CommandText = "select Id, Nam, Kana, Dsp, Sex, Birth, Kaigo from KihonM where Dsp=1 order by Kana"
         Adapter.Fill(Table)
         dgvUser.DataSource = Table
 
