@@ -27,8 +27,11 @@ Public Class 利用者マスタ
         Dim Adapter As New OleDbDataAdapter(SQLCm)
         Dim Table As New DataTable
         SQLCm.CommandText = "select Id, Nam, Kana, Sex, Format(Birth, 'gee/mm/dd') as Birth, Int((Format(NOW(),'YYYYMMDD')-Format(Birth, 'YYYYMMDD'))/10000) as Age, Kaigo, Dsp from KihonM order by Kana"
+        Cn.Open()
         Adapter.Fill(Table)
         dgv.DataSource = Table
+        Cn.Close()
+        Cn.Dispose()
     End Sub
 
     Private Sub settingDgv(dgv As DataGridView)
@@ -111,7 +114,35 @@ Public Class 利用者マスタ
     Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
         Dim targetId As Integer
         Integer.TryParse(idBox.Text, targetId)
+        If targetId <= 0 Then
+            MsgBox("利用者IDに1以上の数値を入力してください。")
+            Return
+        End If
 
+        '入力されているIDのデータが存在するかチェック
+        Dim reader As System.Data.OleDb.OleDbDataReader
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        SQLCm.CommandText = "SELECT top 1 * from KihonM where Id=" & targetId
+        Cn.Open()
+        reader = SQLCm.ExecuteReader()
+        If reader.Read() = False Then
+            reader.Close()
+            MsgBox("登録されていません。")
+            Return
+        Else
+            '削除処理
+            reader.Close()
+            Dim result As DialogResult = MessageBox.Show("削除してよろしいですか？", "Nurse2", MessageBoxButtons.YesNo)
+            If result = Windows.Forms.DialogResult.OK Then
+                SQLCm.CommandText = "delete from KihonM where Id=" & targetId
+                SQLCm.ExecuteNonQuery()
+                '再表示
+                displayUserMasterData(dgvUserMaster)
+            End If
+        End If
+        Cn.Close()
+        Cn.Dispose()
 
     End Sub
 
