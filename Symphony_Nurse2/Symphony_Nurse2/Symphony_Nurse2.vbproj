@@ -58,8 +58,11 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="TimeBox">
+      <HintPath>..\..\..\..\Documents\Visual Studio 2010\Projects\TimeBox\TimeBox\bin\Release\TimeBox.dll</HintPath>
+    </Reference>
     <Reference Include="ymdBox">
-      <HintPath>..\..\..\..\Documents\Visual Studio 2010\ymdBox.dll</HintPath>
+      <HintPath>..\..\..\..\..\Documents\Visual Studio 2010\ymdBox.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -180,11 +183,17 @@
     <EmbeddedResource Include="処置マスタ.resx">
       <DependentUpon>処置マスタ.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="利用者マスタ.resx">
+      <DependentUpon>利用者マスタ.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="利用者選択.resx">
       <DependentUpon>利用者選択.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="印刷設定.resx">
       <DependentUpon>印刷設定.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="温度板.resx">
+      <DependentUpon>温度板.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="諸マスタ.resx">
       <DependentUpon>諸マスタ.vb</DependentUpon>

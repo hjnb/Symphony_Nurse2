@@ -883,16 +883,16 @@ Partial Class 内服病名
         '
         Me.Button1.Location = New System.Drawing.Point(737, 61)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(70, 35)
+        Me.Button1.Size = New System.Drawing.Size(80, 44)
         Me.Button1.TabIndex = 96
         Me.Button1.Text = "登録"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'btnInnsatu
         '
-        Me.btnInnsatu.Location = New System.Drawing.Point(737, 105)
+        Me.btnInnsatu.Location = New System.Drawing.Point(737, 117)
         Me.btnInnsatu.Name = "btnInnsatu"
-        Me.btnInnsatu.Size = New System.Drawing.Size(70, 35)
+        Me.btnInnsatu.Size = New System.Drawing.Size(80, 44)
         Me.btnInnsatu.TabIndex = 97
         Me.btnInnsatu.Text = "印刷"
         Me.btnInnsatu.UseVisualStyleBackColor = True
