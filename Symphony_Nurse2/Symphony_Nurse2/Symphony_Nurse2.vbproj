@@ -63,10 +63,10 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="TimeBox">
-      <HintPath>..\..\..\..\Documents\Visual Studio 2010\Projects\TimeBox\TimeBox\bin\Release\TimeBox.dll</HintPath>
+      <HintPath>\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\TimeBox.dll</HintPath>
     </Reference>
     <Reference Include="ymdBox">
-      <HintPath>..\..\..\..\..\Documents\Visual Studio 2010\ymdBox.dll</HintPath>
+      <HintPath>\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\ymdBox.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
