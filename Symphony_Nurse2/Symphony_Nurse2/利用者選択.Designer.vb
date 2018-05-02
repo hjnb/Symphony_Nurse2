@@ -22,6 +22,7 @@ Partial Class 利用者選択
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.dgvUser = New System.Windows.Forms.DataGridView()
         Me.searchIdBox = New System.Windows.Forms.TextBox()
         Me.searchNamBox = New System.Windows.Forms.TextBox()
@@ -31,10 +32,18 @@ Partial Class 利用者選択
         'dgvUser
         '
         Me.dgvUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvUser.DefaultCellStyle = DataGridViewCellStyle1
         Me.dgvUser.Location = New System.Drawing.Point(12, 32)
         Me.dgvUser.Name = "dgvUser"
         Me.dgvUser.RowTemplate.Height = 21
-        Me.dgvUser.Size = New System.Drawing.Size(170, 563)
+        Me.dgvUser.Size = New System.Drawing.Size(170, 542)
         Me.dgvUser.TabIndex = 2
         '
         'searchIdBox
@@ -61,7 +70,7 @@ Partial Class 利用者選択
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(198, 607)
+        Me.ClientSize = New System.Drawing.Size(198, 584)
         Me.Controls.Add(Me.searchNamBox)
         Me.Controls.Add(Me.searchIdBox)
         Me.Controls.Add(Me.dgvUser)

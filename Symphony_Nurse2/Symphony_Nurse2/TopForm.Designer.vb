@@ -45,6 +45,8 @@ Partial Class TopForm
         Me.userBirth = New System.Windows.Forms.TextBox()
         Me.userSex = New System.Windows.Forms.TextBox()
         Me.userKaigo = New System.Windows.Forms.TextBox()
+        Me.rbtnPrint = New System.Windows.Forms.RadioButton()
+        Me.rbtnPreview = New System.Windows.Forms.RadioButton()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -198,12 +200,37 @@ Partial Class TopForm
         Me.userKaigo.Size = New System.Drawing.Size(100, 19)
         Me.userKaigo.TabIndex = 7
         '
+        'rbtnPrint
+        '
+        Me.rbtnPrint.AutoSize = True
+        Me.rbtnPrint.Location = New System.Drawing.Point(707, 470)
+        Me.rbtnPrint.Name = "rbtnPrint"
+        Me.rbtnPrint.Size = New System.Drawing.Size(47, 16)
+        Me.rbtnPrint.TabIndex = 8
+        Me.rbtnPrint.TabStop = True
+        Me.rbtnPrint.Text = "印刷"
+        Me.rbtnPrint.UseVisualStyleBackColor = True
+        '
+        'rbtnPreview
+        '
+        Me.rbtnPreview.AutoSize = True
+        Me.rbtnPreview.Checked = True
+        Me.rbtnPreview.Location = New System.Drawing.Point(624, 470)
+        Me.rbtnPreview.Name = "rbtnPreview"
+        Me.rbtnPreview.Size = New System.Drawing.Size(67, 16)
+        Me.rbtnPreview.TabIndex = 9
+        Me.rbtnPreview.TabStop = True
+        Me.rbtnPreview.Text = "プレビュー"
+        Me.rbtnPreview.UseVisualStyleBackColor = True
+        '
         'TopForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(171, Byte), Integer), CType(CType(171, Byte), Integer), CType(CType(171, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(817, 524)
+        Me.Controls.Add(Me.rbtnPreview)
+        Me.Controls.Add(Me.rbtnPrint)
         Me.Controls.Add(Me.userKaigo)
         Me.Controls.Add(Me.userBirth)
         Me.Controls.Add(Me.userSex)
@@ -243,5 +270,7 @@ Partial Class TopForm
     Friend WithEvents userBirth As System.Windows.Forms.TextBox
     Friend WithEvents userSex As System.Windows.Forms.TextBox
     Friend WithEvents userKaigo As System.Windows.Forms.TextBox
+    Friend WithEvents rbtnPrint As System.Windows.Forms.RadioButton
+    Friend WithEvents rbtnPreview As System.Windows.Forms.RadioButton
 
 End Class
