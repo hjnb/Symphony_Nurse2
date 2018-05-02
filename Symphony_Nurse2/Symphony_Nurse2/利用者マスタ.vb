@@ -5,7 +5,6 @@ Public Class 利用者マスタ
     Private Sub 利用者マスタ_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Me.Left = 0
         Me.Top = 55
-
         Me.MaximizeBox = False
         Me.MinimizeBox = False
 
@@ -110,6 +109,9 @@ Public Class 利用者マスタ
     End Sub
 
     Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
+        Dim targetId As Integer
+        Integer.TryParse(idBox.Text, targetId)
+
 
     End Sub
 
@@ -145,6 +147,32 @@ Public Class 利用者マスタ
                 e.Value = ""
             End If
             e.FormattingApplied = True
+        End If
+    End Sub
+
+    Private Sub dgvUserMaster_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvUserMaster.CellMouseClick
+        If e.RowIndex = -1 Then
+            Return
+        End If
+
+        Dim id As String = dgvUserMaster("Id", e.RowIndex).Value
+        Dim nam As String = dgvUserMaster("Nam", e.RowIndex).Value
+        Dim kana As String = dgvUserMaster("Kana", e.RowIndex).Value
+        Dim sex As String = dgvUserMaster("Sex", e.RowIndex).Value
+        Dim birth As String = dgvUserMaster("Birth", e.RowIndex).Value
+        Dim kaigo As String = dgvUserMaster("Kaigo", e.RowIndex).Value
+        Dim dsp As String = dgvUserMaster("Dsp", e.RowIndex).Value
+
+        idBox.Text = id
+        namBox.Text = nam
+        kanaBox.Text = kana
+        sexBox.Text = sex
+        birthYmdBox.setWarakiStr(birth)
+        kaigoBox.Text = kaigo
+        If dsp = 0 Then
+            rbtnNotDisplay.Checked = True
+        ElseIf dsp = 1 Then
+            rbtnDisplay.Checked = True
         End If
     End Sub
 

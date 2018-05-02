@@ -39,7 +39,7 @@ Partial Class 利用者マスタ
         Me.kanaBox = New System.Windows.Forms.TextBox()
         Me.sexBox = New System.Windows.Forms.TextBox()
         Me.kaigoBox = New System.Windows.Forms.TextBox()
-        Me.YmdBox1 = New ymdBox.ymdBox()
+        Me.birthYmdBox = New ymdBox.ymdBox()
         Me.dgvUserMaster = New System.Windows.Forms.DataGridView()
         Me.Label8 = New System.Windows.Forms.Label()
         CType(Me.dgvUserMaster, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -213,18 +213,18 @@ Partial Class 利用者マスタ
         Me.kaigoBox.Size = New System.Drawing.Size(50, 19)
         Me.kaigoBox.TabIndex = 5
         '
-        'YmdBox1
+        'birthYmdBox
         '
-        Me.YmdBox1.DateText = ""
-        Me.YmdBox1.EraText = ""
-        Me.YmdBox1.FirstLabel = "."
-        Me.YmdBox1.FontSize = 9
-        Me.YmdBox1.Location = New System.Drawing.Point(361, 84)
-        Me.YmdBox1.MonthText = ""
-        Me.YmdBox1.Name = "YmdBox1"
-        Me.YmdBox1.SecondLabel = "."
-        Me.YmdBox1.Size = New System.Drawing.Size(88, 24)
-        Me.YmdBox1.TabIndex = 4
+        Me.birthYmdBox.DateText = ""
+        Me.birthYmdBox.EraText = ""
+        Me.birthYmdBox.FirstLabel = "."
+        Me.birthYmdBox.FontSize = 9
+        Me.birthYmdBox.Location = New System.Drawing.Point(361, 84)
+        Me.birthYmdBox.MonthText = ""
+        Me.birthYmdBox.Name = "birthYmdBox"
+        Me.birthYmdBox.SecondLabel = "."
+        Me.birthYmdBox.Size = New System.Drawing.Size(88, 24)
+        Me.birthYmdBox.TabIndex = 4
         '
         'dgvUserMaster
         '
@@ -253,7 +253,7 @@ Partial Class 利用者マスタ
         Me.ClientSize = New System.Drawing.Size(698, 597)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.dgvUserMaster)
-        Me.Controls.Add(Me.YmdBox1)
+        Me.Controls.Add(Me.birthYmdBox)
         Me.Controls.Add(Me.kaigoBox)
         Me.Controls.Add(Me.sexBox)
         Me.Controls.Add(Me.kanaBox)
@@ -296,7 +296,7 @@ Partial Class 利用者マスタ
     Friend WithEvents kanaBox As System.Windows.Forms.TextBox
     Friend WithEvents sexBox As System.Windows.Forms.TextBox
     Friend WithEvents kaigoBox As System.Windows.Forms.TextBox
-    Friend WithEvents YmdBox1 As ymdBox.ymdBox
+    Friend WithEvents birthYmdBox As ymdBox.ymdBox
     Friend WithEvents dgvUserMaster As System.Windows.Forms.DataGridView
     Friend WithEvents Label8 As System.Windows.Forms.Label
 End Class
