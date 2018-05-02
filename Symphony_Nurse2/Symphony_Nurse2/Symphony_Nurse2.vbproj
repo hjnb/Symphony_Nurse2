@@ -58,6 +58,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="ymdBox">
+      <HintPath>..\..\..\..\Documents\Visual Studio 2010\ymdBox.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -165,14 +168,14 @@
     <EmbeddedResource Include="健康診断.resx">
       <DependentUpon>健康診断.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="内服病名.resx">
+      <DependentUpon>内服病名.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="処置マスタ.resx">
       <DependentUpon>処置マスタ.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="利用者選択.resx">
       <DependentUpon>利用者選択.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="諸マスタ.resx">
-      <DependentUpon>諸マスタ.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
