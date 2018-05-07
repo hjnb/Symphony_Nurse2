@@ -8,9 +8,7 @@ Public Class 利用者マスタ
         Me.MaximizeBox = False
         Me.MinimizeBox = False
 
-        settingDgv(dgvUserMaster)
         displayUserMasterData(dgvUserMaster)
-        settingDgvWidth(dgvUserMaster)
     End Sub
 
     Private Sub 利用者マスタ_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
@@ -22,6 +20,9 @@ Public Class 利用者マスタ
     End Sub
 
     Private Sub displayUserMasterData(dgv As DataGridView)
+        dgv.Columns.Clear()
+        settingDgv(dgvUserMaster)
+
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
         Dim Adapter As New OleDbDataAdapter(SQLCm)
@@ -32,6 +33,8 @@ Public Class 利用者マスタ
         dgv.DataSource = Table
         Cn.Close()
         Cn.Dispose()
+
+        settingDgvColumns(dgvUserMaster)
     End Sub
 
     Private Sub settingDgv(dgv As DataGridView)
@@ -56,7 +59,7 @@ Public Class 利用者マスタ
 
     End Sub
 
-    Private Sub settingDgvWidth(dgv As DataGridView)
+    Private Sub settingDgvColumns(dgv As DataGridView)
         With dgv
             With .Columns("Id")
                 .HeaderText = "利用者ID"
@@ -73,7 +76,7 @@ Public Class 利用者マスタ
                 .HeaderText = "カナ氏名"
                 .Width = 110
             End With
-            
+
             With .Columns("Sex")
                 .HeaderText = "性別"
                 .Width = 40
@@ -108,6 +111,32 @@ Public Class 利用者マスタ
     End Sub
 
     Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
+        Dim nam As String = namBox.Text
+        Dim kana As String = StrConv(kanaBox.Text, VbStrConv.Narrow) '半角へ変換
+        Dim sex As String = sexBox.Text
+        Dim birth As String = birthYmdBox.getADStr()
+        Dim kaigo As String = kaigoBox.Text
+        Dim dsp As Integer = If(rbtnDisplay.Checked = True, 1, 0)
+
+        '入力チェック
+        If nam = "" Then
+            MsgBox("漢字氏名を入力して下さい。")
+            Return
+        ElseIf kana = "" Then
+            MsgBox("カナ氏名を入力して下さい。")
+            Return
+        ElseIf sex = "" Then
+            MsgBox("性別を入力して下さい。")
+            Return
+        ElseIf birth = "" Then
+            MsgBox("生年月日を入力して下さい。")
+            Return
+        End If
+
+        'IDの設定処理
+
+
+
 
     End Sub
 
@@ -129,21 +158,34 @@ Public Class 利用者マスタ
         If reader.Read() = False Then
             reader.Close()
             MsgBox("登録されていません。")
+            Cn.Close()
+            Cn.Dispose()
             Return
         Else
             '削除処理
             reader.Close()
             Dim result As DialogResult = MessageBox.Show("削除してよろしいですか？", "Nurse2", MessageBoxButtons.YesNo)
-            If result = Windows.Forms.DialogResult.OK Then
+            If result = Windows.Forms.DialogResult.Yes Then
                 SQLCm.CommandText = "delete from KihonM where Id=" & targetId
                 SQLCm.ExecuteNonQuery()
+                inputClear()
+                Cn.Close()
+                Cn.Dispose()
+
                 '再表示
                 displayUserMasterData(dgvUserMaster)
             End If
         End If
-        Cn.Close()
-        Cn.Dispose()
 
+    End Sub
+
+    Private Sub inputClear()
+        idBox.Text = ""
+        namBox.Text = ""
+        kanaBox.Text = ""
+        sexBox.Text = ""
+        birthYmdBox.clearText()
+        kaigoBox.Text = ""
     End Sub
 
     Private Sub btnPrint_Click(sender As System.Object, e As System.EventArgs) Handles btnPrint.Click
