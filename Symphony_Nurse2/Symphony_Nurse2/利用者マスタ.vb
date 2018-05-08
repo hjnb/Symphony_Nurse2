@@ -2,12 +2,42 @@
 
 Public Class 利用者マスタ
 
+    'スクロール位置保持用
+    Private scrollPosition As Integer = 0
+
+    '選択行位置保持用
+    Private selectedRowIndex As Integer = 0
+
+    '行ヘッダーのカレントセルを表す三角マークを非表示に設定する為のクラス。
+    Public Class dgvRowHeaderCell
+
+        'DataGridViewRowHeaderCell を継承
+        Inherits DataGridViewRowHeaderCell
+
+        'DataGridViewHeaderCell.Paint をオーバーライドして行ヘッダーを描画
+        Protected Overrides Sub Paint(ByVal graphics As Graphics, ByVal clipBounds As Rectangle, _
+           ByVal cellBounds As Rectangle, ByVal rowIndex As Integer, ByVal cellState As DataGridViewElementStates, _
+           ByVal value As Object, ByVal formattedValue As Object, ByVal errorText As String, _
+           ByVal cellStyle As DataGridViewCellStyle, ByVal advancedBorderStyle As DataGridViewAdvancedBorderStyle, _
+           ByVal paintParts As DataGridViewPaintParts)
+            '標準セルの描画からセル内容の背景だけ除いた物を描画(-5)
+            MyBase.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, _
+                     formattedValue, errorText, cellStyle, advancedBorderStyle, _
+                     Not DataGridViewPaintParts.ContentBackground)
+        End Sub
+
+    End Class
+
     Private Sub 利用者マスタ_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Me.Left = 0
         Me.Top = 55
         Me.MaximizeBox = False
         Me.MinimizeBox = False
 
+        '入力テキストボックスの設定
+        settingInputTextBox()
+
+        'データの表示
         displayUserMasterData(dgvUserMaster)
     End Sub
 
@@ -35,6 +65,13 @@ Public Class 利用者マスタ
         Cn.Dispose()
 
         settingDgvColumns(dgvUserMaster)
+
+        'スクロールの位置設定
+        dgvUserMaster.FirstDisplayedScrollingRowIndex = scrollPosition
+
+        '選択行設定
+        dgvUserMaster.Rows(selectedRowIndex).Selected = True
+
     End Sub
 
     Private Sub settingDgv(dgv As DataGridView)
@@ -110,6 +147,35 @@ Public Class 利用者マスタ
         End With
     End Sub
 
+    Private Sub settingInputTextBox()
+        '利用者ID
+        idBox.ImeMode = Windows.Forms.ImeMode.Disable
+
+        '漢字氏名
+        namBox.ImeMode = Windows.Forms.ImeMode.Hiragana
+
+        'カナ氏名
+        kanaBox.ImeMode = Windows.Forms.ImeMode.KatakanaHalf
+
+        '性別
+        sexBox.ImeMode = Windows.Forms.ImeMode.Disable
+        sexBox.TextAlign = HorizontalAlignment.Center
+
+        '要介護
+        kaigoBox.ImeMode = Windows.Forms.ImeMode.Disable
+        kaigoBox.TextAlign = HorizontalAlignment.Center
+
+    End Sub
+
+    Private Sub inputClear()
+        idBox.Text = ""
+        namBox.Text = ""
+        kanaBox.Text = ""
+        sexBox.Text = ""
+        birthYmdBox.clearText()
+        kaigoBox.Text = ""
+    End Sub
+
     Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
         Dim nam As String = namBox.Text
         Dim kana As String = StrConv(kanaBox.Text, VbStrConv.Narrow) '半角へ変換
@@ -131,22 +197,92 @@ Public Class 利用者マスタ
         ElseIf birth = "" Then
             MsgBox("生年月日を入力して下さい。")
             Return
+        ElseIf kaigo <> "" AndAlso IsNumeric(kaigo) = False Then
+            MsgBox("介護度を正しく入力して下さい。")
+            Return
+        ElseIf idBox.Text <> "" AndAlso IsNumeric(idBox.Text) = False Then
+            MsgBox("IDは数値を入力してください。")
+            Return
         End If
 
-        'IDの設定処理
+        '空ではない場合、介護度の頭のゼロを取る
+        If kaigo <> "" Then
+            kaigo = CInt(kaigo).ToString
+        End If
 
+        '空ではない場合、IDの頭のゼロを取る
+        Dim id As Integer = If(idBox.Text <> "", CInt(idBox.Text), -1)
 
+        Dim reader As System.Data.OleDb.OleDbDataReader
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
 
+        'IDの設定
+        If id = -1 Then
+            '最新のid+1の値を取得
+            SQLCm.CommandText = "SELECT top 1 Id FROM KihonM order by Id desc"
+            Cn.Open()
+            reader = SQLCm.ExecuteReader()
+            If reader.Read() = True Then
+                id = reader("Id") + 1
+            Else
+                id = 1
+            End If
+            reader.Close()
+            Cn.Close()
+        End If
+
+        'IDの有無で更新か新規登録
+        SQLCm.CommandText = "SELECT Id FROM KihonM where Id=@id"
+        SQLCm.Parameters.Clear()
+        SQLCm.Parameters.Add("@id", OleDbType.Integer).Value = id
+        Cn.Open()
+        reader = SQLCm.ExecuteReader()
+        If reader.Read() = True Then
+            reader.Close()
+            '更新
+            SQLCm.CommandText = "update KihonM set Nam=@nam, Kana=@kana, Sex=@sex, Birth=@birth, Kaigo=@kaigo, Dsp=@dsp where Id=@id"
+            SQLCm.Parameters.Clear()
+            SQLCm.Parameters.Add("@nam", OleDbType.Char).Value = nam
+            SQLCm.Parameters.Add("@kana", OleDbType.Char).Value = kana
+            SQLCm.Parameters.Add("@sex", OleDbType.Char).Value = sex
+            SQLCm.Parameters.Add("@birth", OleDbType.Char).Value = birth
+            SQLCm.Parameters.Add("@kaigo", OleDbType.Char).Value = kaigo
+            SQLCm.Parameters.Add("@dsp", OleDbType.Integer).Value = dsp
+            SQLCm.Parameters.Add("@id", OleDbType.Integer).Value = id
+            SQLCm.ExecuteNonQuery()
+            Cn.Close()
+        Else
+            reader.Close()
+            '新規登録
+            SQLCm.CommandText = "insert into KihonM(Id, Nam, Kana, Sex, Birth, Kaigo, Dsp) values (@id, @nam, @kana, @sex, @birth, @kaigo, @dsp)"
+            SQLCm.Parameters.Clear()
+            SQLCm.Parameters.Add("@id", OleDbType.Integer).Value = id
+            SQLCm.Parameters.Add("@nam", OleDbType.Char).Value = nam
+            SQLCm.Parameters.Add("@kana", OleDbType.Char).Value = kana
+            SQLCm.Parameters.Add("@sex", OleDbType.Char).Value = sex
+            SQLCm.Parameters.Add("@birth", OleDbType.Char).Value = birth
+            SQLCm.Parameters.Add("@kaigo", OleDbType.Char).Value = kaigo
+            SQLCm.Parameters.Add("@dsp", OleDbType.Integer).Value = dsp
+            SQLCm.ExecuteNonQuery()
+            Cn.Close()
+        End If
+
+        '入力テキストクリア
+        inputClear()
+
+        '再表示
+        displayUserMasterData(dgvUserMaster)
 
     End Sub
 
     Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
-        Dim targetId As Integer
-        Integer.TryParse(idBox.Text, targetId)
-        If targetId <= 0 Then
+        If IsNumeric(idBox.Text) = False Then
             MsgBox("利用者IDに1以上の数値を入力してください。")
             Return
         End If
+
+        Dim targetId As Integer = CInt(idBox.Text)
 
         '入力されているIDのデータが存在するかチェック
         Dim reader As System.Data.OleDb.OleDbDataReader
@@ -176,41 +312,11 @@ Public Class 利用者マスタ
                 displayUserMasterData(dgvUserMaster)
             End If
         End If
-
-    End Sub
-
-    Private Sub inputClear()
-        idBox.Text = ""
-        namBox.Text = ""
-        kanaBox.Text = ""
-        sexBox.Text = ""
-        birthYmdBox.clearText()
-        kaigoBox.Text = ""
     End Sub
 
     Private Sub btnPrint_Click(sender As System.Object, e As System.EventArgs) Handles btnPrint.Click
 
     End Sub
-
-    '行ヘッダーのカレントセルを表す三角マークを非表示に設定する為のクラス。
-    Public Class dgvRowHeaderCell
-
-        'DataGridViewRowHeaderCell を継承
-        Inherits DataGridViewRowHeaderCell
-
-        'DataGridViewHeaderCell.Paint をオーバーライドして行ヘッダーを描画
-        Protected Overrides Sub Paint(ByVal graphics As Graphics, ByVal clipBounds As Rectangle, _
-           ByVal cellBounds As Rectangle, ByVal rowIndex As Integer, ByVal cellState As DataGridViewElementStates, _
-           ByVal value As Object, ByVal formattedValue As Object, ByVal errorText As String, _
-           ByVal cellStyle As DataGridViewCellStyle, ByVal advancedBorderStyle As DataGridViewAdvancedBorderStyle, _
-           ByVal paintParts As DataGridViewPaintParts)
-            '標準セルの描画からセル内容の背景だけ除いた物を描画(-5)
-            MyBase.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, _
-                     formattedValue, errorText, cellStyle, advancedBorderStyle, _
-                     Not DataGridViewPaintParts.ContentBackground)
-        End Sub
-
-    End Class
 
     Private Sub dgvUserMaster_CellFormatting(sender As Object, e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles dgvUserMaster.CellFormatting
         If dgvUserMaster.Columns(e.ColumnIndex).Name = "Dsp" Then
@@ -236,6 +342,7 @@ Public Class 利用者マスタ
         Dim kaigo As String = dgvUserMaster("Kaigo", e.RowIndex).Value
         Dim dsp As String = dgvUserMaster("Dsp", e.RowIndex).Value
 
+        'テキストボックスへ反映
         idBox.Text = id
         namBox.Text = nam
         kanaBox.Text = kana
@@ -247,6 +354,9 @@ Public Class 利用者マスタ
         ElseIf dsp = 1 Then
             rbtnDisplay.Checked = True
         End If
+
+        '選択している行のインデックス保持
+        selectedRowIndex = e.RowIndex
     End Sub
 
     Private Sub dgvUserMaster_CellPainting(sender As Object, e As System.Windows.Forms.DataGridViewCellPaintingEventArgs) Handles dgvUserMaster.CellPainting
@@ -268,6 +378,21 @@ Public Class 利用者マスタ
                 TextFormatFlags.HorizontalCenter Or TextFormatFlags.VerticalCenter)
             '描画が完了したことを知らせる
             e.Handled = True
+        End If
+    End Sub
+
+    Private Sub dgvUserMaster_Scroll(sender As Object, e As System.Windows.Forms.ScrollEventArgs) Handles dgvUserMaster.Scroll
+        scrollPosition = dgvUserMaster.FirstDisplayedScrollingRowIndex
+    End Sub
+
+    Private Sub sexBox_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles sexBox.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            Dim inputStr As String = sexBox.Text
+            If inputStr = "2" Then
+                sexBox.Text = "女"
+            Else
+                sexBox.Text = "男"
+            End If
         End If
     End Sub
 End Class
