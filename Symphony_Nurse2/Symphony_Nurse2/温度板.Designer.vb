@@ -56,7 +56,14 @@ Partial Class 温度板
         Me.btnDayUe = New System.Windows.Forms.Button()
         Me.btnTimeSita = New System.Windows.Forms.Button()
         Me.btnTimeUe = New System.Windows.Forms.Button()
+        Me.lstSyoti = New System.Windows.Forms.ListBox()
+        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.btnKousinn = New System.Windows.Forms.Button()
+        Me.btnKuria = New System.Windows.Forms.Button()
+        Me.DataGridView3 = New System.Windows.Forms.DataGridView()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -207,6 +214,7 @@ Partial Class 温度板
         'cmbKisaisya
         '
         Me.cmbKisaisya.FormattingEnabled = True
+        Me.cmbKisaisya.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbKisaisya.Location = New System.Drawing.Point(404, 25)
         Me.cmbKisaisya.Name = "cmbKisaisya"
         Me.cmbKisaisya.Size = New System.Drawing.Size(88, 20)
@@ -264,6 +272,7 @@ Partial Class 温度板
         'cmbSyoti
         '
         Me.cmbSyoti.FormattingEnabled = True
+        Me.cmbSyoti.Items.AddRange(New Object() {"治療プラン", "処置", "薬剤内服"})
         Me.cmbSyoti.Location = New System.Drawing.Point(113, 219)
         Me.cmbSyoti.Name = "cmbSyoti"
         Me.cmbSyoti.Size = New System.Drawing.Size(103, 20)
@@ -271,6 +280,7 @@ Partial Class 温度板
         '
         'txtSyoti1
         '
+        Me.txtSyoti1.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtSyoti1.Location = New System.Drawing.Point(113, 257)
         Me.txtSyoti1.Name = "txtSyoti1"
         Me.txtSyoti1.Size = New System.Drawing.Size(340, 19)
@@ -280,6 +290,7 @@ Partial Class 温度板
         '
         Me.txtSyoti2.Location = New System.Drawing.Point(113, 292)
         Me.txtSyoti2.Name = "txtSyoti2"
+        Me.txtSyoti2.ReadOnly = True
         Me.txtSyoti2.Size = New System.Drawing.Size(74, 19)
         Me.txtSyoti2.TabIndex = 25
         '
@@ -289,6 +300,7 @@ Partial Class 温度板
         Me.DataGridView1.Location = New System.Drawing.Point(45, 328)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowTemplate.Height = 21
+        Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.DataGridView1.Size = New System.Drawing.Size(756, 340)
         Me.DataGridView1.TabIndex = 26
         '
@@ -355,11 +367,61 @@ Partial Class 温度板
         Me.btnTimeUe.Text = "▲"
         Me.btnTimeUe.UseVisualStyleBackColor = True
         '
+        'lstSyoti
+        '
+        Me.lstSyoti.FormattingEnabled = True
+        Me.lstSyoti.ItemHeight = 12
+        Me.lstSyoti.Location = New System.Drawing.Point(374, 66)
+        Me.lstSyoti.Name = "lstSyoti"
+        Me.lstSyoti.Size = New System.Drawing.Size(208, 172)
+        Me.lstSyoti.TabIndex = 87
+        '
+        'DataGridView2
+        '
+        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView2.Location = New System.Drawing.Point(869, 34)
+        Me.DataGridView2.Name = "DataGridView2"
+        Me.DataGridView2.RowTemplate.Height = 21
+        Me.DataGridView2.Size = New System.Drawing.Size(351, 285)
+        Me.DataGridView2.TabIndex = 88
+        '
+        'btnKousinn
+        '
+        Me.btnKousinn.Location = New System.Drawing.Point(920, 346)
+        Me.btnKousinn.Name = "btnKousinn"
+        Me.btnKousinn.Size = New System.Drawing.Size(63, 43)
+        Me.btnKousinn.TabIndex = 89
+        Me.btnKousinn.Text = "更新"
+        Me.btnKousinn.UseVisualStyleBackColor = True
+        '
+        'btnKuria
+        '
+        Me.btnKuria.Location = New System.Drawing.Point(907, 414)
+        Me.btnKuria.Name = "btnKuria"
+        Me.btnKuria.Size = New System.Drawing.Size(103, 31)
+        Me.btnKuria.TabIndex = 90
+        Me.btnKuria.Text = "クリア"
+        Me.btnKuria.UseVisualStyleBackColor = True
+        '
+        'DataGridView3
+        '
+        Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView3.Location = New System.Drawing.Point(1095, 415)
+        Me.DataGridView3.Name = "DataGridView3"
+        Me.DataGridView3.RowTemplate.Height = 21
+        Me.DataGridView3.Size = New System.Drawing.Size(167, 214)
+        Me.DataGridView3.TabIndex = 91
+        '
         '温度板
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(845, 699)
+        Me.ClientSize = New System.Drawing.Size(1396, 699)
+        Me.Controls.Add(Me.DataGridView3)
+        Me.Controls.Add(Me.btnKuria)
+        Me.Controls.Add(Me.btnKousinn)
+        Me.Controls.Add(Me.DataGridView2)
+        Me.Controls.Add(Me.lstSyoti)
         Me.Controls.Add(Me.btnTimeSita)
         Me.Controls.Add(Me.btnTimeUe)
         Me.Controls.Add(Me.btnDaySita)
@@ -397,6 +459,8 @@ Partial Class 温度板
         Me.Name = "温度板"
         Me.Text = "温度板"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -435,4 +499,9 @@ Partial Class 温度板
     Friend WithEvents btnDayUe As System.Windows.Forms.Button
     Friend WithEvents btnTimeSita As System.Windows.Forms.Button
     Friend WithEvents btnTimeUe As System.Windows.Forms.Button
+    Friend WithEvents lstSyoti As System.Windows.Forms.ListBox
+    Friend WithEvents DataGridView2 As System.Windows.Forms.DataGridView
+    Friend WithEvents btnKousinn As System.Windows.Forms.Button
+    Friend WithEvents btnKuria As System.Windows.Forms.Button
+    Friend WithEvents DataGridView3 As System.Windows.Forms.DataGridView
 End Class

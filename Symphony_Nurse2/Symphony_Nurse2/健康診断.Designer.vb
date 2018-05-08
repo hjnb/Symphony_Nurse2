@@ -65,8 +65,10 @@ Partial Class 健康診断
         Me.btnInnsatu = New System.Windows.Forms.Button()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.btnSakujo = New System.Windows.Forms.Button()
+        Me.DataGridView3 = New System.Windows.Forms.DataGridView()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'DataGridView1
@@ -441,11 +443,20 @@ Partial Class 健康診断
         Me.btnSakujo.Text = "削除"
         Me.btnSakujo.UseVisualStyleBackColor = True
         '
+        'DataGridView3
+        '
+        Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView3.Location = New System.Drawing.Point(920, 72)
+        Me.DataGridView3.Name = "DataGridView3"
+        Me.DataGridView3.Size = New System.Drawing.Size(298, 351)
+        Me.DataGridView3.TabIndex = 89
+        '
         '健康診断
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(877, 720)
+        Me.ClientSize = New System.Drawing.Size(1269, 720)
+        Me.Controls.Add(Me.DataGridView3)
         Me.Controls.Add(Me.btnSakujo)
         Me.Controls.Add(Me.DataGridView2)
         Me.Controls.Add(Me.btnInnsatu)
@@ -493,6 +504,7 @@ Partial Class 健康診断
         Me.Text = "健康診断"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -540,4 +552,5 @@ Partial Class 健康診断
     Friend WithEvents btnInnsatu As System.Windows.Forms.Button
     Friend WithEvents DataGridView2 As System.Windows.Forms.DataGridView
     Friend WithEvents btnSakujo As System.Windows.Forms.Button
+    Friend WithEvents DataGridView3 As System.Windows.Forms.DataGridView
 End Class
