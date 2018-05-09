@@ -42,6 +42,7 @@ Partial Class 利用者マスタ
         Me.birthYmdBox = New ymdBox.ymdBox()
         Me.dgvUserMaster = New System.Windows.Forms.DataGridView()
         Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
         CType(Me.dgvUserMaster, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -50,7 +51,7 @@ Partial Class 利用者マスタ
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Blue
-        Me.Label1.Location = New System.Drawing.Point(41, 30)
+        Me.Label1.Location = New System.Drawing.Point(23, 30)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(61, 14)
         Me.Label1.TabIndex = 0
@@ -61,7 +62,7 @@ Partial Class 利用者マスタ
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Black
-        Me.Label2.Location = New System.Drawing.Point(41, 61)
+        Me.Label2.Location = New System.Drawing.Point(23, 61)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(63, 14)
         Me.Label2.TabIndex = 1
@@ -72,7 +73,7 @@ Partial Class 利用者マスタ
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.Black
-        Me.Label3.Location = New System.Drawing.Point(290, 89)
+        Me.Label3.Location = New System.Drawing.Point(272, 89)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(63, 14)
         Me.Label3.TabIndex = 2
@@ -83,7 +84,7 @@ Partial Class 利用者マスタ
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
-        Me.Label4.Location = New System.Drawing.Point(41, 117)
+        Me.Label4.Location = New System.Drawing.Point(23, 117)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(49, 14)
         Me.Label4.TabIndex = 3
@@ -94,7 +95,7 @@ Partial Class 利用者マスタ
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Black
-        Me.Label5.Location = New System.Drawing.Point(41, 89)
+        Me.Label5.Location = New System.Drawing.Point(23, 89)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(35, 14)
         Me.Label5.TabIndex = 4
@@ -105,7 +106,7 @@ Partial Class 利用者マスタ
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.Black
-        Me.Label6.Location = New System.Drawing.Point(290, 61)
+        Me.Label6.Location = New System.Drawing.Point(272, 61)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(56, 14)
         Me.Label6.TabIndex = 5
@@ -116,7 +117,7 @@ Partial Class 利用者マスタ
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label7.ForeColor = System.Drawing.Color.Black
-        Me.Label7.Location = New System.Drawing.Point(290, 117)
+        Me.Label7.Location = New System.Drawing.Point(272, 117)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(35, 14)
         Me.Label7.TabIndex = 6
@@ -126,7 +127,7 @@ Partial Class 利用者マスタ
         '
         Me.rbtnDisplay.AutoSize = True
         Me.rbtnDisplay.Checked = True
-        Me.rbtnDisplay.Location = New System.Drawing.Point(358, 117)
+        Me.rbtnDisplay.Location = New System.Drawing.Point(340, 117)
         Me.rbtnDisplay.Name = "rbtnDisplay"
         Me.rbtnDisplay.Size = New System.Drawing.Size(47, 16)
         Me.rbtnDisplay.TabIndex = 7
@@ -137,7 +138,7 @@ Partial Class 利用者マスタ
         'rbtnNotDisplay
         '
         Me.rbtnNotDisplay.AutoSize = True
-        Me.rbtnNotDisplay.Location = New System.Drawing.Point(426, 117)
+        Me.rbtnNotDisplay.Location = New System.Drawing.Point(408, 117)
         Me.rbtnNotDisplay.Name = "rbtnNotDisplay"
         Me.rbtnNotDisplay.Size = New System.Drawing.Size(59, 16)
         Me.rbtnNotDisplay.TabIndex = 8
@@ -146,8 +147,8 @@ Partial Class 利用者マスタ
         '
         'btnRegist
         '
-        Me.btnRegist.Font = New System.Drawing.Font("MS UI Gothic", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.btnRegist.Location = New System.Drawing.Point(415, 152)
+        Me.btnRegist.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnRegist.Location = New System.Drawing.Point(376, 148)
         Me.btnRegist.Name = "btnRegist"
         Me.btnRegist.Size = New System.Drawing.Size(78, 32)
         Me.btnRegist.TabIndex = 6
@@ -156,8 +157,8 @@ Partial Class 利用者マスタ
         '
         'btnPrint
         '
-        Me.btnPrint.Font = New System.Drawing.Font("MS UI Gothic", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.btnPrint.Location = New System.Drawing.Point(569, 152)
+        Me.btnPrint.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnPrint.Location = New System.Drawing.Point(530, 148)
         Me.btnPrint.Name = "btnPrint"
         Me.btnPrint.Size = New System.Drawing.Size(78, 32)
         Me.btnPrint.TabIndex = 10
@@ -166,8 +167,8 @@ Partial Class 利用者マスタ
         '
         'btnDelete
         '
-        Me.btnDelete.Font = New System.Drawing.Font("MS UI Gothic", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.btnDelete.Location = New System.Drawing.Point(492, 152)
+        Me.btnDelete.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnDelete.Location = New System.Drawing.Point(453, 148)
         Me.btnDelete.Name = "btnDelete"
         Me.btnDelete.Size = New System.Drawing.Size(78, 32)
         Me.btnDelete.TabIndex = 11
@@ -177,7 +178,7 @@ Partial Class 利用者マスタ
         'idBox
         '
         Me.idBox.ImeMode = System.Windows.Forms.ImeMode.Disable
-        Me.idBox.Location = New System.Drawing.Point(108, 28)
+        Me.idBox.Location = New System.Drawing.Point(90, 28)
         Me.idBox.Name = "idBox"
         Me.idBox.Size = New System.Drawing.Size(69, 19)
         Me.idBox.TabIndex = 0
@@ -185,7 +186,7 @@ Partial Class 利用者マスタ
         'namBox
         '
         Me.namBox.ImeMode = System.Windows.Forms.ImeMode.Hiragana
-        Me.namBox.Location = New System.Drawing.Point(108, 59)
+        Me.namBox.Location = New System.Drawing.Point(90, 59)
         Me.namBox.Name = "namBox"
         Me.namBox.Size = New System.Drawing.Size(140, 19)
         Me.namBox.TabIndex = 1
@@ -193,7 +194,7 @@ Partial Class 利用者マスタ
         'kanaBox
         '
         Me.kanaBox.ImeMode = System.Windows.Forms.ImeMode.KatakanaHalf
-        Me.kanaBox.Location = New System.Drawing.Point(361, 59)
+        Me.kanaBox.Location = New System.Drawing.Point(343, 59)
         Me.kanaBox.Name = "kanaBox"
         Me.kanaBox.Size = New System.Drawing.Size(140, 19)
         Me.kanaBox.TabIndex = 2
@@ -201,14 +202,14 @@ Partial Class 利用者マスタ
         'sexBox
         '
         Me.sexBox.ImeMode = System.Windows.Forms.ImeMode.Disable
-        Me.sexBox.Location = New System.Drawing.Point(108, 89)
+        Me.sexBox.Location = New System.Drawing.Point(90, 89)
         Me.sexBox.Name = "sexBox"
         Me.sexBox.Size = New System.Drawing.Size(50, 19)
         Me.sexBox.TabIndex = 3
         '
         'kaigoBox
         '
-        Me.kaigoBox.Location = New System.Drawing.Point(108, 117)
+        Me.kaigoBox.Location = New System.Drawing.Point(90, 117)
         Me.kaigoBox.Name = "kaigoBox"
         Me.kaigoBox.Size = New System.Drawing.Size(50, 19)
         Me.kaigoBox.TabIndex = 5
@@ -219,7 +220,7 @@ Partial Class 利用者マスタ
         Me.birthYmdBox.EraText = ""
         Me.birthYmdBox.FirstLabel = "."
         Me.birthYmdBox.FontSize = 9
-        Me.birthYmdBox.Location = New System.Drawing.Point(361, 84)
+        Me.birthYmdBox.Location = New System.Drawing.Point(343, 84)
         Me.birthYmdBox.MonthText = ""
         Me.birthYmdBox.Name = "birthYmdBox"
         Me.birthYmdBox.SecondLabel = "."
@@ -229,7 +230,7 @@ Partial Class 利用者マスタ
         'dgvUserMaster
         '
         Me.dgvUserMaster.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvUserMaster.Location = New System.Drawing.Point(44, 200)
+        Me.dgvUserMaster.Location = New System.Drawing.Point(26, 196)
         Me.dgvUserMaster.Name = "dgvUserMaster"
         Me.dgvUserMaster.RowTemplate.Height = 21
         Me.dgvUserMaster.Size = New System.Drawing.Size(605, 385)
@@ -240,17 +241,27 @@ Partial Class 利用者マスタ
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.Black
-        Me.Label8.Location = New System.Drawing.Point(169, 92)
+        Me.Label8.Location = New System.Drawing.Point(151, 92)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(86, 14)
         Me.Label8.TabIndex = 13
         Me.Label8.Text = "（1：男　2：女）"
         '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(63, 173)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(161, 12)
+        Me.Label9.TabIndex = 14
+        Me.Label9.Text = "ﾀﾞﾌﾞﾙｸﾘｯｸした項目名で並べます"
+        '
         '利用者マスタ
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(698, 597)
+        Me.ClientSize = New System.Drawing.Size(662, 599)
+        Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.dgvUserMaster)
         Me.Controls.Add(Me.birthYmdBox)
@@ -299,4 +310,5 @@ Partial Class 利用者マスタ
     Friend WithEvents birthYmdBox As ymdBox.ymdBox
     Friend WithEvents dgvUserMaster As System.Windows.Forms.DataGridView
     Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents Label9 As System.Windows.Forms.Label
 End Class

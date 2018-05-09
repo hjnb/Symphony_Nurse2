@@ -8,6 +8,9 @@ Public Class 利用者マスタ
     '選択行位置保持用
     Private selectedRowIndex As Integer = 0
 
+    'テキストボックスのマウスダウンイベント制御用
+    Private mdFlag As Boolean = False
+
     '行ヘッダーのカレントセルを表す三角マークを非表示に設定する為のクラス。
     Public Class dgvRowHeaderCell
 
@@ -57,7 +60,7 @@ Public Class 利用者マスタ
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
         Dim Adapter As New OleDbDataAdapter(SQLCm)
         Dim Table As New DataTable
-        SQLCm.CommandText = "select Id, Nam, Kana, Sex, Format(Birth, 'gee/mm/dd') as Birth, Int((Format(NOW(),'YYYYMMDD')-Format(Birth, 'YYYYMMDD'))/10000) as Age, Kaigo, Dsp from KihonM order by Kana"
+        SQLCm.CommandText = "select Id, Nam, Kana, Sex, Birth as BirthAD, Format(Birth, 'gee/mm/dd') as Birth, Int((Format(NOW(),'YYYYMMDD')-Format(Birth, 'YYYYMMDD'))/10000) as Age, Kaigo, Dsp from KihonM order by Kana"
         Cn.Open()
         Adapter.Fill(Table)
         dgv.DataSource = Table
@@ -98,6 +101,13 @@ Public Class 利用者マスタ
 
     Private Sub settingDgvColumns(dgv As DataGridView)
         With dgv
+            '並び替えができないようにする
+            For Each c As DataGridViewColumn In dgv.Columns
+                c.SortMode = DataGridViewColumnSortMode.NotSortable
+            Next
+
+            .Columns("BirthAD").Visible = False
+
             With .Columns("Id")
                 .HeaderText = "利用者ID"
                 .Width = 60
@@ -186,22 +196,22 @@ Public Class 利用者マスタ
 
         '入力チェック
         If nam = "" Then
-            MsgBox("漢字氏名を入力して下さい。")
+            MsgBox("漢字氏名を入力して下さい。", , "登録エラー")
             Return
         ElseIf kana = "" Then
-            MsgBox("カナ氏名を入力して下さい。")
+            MsgBox("カナ氏名を入力して下さい。", , "登録エラー")
             Return
         ElseIf sex = "" Then
-            MsgBox("性別を入力して下さい。")
+            MsgBox("性別を入力して下さい。", , "登録エラー")
             Return
         ElseIf birth = "" Then
-            MsgBox("生年月日を入力して下さい。")
+            MsgBox("生年月日を入力して下さい。", , "登録エラー")
             Return
         ElseIf kaigo <> "" AndAlso IsNumeric(kaigo) = False Then
-            MsgBox("介護度を正しく入力して下さい。")
+            MsgBox("介護度を正しく入力して下さい。", , "登録エラー")
             Return
         ElseIf idBox.Text <> "" AndAlso IsNumeric(idBox.Text) = False Then
-            MsgBox("IDは数値を入力してください。")
+            MsgBox("IDは数値を入力してください。", , "登録エラー")
             Return
         End If
 
@@ -278,7 +288,7 @@ Public Class 利用者マスタ
 
     Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
         If IsNumeric(idBox.Text) = False Then
-            MsgBox("利用者IDに1以上の数値を入力してください。")
+            MsgBox("利用者IDに1以上の数値を入力してください。", , "削除エラー")
             Return
         End If
 
@@ -293,7 +303,7 @@ Public Class 利用者マスタ
         reader = SQLCm.ExecuteReader()
         If reader.Read() = False Then
             reader.Close()
-            MsgBox("登録されていません。")
+            MsgBox("登録されていません。", , "削除エラー")
             Cn.Close()
             Cn.Dispose()
             Return
@@ -381,6 +391,19 @@ Public Class 利用者マスタ
         End If
     End Sub
 
+    Private Sub dgvUserMaster_ColumnHeaderMouseDoubleClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvUserMaster.ColumnHeaderMouseDoubleClick
+        Dim targetColumn As DataGridViewColumn = dgvUserMaster.Columns(e.ColumnIndex)
+        If targetColumn.Name = "Birth" OrElse targetColumn.Name = "Age" Then
+            targetColumn = dgvUserMaster.Columns("BirthAD")
+        End If
+
+        If targetColumn.Name = "Id" OrElse targetColumn.Name = "BirthAD" Then
+            dgvUserMaster.Sort(targetColumn, System.ComponentModel.ListSortDirection.Descending)
+        Else
+            dgvUserMaster.Sort(targetColumn, System.ComponentModel.ListSortDirection.Ascending)
+        End If
+    End Sub
+
     Private Sub dgvUserMaster_Scroll(sender As Object, e As System.Windows.Forms.ScrollEventArgs) Handles dgvUserMaster.Scroll
         scrollPosition = dgvUserMaster.FirstDisplayedScrollingRowIndex
     End Sub
@@ -393,6 +416,20 @@ Public Class 利用者マスタ
             Else
                 sexBox.Text = "男"
             End If
+        End If
+    End Sub
+
+    Private Sub textBox_Enter(sender As Object, e As System.EventArgs) Handles idBox.Enter, namBox.Enter, kanaBox.Enter, sexBox.Enter, kaigoBox.Enter
+        Dim tb As TextBox = CType(sender, TextBox)
+        tb.SelectAll()
+        mdFlag = True
+    End Sub
+
+    Private Sub textBox_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles idBox.MouseDown, namBox.MouseDown, kanaBox.MouseDown, sexBox.MouseDown, kaigoBox.MouseDown
+        If mdFlag = True Then
+            Dim tb As TextBox = CType(sender, TextBox)
+            tb.SelectAll()
+            mdFlag = False
         End If
     End Sub
 End Class
