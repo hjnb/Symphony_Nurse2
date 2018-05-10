@@ -95,6 +95,7 @@ Public Class 利用者マスタ
             .BackgroundColor = Color.FromKnownColor(KnownColor.Control)
             .RowTemplate.HeaderCell = New dgvRowHeaderCell() '行ヘッダの三角マークを非表示に
             .ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .ShowCellToolTips = False
         End With
 
     End Sub
@@ -328,6 +329,10 @@ Public Class 利用者マスタ
 
     End Sub
 
+    Private Function checkDBNullValue(dgvCellValue As Object) As String
+        Return If(IsDBNull(dgvCellValue), "", dgvCellValue)
+    End Function
+
     Private Sub dgvUserMaster_CellFormatting(sender As Object, e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles dgvUserMaster.CellFormatting
         If dgvUserMaster.Columns(e.ColumnIndex).Name = "Dsp" Then
             If e.Value = "1" Then
@@ -344,13 +349,13 @@ Public Class 利用者マスタ
             Return
         End If
 
-        Dim id As String = dgvUserMaster("Id", e.RowIndex).Value
-        Dim nam As String = dgvUserMaster("Nam", e.RowIndex).Value
-        Dim kana As String = dgvUserMaster("Kana", e.RowIndex).Value
-        Dim sex As String = dgvUserMaster("Sex", e.RowIndex).Value
-        Dim birth As String = dgvUserMaster("Birth", e.RowIndex).Value
-        Dim kaigo As String = dgvUserMaster("Kaigo", e.RowIndex).Value
-        Dim dsp As String = dgvUserMaster("Dsp", e.RowIndex).Value
+        Dim id As String = checkDBNullValue(dgvUserMaster("Id", e.RowIndex).Value)
+        Dim nam As String = checkDBNullValue(dgvUserMaster("Nam", e.RowIndex).Value)
+        Dim kana As String = checkDBNullValue(dgvUserMaster("Kana", e.RowIndex).Value)
+        Dim sex As String = checkDBNullValue(dgvUserMaster("Sex", e.RowIndex).Value)
+        Dim birth As String = checkDBNullValue(dgvUserMaster("Birth", e.RowIndex).Value)
+        Dim kaigo As String = checkDBNullValue(dgvUserMaster("Kaigo", e.RowIndex).Value)
+        Dim dsp As String = checkDBNullValue(dgvUserMaster("Dsp", e.RowIndex).Value)
 
         'テキストボックスへ反映
         idBox.Text = id
