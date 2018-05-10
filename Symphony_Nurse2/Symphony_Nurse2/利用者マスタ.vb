@@ -32,6 +32,7 @@ Public Class 利用者マスタ
     End Class
 
     Private Sub 利用者マスタ_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        Me.KeyPreview = True
         Me.Left = 0
         Me.Top = 55
         Me.MaximizeBox = False

@@ -26,14 +26,14 @@ Partial Class 処置マスタ
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.cmbCategory1 = New System.Windows.Forms.ComboBox()
+        Me.dspBox = New System.Windows.Forms.TextBox()
+        Me.category2Box = New System.Windows.Forms.TextBox()
+        Me.category3Box = New System.Windows.Forms.TextBox()
+        Me.btnRegist = New System.Windows.Forms.Button()
+        Me.btnDelete = New System.Windows.Forms.Button()
+        Me.dgvTreatingMaster = New System.Windows.Forms.DataGridView()
+        CType(Me.dgvTreatingMaster, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -74,81 +74,83 @@ Partial Class 処置マスタ
         Me.Label4.TabIndex = 3
         Me.Label4.Text = "分類3"
         '
-        'ComboBox1
+        'cmbCategory1
         '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(86, 27)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(100, 20)
-        Me.ComboBox1.TabIndex = 4
+        Me.cmbCategory1.FormattingEnabled = True
+        Me.cmbCategory1.Location = New System.Drawing.Point(86, 27)
+        Me.cmbCategory1.Name = "cmbCategory1"
+        Me.cmbCategory1.Size = New System.Drawing.Size(100, 20)
+        Me.cmbCategory1.TabIndex = 4
         '
-        'TextBox1
+        'dspBox
         '
-        Me.TextBox1.Location = New System.Drawing.Point(86, 56)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(48, 19)
-        Me.TextBox1.TabIndex = 5
+        Me.dspBox.Location = New System.Drawing.Point(86, 56)
+        Me.dspBox.Name = "dspBox"
+        Me.dspBox.Size = New System.Drawing.Size(48, 19)
+        Me.dspBox.TabIndex = 5
         '
-        'TextBox2
+        'category2Box
         '
-        Me.TextBox2.Location = New System.Drawing.Point(86, 83)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(239, 19)
-        Me.TextBox2.TabIndex = 6
+        Me.category2Box.Location = New System.Drawing.Point(86, 83)
+        Me.category2Box.Name = "category2Box"
+        Me.category2Box.Size = New System.Drawing.Size(239, 19)
+        Me.category2Box.TabIndex = 6
         '
-        'TextBox3
+        'category3Box
         '
-        Me.TextBox3.Location = New System.Drawing.Point(86, 110)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(48, 19)
-        Me.TextBox3.TabIndex = 7
+        Me.category3Box.Location = New System.Drawing.Point(86, 110)
+        Me.category3Box.Name = "category3Box"
+        Me.category3Box.Size = New System.Drawing.Size(48, 19)
+        Me.category3Box.TabIndex = 7
         '
-        'Button1
+        'btnRegist
         '
-        Me.Button1.Location = New System.Drawing.Point(412, 27)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(63, 33)
-        Me.Button1.TabIndex = 8
-        Me.Button1.Text = "登録"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnRegist.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnRegist.Location = New System.Drawing.Point(408, 44)
+        Me.btnRegist.Name = "btnRegist"
+        Me.btnRegist.Size = New System.Drawing.Size(80, 33)
+        Me.btnRegist.TabIndex = 8
+        Me.btnRegist.Text = "登録"
+        Me.btnRegist.UseVisualStyleBackColor = True
         '
-        'Button2
+        'btnDelete
         '
-        Me.Button2.Location = New System.Drawing.Point(412, 76)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(63, 33)
-        Me.Button2.TabIndex = 9
-        Me.Button2.Text = "削除"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.btnDelete.Font = New System.Drawing.Font("MS UI Gothic", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnDelete.Location = New System.Drawing.Point(408, 93)
+        Me.btnDelete.Name = "btnDelete"
+        Me.btnDelete.Size = New System.Drawing.Size(80, 33)
+        Me.btnDelete.TabIndex = 9
+        Me.btnDelete.Text = "削除"
+        Me.btnDelete.UseVisualStyleBackColor = True
         '
-        'DataGridView1
+        'dgvTreatingMaster
         '
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(30, 156)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.RowTemplate.Height = 21
-        Me.DataGridView1.Size = New System.Drawing.Size(534, 280)
-        Me.DataGridView1.TabIndex = 10
+        Me.dgvTreatingMaster.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvTreatingMaster.Location = New System.Drawing.Point(27, 156)
+        Me.dgvTreatingMaster.Name = "dgvTreatingMaster"
+        Me.dgvTreatingMaster.RowTemplate.Height = 21
+        Me.dgvTreatingMaster.Size = New System.Drawing.Size(469, 322)
+        Me.dgvTreatingMaster.TabIndex = 10
         '
         '処置マスタ
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(597, 463)
-        Me.Controls.Add(Me.DataGridView1)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.TextBox3)
-        Me.Controls.Add(Me.TextBox2)
-        Me.Controls.Add(Me.TextBox1)
-        Me.Controls.Add(Me.ComboBox1)
+        Me.ClientSize = New System.Drawing.Size(525, 500)
+        Me.Controls.Add(Me.dgvTreatingMaster)
+        Me.Controls.Add(Me.btnDelete)
+        Me.Controls.Add(Me.btnRegist)
+        Me.Controls.Add(Me.category3Box)
+        Me.Controls.Add(Me.category2Box)
+        Me.Controls.Add(Me.dspBox)
+        Me.Controls.Add(Me.cmbCategory1)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Name = "処置マスタ"
         Me.Text = "処置マスタ"
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvTreatingMaster, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -157,11 +159,11 @@ Partial Class 処置マスタ
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
-    Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents Button2 As System.Windows.Forms.Button
-    Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
+    Friend WithEvents cmbCategory1 As System.Windows.Forms.ComboBox
+    Friend WithEvents dspBox As System.Windows.Forms.TextBox
+    Friend WithEvents category2Box As System.Windows.Forms.TextBox
+    Friend WithEvents category3Box As System.Windows.Forms.TextBox
+    Friend WithEvents btnRegist As System.Windows.Forms.Button
+    Friend WithEvents btnDelete As System.Windows.Forms.Button
+    Friend WithEvents dgvTreatingMaster As System.Windows.Forms.DataGridView
 End Class
