@@ -9,7 +9,10 @@ Public Class 処置マスタ
     Private selectedRowIndex As Integer = 0
 
     '分類１のテキスト変更時のイベント発生制御フラグ
-    Private isInitCategory1 As Boolean = False
+    Private canChangeCategory1Event As Boolean = True
+
+    'テキストボックスのマウスダウンイベント制御用
+    Private mdFlag As Boolean = False
 
     '行ヘッダーのカレントセルを表す三角マークを非表示に設定する為のクラス。
     Public Class dgvRowHeaderCell
@@ -42,7 +45,7 @@ Public Class 処置マスタ
         settingInputTextBox()
 
         'dgvにデータ表示
-        displayTreatingMasterData(dgvTreatingMaster, cmbCategory1.Text)
+        displayTreatingMasterData(dgvTreatingMaster, cmbCategory1.Text, False)
 
     End Sub
 
@@ -54,7 +57,7 @@ Public Class 処置マスタ
         End If
     End Sub
 
-    Private Sub displayTreatingMasterData(dgv As DataGridView, category1 As String)
+    Private Sub displayTreatingMasterData(dgv As DataGridView, category1 As String, dbUpdateFlg As Boolean)
         dgv.Columns.Clear()
         settingDgv(dgvTreatingMaster)
 
@@ -64,9 +67,9 @@ Public Class 処置マスタ
         Dim Table As New DataTable
 
         If category1 = "" Then
-            SQLCm.CommandText = "select Bunrui1, Dsp, Bunrui2, Bunrui3 from SyotiM order by Bunrui1, Bunrui2"
+            SQLCm.CommandText = "select Bunrui1, Dsp, Bunrui2, Bunrui3 from SyotiM order by Bunrui1, Dsp, Bunrui2"
         Else
-            SQLCm.CommandText = "select Bunrui1, Dsp, Bunrui2, Bunrui3 from SyotiM where Bunrui1=@category1 order by Bunrui1, Bunrui2"
+            SQLCm.CommandText = "select Bunrui1, Dsp, Bunrui2, Bunrui3 from SyotiM where Bunrui1=@category1 order by Dsp, Bunrui2"
             SQLCm.Parameters.Clear()
             SQLCm.Parameters.Add("@category1", OleDbType.Char).Value = category1
         End If
@@ -79,12 +82,18 @@ Public Class 処置マスタ
 
         settingDgvColumns(dgvTreatingMaster)
 
-        'スクロールの位置設定
-        dgvTreatingMaster.FirstDisplayedScrollingRowIndex = scrollPosition
-
-        '選択行設定
-        dgvTreatingMaster.Rows(selectedRowIndex).Selected = True
-
+        'スクロール位置設定と選択行設定
+        If dbUpdateFlg = True Then
+            '登録 or 削除後の再表示の場合
+            dgvTreatingMaster.FirstDisplayedScrollingRowIndex = scrollPosition
+            dgvTreatingMaster.Rows(selectedRowIndex).Selected = True
+        Else
+            '初期表示 or コンボボックス選択変更時の場合
+            scrollPosition = 0
+            selectedRowIndex = 0
+            dgvTreatingMaster.FirstDisplayedScrollingRowIndex = scrollPosition
+            dgvTreatingMaster.Rows(selectedRowIndex).Selected = True
+        End If
     End Sub
 
     Private Sub settingDgv(dgv As DataGridView)
@@ -143,8 +152,6 @@ Public Class 処置マスタ
     End Sub
 
     Private Sub settingCategory1Box()
-        '
-        isInitCategory1 = False
         'クリア
         cmbCategory1.Items.Clear()
 
@@ -160,8 +167,6 @@ Public Class 処置マスタ
         End While
         reader.Close()
         Cn.Close()
-
-        isInitCategory1 = True
     End Sub
 
     Private Sub settingInputTextBox()
@@ -188,12 +193,109 @@ Public Class 処置マスタ
         category3Box.Text = ""
     End Sub
 
+    Private Function checkDBNullValue(dgvCellValue As Object) As String
+        Return If(IsDBNull(dgvCellValue), "", dgvCellValue)
+    End Function
+
     Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
+        '分類１、２、３の入力テキスト取得
+        Dim category1 As String = cmbCategory1.Text
+        Dim category2 As String = category2Box.Text
+        Dim category3 As String = category3Box.Text
+
+        '入力チェック
+        If category1 = "" Then
+            MsgBox("分類１を入力して下さい。")
+            Return
+        ElseIf dspBox.Text = "" Then
+            MsgBox("表示順を入力して下さい。")
+            Return
+        ElseIf IsNumeric(dspBox.Text) = False Then
+            MsgBox("表示順は数値を入力して下さい。")
+            Return
+        ElseIf category2 = "" Then
+            MsgBox("分類２を入力して下さい。")
+            Return
+        End If
+
+        '表示順に入力された数値の絶対値を取得
+        Dim dsp As Integer = Math.Abs(CInt(dspBox.Text))
+
+        Dim reader As System.Data.OleDb.OleDbDataReader
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+
+        '分類１且つ分類２且つ分類３のデータの存在の有無で、更新か新規登録処理
+        SQLCm.CommandText = "SELECT top 1 * FROM SyotiM where Bunrui1=@category1 and Bunrui2=@category2 and Bunrui3=@category3"
+        SQLCm.Parameters.Clear()
+        SQLCm.Parameters.Add("@category1", OleDbType.Char).Value = category1
+        SQLCm.Parameters.Add("@category2", OleDbType.Char).Value = category2
+        SQLCm.Parameters.Add("@category3", OleDbType.Char).Value = category3
+        Cn.Open()
+        reader = SQLCm.ExecuteReader()
+        If reader.Read() = True Then
+            reader.Close()
+            '更新
+            SQLCm.CommandText = "update SyotiM set Dsp=@dsp where Bunrui1=@category1 and Bunrui2=@category2 and Bunrui3=@category3"
+            SQLCm.Parameters.Clear()
+            SQLCm.Parameters.Add("@dsp", OleDbType.Integer).Value = dsp
+            SQLCm.Parameters.Add("@category1", OleDbType.Char).Value = category1
+            SQLCm.Parameters.Add("@category2", OleDbType.Char).Value = category2
+            SQLCm.Parameters.Add("@category3", OleDbType.Char).Value = category3
+            SQLCm.ExecuteNonQuery()
+            Cn.Close()
+        Else
+            reader.Close()
+            '新規登録
+            SQLCm.CommandText = "insert into SyotiM(Bunrui1, Dsp, Bunrui2, Bunrui3) values (@category1, @dsp, @category2, @category3)"
+            SQLCm.Parameters.Clear()
+            SQLCm.Parameters.Add("@category1", OleDbType.Char).Value = category1
+            SQLCm.Parameters.Add("@dsp", OleDbType.Integer).Value = dsp
+            SQLCm.Parameters.Add("@category2", OleDbType.Char).Value = category2
+            SQLCm.Parameters.Add("@category3", OleDbType.Char).Value = category3
+            SQLCm.ExecuteNonQuery()
+            Cn.Close()
+        End If
+
+        '入力テキストクリア
+        inputClear()
+
+        '
+        settingCategory1Box()
+        cmbCategory1.Text = category1
 
     End Sub
 
     Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
 
+    End Sub
+
+    Private Sub dgvTreatingMaster_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvTreatingMaster.CellMouseClick
+        If e.RowIndex = -1 Then
+            Return
+        End If
+
+        '選択セルから値取得
+        Dim category1 As String = checkDBNullValue(dgvTreatingMaster("Bunrui1", e.RowIndex).Value)
+        Dim dsp As String = checkDBNullValue(dgvTreatingMaster("Dsp", e.RowIndex).Value)
+        Dim category2 As String = checkDBNullValue(dgvTreatingMaster("Bunrui2", e.RowIndex).Value)
+        Dim category3 As String = checkDBNullValue(dgvTreatingMaster("Bunrui3", e.RowIndex).Value)
+
+        '分類１イベント制御をfalseに
+        canChangeCategory1Event = False
+
+        'テキストボックスへセット
+        cmbCategory1.Text = category1
+        dspBox.Text = dsp
+        dspBox.Focus()
+        category2Box.Text = category2
+        category3Box.Text = category3
+
+        '選択行の保持
+        selectedRowIndex = e.RowIndex
+
+        '分類１イベント制御をtrueに
+        canChangeCategory1Event = True
     End Sub
 
     Private Sub dgvTreatingMaster_CellPainting(sender As Object, e As System.Windows.Forms.DataGridViewCellPaintingEventArgs) Handles dgvTreatingMaster.CellPainting
@@ -218,9 +320,31 @@ Public Class 処置マスタ
         End If
     End Sub
 
+    Private Sub dgvTreatingMaster_Scroll(sender As Object, e As System.Windows.Forms.ScrollEventArgs) Handles dgvTreatingMaster.Scroll
+        scrollPosition = dgvTreatingMaster.FirstDisplayedScrollingRowIndex
+    End Sub
+
+    Private Sub cmbCategory1_Click(sender As Object, e As System.EventArgs) Handles cmbCategory1.Click
+        inputClear()
+    End Sub
+
     Private Sub cmbCategory1_SelectedValueChanged(sender As Object, e As System.EventArgs) Handles cmbCategory1.SelectedValueChanged
-        If isInitCategory1 = True Then
-            MsgBox("aa")
+        If canChangeCategory1Event = True Then
+            displayTreatingMasterData(dgvTreatingMaster, cmbCategory1.Text, False)
+        End If
+    End Sub
+
+    Private Sub textBox_Enter(sender As Object, e As System.EventArgs) Handles dspBox.Enter, category2Box.Enter, category3Box.Enter
+        Dim tb As TextBox = CType(sender, TextBox)
+        tb.SelectAll()
+        mdFlag = True
+    End Sub
+
+    Private Sub textBox_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles dspBox.MouseDown, category2Box.MouseDown, category3Box.MouseDown
+        If mdFlag = True Then
+            Dim tb As TextBox = CType(sender, TextBox)
+            tb.SelectAll()
+            mdFlag = False
         End If
     End Sub
 End Class

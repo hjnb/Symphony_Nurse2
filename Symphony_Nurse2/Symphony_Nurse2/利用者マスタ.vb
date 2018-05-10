@@ -217,13 +217,13 @@ Public Class 利用者マスタ
             Return
         End If
 
-        '空ではない場合、介護度の頭のゼロを取る
+        '介護度が空ではない場合、入力数値の絶対値を取得
         If kaigo <> "" Then
-            kaigo = CInt(kaigo).ToString
+            kaigo = Math.Abs(CInt(kaigo)).ToString
         End If
 
-        '空ではない場合、IDの頭のゼロを取る
-        Dim id As Integer = If(idBox.Text <> "", CInt(idBox.Text), -1)
+        'IDが空ではない場合、入力数値の絶対値を取得
+        Dim id As Integer = If(idBox.Text <> "", Math.Abs(CInt(idBox.Text)), -1)
 
         Dim reader As System.Data.OleDb.OleDbDataReader
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
@@ -245,7 +245,7 @@ Public Class 利用者マスタ
         End If
 
         'IDの有無で更新か新規登録
-        SQLCm.CommandText = "SELECT Id FROM KihonM where Id=@id"
+        SQLCm.CommandText = "SELECT top 1 Id FROM KihonM where Id=@id"
         SQLCm.Parameters.Clear()
         SQLCm.Parameters.Add("@id", OleDbType.Integer).Value = id
         Cn.Open()
