@@ -294,13 +294,15 @@ Public Class 利用者マスタ
             Return
         End If
 
-        Dim targetId As Integer = CInt(idBox.Text)
+        Dim targetId As Integer = Math.Abs(CInt(idBox.Text))
 
         '入力されているIDのデータが存在するかチェック
         Dim reader As System.Data.OleDb.OleDbDataReader
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
-        SQLCm.CommandText = "SELECT top 1 * from KihonM where Id=" & targetId
+        SQLCm.CommandText = "SELECT top 1 * from KihonM where Id=@id"
+        SQLCm.Parameters.Clear()
+        SQLCm.Parameters.Add("@id", OleDbType.Integer).Value = targetId
         Cn.Open()
         reader = SQLCm.ExecuteReader()
         If reader.Read() = False Then
@@ -314,7 +316,9 @@ Public Class 利用者マスタ
             reader.Close()
             Dim result As DialogResult = MessageBox.Show("削除してよろしいですか？", "Nurse2", MessageBoxButtons.YesNo)
             If result = Windows.Forms.DialogResult.Yes Then
-                SQLCm.CommandText = "delete from KihonM where Id=" & targetId
+                SQLCm.CommandText = "delete from KihonM where Id=@id"
+                SQLCm.Parameters.Clear()
+                SQLCm.Parameters.Add("@id", OleDbType.Integer).Value = targetId
                 SQLCm.ExecuteNonQuery()
                 inputClear()
                 Cn.Close()

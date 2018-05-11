@@ -2,12 +2,6 @@
 
 Public Class 処置マスタ
 
-    'スクロール位置保持用
-    Private scrollPosition As Integer = 0
-
-    '選択行位置保持用
-    Private selectedRowIndex As Integer = 0
-
     '分類１のテキスト変更時のイベント発生制御フラグ
     Private canChangeCategory1Event As Boolean = True
 
@@ -45,7 +39,7 @@ Public Class 処置マスタ
         settingInputTextBox()
 
         'dgvにデータ表示
-        displayTreatingMasterData(dgvTreatingMaster, cmbCategory1.Text, False)
+        displayTreatingMasterData(dgvTreatingMaster, cmbCategory1.Text)
 
     End Sub
 
@@ -57,8 +51,9 @@ Public Class 処置マスタ
         End If
     End Sub
 
-    Private Sub displayTreatingMasterData(dgv As DataGridView, category1 As String, dbUpdateFlg As Boolean)
+    Private Sub displayTreatingMasterData(dgv As DataGridView, category1 As String)
         dgv.Columns.Clear()
+        'dgv表示前設定
         settingDgv(dgvTreatingMaster)
 
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
@@ -67,9 +62,9 @@ Public Class 処置マスタ
         Dim Table As New DataTable
 
         If category1 = "" Then
-            SQLCm.CommandText = "select Bunrui1, Dsp, Bunrui2, Bunrui3 from SyotiM order by Bunrui1, Dsp, Bunrui2"
+            SQLCm.CommandText = "select Bunrui1, Dsp, Bunrui2, Bunrui3 from SyotiM order by Bunrui1, Dsp, Bunrui2, Bunrui3"
         Else
-            SQLCm.CommandText = "select Bunrui1, Dsp, Bunrui2, Bunrui3 from SyotiM where Bunrui1=@category1 order by Dsp, Bunrui2"
+            SQLCm.CommandText = "select Bunrui1, Dsp, Bunrui2, Bunrui3 from SyotiM where Bunrui1=@category1 order by Dsp, Bunrui2, Bunrui3"
             SQLCm.Parameters.Clear()
             SQLCm.Parameters.Add("@category1", OleDbType.Char).Value = category1
         End If
@@ -80,20 +75,9 @@ Public Class 処置マスタ
         Cn.Close()
         Cn.Dispose()
 
+        'dgv表示後設定
         settingDgvColumns(dgvTreatingMaster)
 
-        'スクロール位置設定と選択行設定
-        If dbUpdateFlg = True Then
-            '登録 or 削除後の再表示の場合
-            dgvTreatingMaster.FirstDisplayedScrollingRowIndex = scrollPosition
-            dgvTreatingMaster.Rows(selectedRowIndex).Selected = True
-        Else
-            '初期表示 or コンボボックス選択変更時の場合
-            scrollPosition = 0
-            selectedRowIndex = 0
-            dgvTreatingMaster.FirstDisplayedScrollingRowIndex = scrollPosition
-            dgvTreatingMaster.Rows(selectedRowIndex).Selected = True
-        End If
     End Sub
 
     Private Sub settingDgv(dgv As DataGridView)
@@ -197,6 +181,17 @@ Public Class 処置マスタ
         Return If(IsDBNull(dgvCellValue), "", dgvCellValue)
     End Function
 
+    Private Sub searchDgvRow(category1 As String, category2 As String, category3 As String)
+        For Each row As DataGridViewRow In dgvTreatingMaster.Rows
+            If row.Cells("Bunrui1").Value = category1 AndAlso row.Cells("Bunrui2").Value = category2 AndAlso row.Cells("Bunrui3").Value = category3 Then
+                '対象の行の選択、スクロールさせる
+                row.Selected = True
+                dgvTreatingMaster.FirstDisplayedScrollingRowIndex = row.Index
+                Exit For
+            End If
+        Next
+    End Sub
+
     Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
         '分類１、２、３の入力テキスト取得
         Dim category1 As String = cmbCategory1.Text
@@ -205,16 +200,16 @@ Public Class 処置マスタ
 
         '入力チェック
         If category1 = "" Then
-            MsgBox("分類１を入力して下さい。")
+            MsgBox("分類１を入力して下さい。", , "登録エラー")
             Return
         ElseIf dspBox.Text = "" Then
-            MsgBox("表示順を入力して下さい。")
+            MsgBox("表示順を入力して下さい。", , "登録エラー")
             Return
         ElseIf IsNumeric(dspBox.Text) = False Then
-            MsgBox("表示順は数値を入力して下さい。")
+            MsgBox("表示順は数値を入力して下さい。", , "登録エラー")
             Return
         ElseIf category2 = "" Then
-            MsgBox("分類２を入力して下さい。")
+            MsgBox("分類２を入力して下さい。", , "登録エラー")
             Return
         End If
 
@@ -260,14 +255,71 @@ Public Class 処置マスタ
         '入力テキストクリア
         inputClear()
 
-        '
+        'コンボボックスの値再取得、設定(コンボボックス変更イベントでdgv再表示される)
         settingCategory1Box()
         cmbCategory1.Text = category1
+
+        '追加or更新した行を選択、スクロール
+        searchDgvRow(category1, category2, category3)
 
     End Sub
 
     Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
+        Dim category1 As String = cmbCategory1.Text '分類１
+        Dim category2 As String = category2Box.Text '分類２
+        Dim category3 As String = category3Box.Text '分類３
 
+        '入力チェック
+        If category1 = "" Then
+            MsgBox("分類１がありません。", , "削除エラー")
+            Return
+        ElseIf category2 = "" Then
+            MsgBox("分類２がありません。", , "削除エラー")
+            Return
+        End If
+
+        '入力されているデータが存在するかチェック
+        Dim reader As System.Data.OleDb.OleDbDataReader
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        SQLCm.CommandText = "SELECT top 1 * from SyotiM where Bunrui1=@category1 and Bunrui2=@category2 and Bunrui3=@category3"
+        SQLCm.Parameters.Clear()
+        SQLCm.Parameters.Add("@category1", OleDbType.Char).Value = category1
+        SQLCm.Parameters.Add("@category2", OleDbType.Char).Value = category2
+        SQLCm.Parameters.Add("@category3", OleDbType.Char).Value = category3
+        Cn.Open()
+        reader = SQLCm.ExecuteReader()
+        If reader.Read() = False Then
+            reader.Close()
+            MsgBox("登録されていません。", , "削除エラー")
+            Cn.Close()
+            Cn.Dispose()
+            Return
+        Else
+            '削除処理
+            reader.Close()
+            Dim result As DialogResult = MessageBox.Show("削除してよろしいですか？", "Nurse2", MessageBoxButtons.YesNo)
+            If result = Windows.Forms.DialogResult.Yes Then
+                SQLCm.CommandText = "delete from SyotiM where Bunrui1=@category1 and Bunrui2=@category2 and Bunrui3=@category3"
+                SQLCm.Parameters.Clear()
+                SQLCm.Parameters.Add("@category1", OleDbType.Char).Value = category1
+                SQLCm.Parameters.Add("@category2", OleDbType.Char).Value = category2
+                SQLCm.Parameters.Add("@category3", OleDbType.Char).Value = category3
+                SQLCm.ExecuteNonQuery()
+                Cn.Close()
+
+                '入力テキストクリア
+                inputClear()
+
+                'コンボボックスの値再取得、設定(コンボボックス変更イベントでdgv再表示される)
+                settingCategory1Box()
+                If cmbCategory1.FindString(category1) = -1 Then
+                    displayTreatingMasterData(dgvTreatingMaster, "")
+                Else
+                    cmbCategory1.Text = category1
+                End If
+            End If
+        End If
     End Sub
 
     Private Sub dgvTreatingMaster_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvTreatingMaster.CellMouseClick
@@ -290,9 +342,6 @@ Public Class 処置マスタ
         dspBox.Focus()
         category2Box.Text = category2
         category3Box.Text = category3
-
-        '選択行の保持
-        selectedRowIndex = e.RowIndex
 
         '分類１イベント制御をtrueに
         canChangeCategory1Event = True
@@ -320,17 +369,13 @@ Public Class 処置マスタ
         End If
     End Sub
 
-    Private Sub dgvTreatingMaster_Scroll(sender As Object, e As System.Windows.Forms.ScrollEventArgs) Handles dgvTreatingMaster.Scroll
-        scrollPosition = dgvTreatingMaster.FirstDisplayedScrollingRowIndex
-    End Sub
-
     Private Sub cmbCategory1_Click(sender As Object, e As System.EventArgs) Handles cmbCategory1.Click
         inputClear()
     End Sub
 
     Private Sub cmbCategory1_SelectedValueChanged(sender As Object, e As System.EventArgs) Handles cmbCategory1.SelectedValueChanged
         If canChangeCategory1Event = True Then
-            displayTreatingMasterData(dgvTreatingMaster, cmbCategory1.Text, False)
+            displayTreatingMasterData(dgvTreatingMaster, cmbCategory1.Text)
         End If
     End Sub
 
