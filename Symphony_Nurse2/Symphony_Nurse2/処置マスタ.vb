@@ -8,6 +8,10 @@ Public Class 処置マスタ
     'テキストボックスのマウスダウンイベント制御用
     Private mdFlag As Boolean = False
 
+    'dgvの幅サイズ
+    Private Const DGV_WIDTH_MAX As Integer = 469
+    Private Const DGV_WIDTH_MIN As Integer = 452
+
     '行ヘッダーのカレントセルを表す三角マークを非表示に設定する為のクラス。
     Public Class dgvRowHeaderCell
 
@@ -131,6 +135,12 @@ Public Class 処置マスタ
                 .HeaderText = "分類３"
                 .Width = 55
             End With
+
+            If .Rows.Count <= 20 Then
+                .Size = New Size(DGV_WIDTH_MIN, .Size.Height)
+            Else
+                .Size = New Size(DGV_WIDTH_MAX, .Size.Height)
+            End If
 
         End With
     End Sub
