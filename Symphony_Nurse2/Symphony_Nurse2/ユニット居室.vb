@@ -8,16 +8,14 @@ Public Class ユニット居室
     '選択している名前（カナ）保持用
     Private selectedKana As String = ""
 
+    '選択しているID保持用
+    Private selectedID As String = ""
+
     '
     Private unitDt As DataTable
 
     '
     Private unitAdapter As OleDbDataAdapter
-
-    Private Class UnitData
-        Private id As String
-
-    End Class
 
 
     '行ヘッダーのカレントセルを表す三角マークを非表示に設定する為のクラス。
@@ -75,21 +73,36 @@ Public Class ユニット居室
         '表示前設定
         settingDgvUnit()
 
-        '
         'データ取得、表示
-
-
-
         Dim reader As System.Data.OleDb.OleDbDataReader
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
         unitAdapter = New OleDbDataAdapter(SQLCm)
         unitDt = New DataTable()
-        SQLCm.CommandText = "select * from Unit where order by Gyo"
+        SQLCm.CommandText = "select * from Unit order by Gyo"
+        Cn.Open()
+        reader = SQLCm.ExecuteReader()
+        While reader.Read() = True
+
+        End While
+        reader.Close()
+        Cn.Close()
+        unitAdapter.Fill(unitDt)
+        addRoomNumColumn(unitDt)
+
+
+        dgvUnit.DataSource = unitDt
 
 
         '表示後設定
         settingDgvUnitColumns()
+    End Sub
+
+    Private Sub addRoomNumColumn(dt As DataTable)
+        Dim roomNumColumn As DataColumn = New DataColumn()
+        roomNumColumn.ColumnName = "RoomNum"
+        roomNumColumn.DataType = System.Type.GetType("System.Int32")
+        dt.Columns.Add(roomNumColumn)
     End Sub
 
     Private Sub settingDgvUser()
@@ -148,10 +161,28 @@ Public Class ユニット居室
     Private Sub settingDgvUnit()
         'DoubleBufferedプロパティをTrue
         TopForm.EnableDoubleBuffering(dgvUnit)
+
+        'dgv設定
+        With dgvUnit
+            .AllowUserToAddRows = False '行追加禁止
+            .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
+            .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
+            .AllowUserToDeleteRows = False
+            .MultiSelect = False
+            .RowHeadersVisible = False
+            .ColumnHeadersVisible = False
+            .RowTemplate.Height = 15
+            .BackgroundColor = Color.FromKnownColor(KnownColor.Control)
+            .ShowCellToolTips = False
+        End With
     End Sub
 
     Private Sub settingDgvUnitColumns()
-
+        With dgvUnit
+            With .Columns("RoomNum")
+                .DisplayIndex = 0
+            End With
+        End With
     End Sub
 
     Private Function checkDBNullValue(dgvCellValue As Object) As String
