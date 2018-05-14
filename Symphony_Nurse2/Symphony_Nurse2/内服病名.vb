@@ -4,7 +4,18 @@ Imports Microsoft.Office.Interop
 Imports Microsoft.Office.Core
 Public Class 内服病名
 
+    Private Sub 内服病名_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            Dim forward As Boolean = e.Modifiers <> Keys.Shift
+            Me.SelectNextControl(Me.ActiveControl, forward, True, True, True)
+            e.Handled = True
+        End If
+    End Sub
+
     Private Sub 内服病名_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        Me.StartPosition = FormStartPosition.Manual
+        Me.DesktopLocation = New Point(0, 50)
+
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
         Dim Adapter As New OleDbDataAdapter(SQLCm)
@@ -144,6 +155,7 @@ line1:
 
         lblID.Text = ""
 
+        KeyPreview = True
     End Sub
 
     Private Sub DataGridView1_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles DataGridView1.CellMouseClick
@@ -267,9 +279,9 @@ line1:
                 Next
                 YmdBox1.setADStr(DataGridView4(11, 0).Value)
             End If
-            
+
         End If
-        
+
 
     End Sub
 
@@ -296,7 +308,7 @@ line1:
             Return
         End If
 
-        If DataGridView1.Rows.Count <> 0 Then
+        If DataGridView4.Rows.Count <> 0 Then
             'データがあったら変更
             Hennkou()
             btnKousinn.PerformClick()
@@ -368,8 +380,6 @@ line1:
             SQLCm.ExecuteNonQuery()
         Next
 
-
-
         Cn.Close()
         SQLCm.Dispose()
         Cn.Dispose()
@@ -380,6 +390,62 @@ line1:
     End Sub
 
     Private Sub btnKousinn_Click(sender As System.Object, e As System.EventArgs) Handles btnKousinn.Click
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        Dim Adapter As New OleDbDataAdapter(SQLCm)
+        Dim Table As New DataTable
+        SQLCm.CommandText = "select * from BSht WHERE Id = " & lblID.Text & " order by Gyo"
+        Adapter.Fill(Table)
+        DataGridView4.DataSource = Table
+    End Sub
+
+    Private Sub rbnSubete_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnSubete.CheckedChanged
 
     End Sub
+
+    Private Sub rbnKigou_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnKigou.CheckedChanged
+
+    End Sub
+
+    Private Sub rbnA_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnA.CheckedChanged
+
+    End Sub
+
+    Private Sub rbnK_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnK.CheckedChanged
+
+    End Sub
+
+    Private Sub rbnS_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnS.CheckedChanged
+
+    End Sub
+
+    Private Sub rbnT_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnT.CheckedChanged
+
+    End Sub
+
+    Private Sub rbnN_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnN.CheckedChanged
+
+    End Sub
+
+    Private Sub rbnH_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnH.CheckedChanged
+
+    End Sub
+
+    Private Sub rbnM_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnM.CheckedChanged
+
+    End Sub
+
+    Private Sub rbnY_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnY.CheckedChanged
+
+    End Sub
+
+    Private Sub rbnR_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnR.CheckedChanged
+
+    End Sub
+
+    Private Sub rbnW_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnW.CheckedChanged
+
+    End Sub
+
+
 End Class

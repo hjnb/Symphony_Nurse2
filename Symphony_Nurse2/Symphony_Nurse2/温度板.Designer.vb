@@ -379,26 +379,26 @@ Partial Class 温度板
         'DataGridView2
         '
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.Location = New System.Drawing.Point(869, 34)
+        Me.DataGridView2.Location = New System.Drawing.Point(672, 104)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowTemplate.Height = 21
-        Me.DataGridView2.Size = New System.Drawing.Size(351, 285)
+        Me.DataGridView2.Size = New System.Drawing.Size(10, 10)
         Me.DataGridView2.TabIndex = 88
         '
         'btnKousinn
         '
-        Me.btnKousinn.Location = New System.Drawing.Point(920, 346)
+        Me.btnKousinn.Location = New System.Drawing.Point(656, 88)
         Me.btnKousinn.Name = "btnKousinn"
-        Me.btnKousinn.Size = New System.Drawing.Size(63, 43)
+        Me.btnKousinn.Size = New System.Drawing.Size(10, 10)
         Me.btnKousinn.TabIndex = 89
         Me.btnKousinn.Text = "更新"
         Me.btnKousinn.UseVisualStyleBackColor = True
         '
         'btnKuria
         '
-        Me.btnKuria.Location = New System.Drawing.Point(907, 414)
+        Me.btnKuria.Location = New System.Drawing.Point(672, 88)
         Me.btnKuria.Name = "btnKuria"
-        Me.btnKuria.Size = New System.Drawing.Size(103, 31)
+        Me.btnKuria.Size = New System.Drawing.Size(10, 10)
         Me.btnKuria.TabIndex = 90
         Me.btnKuria.Text = "クリア"
         Me.btnKuria.UseVisualStyleBackColor = True
@@ -406,17 +406,18 @@ Partial Class 温度板
         'DataGridView3
         '
         Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView3.Location = New System.Drawing.Point(1095, 415)
+        Me.DataGridView3.Location = New System.Drawing.Point(656, 104)
         Me.DataGridView3.Name = "DataGridView3"
         Me.DataGridView3.RowTemplate.Height = 21
-        Me.DataGridView3.Size = New System.Drawing.Size(167, 214)
+        Me.DataGridView3.Size = New System.Drawing.Size(10, 10)
         Me.DataGridView3.TabIndex = 91
         '
         '温度板
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1396, 699)
+        Me.ClientSize = New System.Drawing.Size(850, 699)
+        Me.Controls.Add(Me.btnTouroku)
         Me.Controls.Add(Me.DataGridView3)
         Me.Controls.Add(Me.btnKuria)
         Me.Controls.Add(Me.btnKousinn)
@@ -428,7 +429,6 @@ Partial Class 温度板
         Me.Controls.Add(Me.btnDayUe)
         Me.Controls.Add(Me.btnInnsatu)
         Me.Controls.Add(Me.btnSakujo)
-        Me.Controls.Add(Me.btnTouroku)
         Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.txtSyoti2)
         Me.Controls.Add(Me.txtSyoti1)

@@ -748,7 +748,7 @@ Partial Class 内服病名
         'rbnSubete
         '
         Me.rbnSubete.AutoSize = True
-        Me.rbnSubete.Location = New System.Drawing.Point(640, 460)
+        Me.rbnSubete.Location = New System.Drawing.Point(640, 447)
         Me.rbnSubete.Name = "rbnSubete"
         Me.rbnSubete.Size = New System.Drawing.Size(44, 16)
         Me.rbnSubete.TabIndex = 83
@@ -759,7 +759,7 @@ Partial Class 内服病名
         'rbnA
         '
         Me.rbnA.AutoSize = True
-        Me.rbnA.Location = New System.Drawing.Point(685, 460)
+        Me.rbnA.Location = New System.Drawing.Point(685, 447)
         Me.rbnA.Name = "rbnA"
         Me.rbnA.Size = New System.Drawing.Size(32, 16)
         Me.rbnA.TabIndex = 84
@@ -770,7 +770,7 @@ Partial Class 内服病名
         'rbnK
         '
         Me.rbnK.AutoSize = True
-        Me.rbnK.Location = New System.Drawing.Point(718, 460)
+        Me.rbnK.Location = New System.Drawing.Point(718, 447)
         Me.rbnK.Name = "rbnK"
         Me.rbnK.Size = New System.Drawing.Size(32, 16)
         Me.rbnK.TabIndex = 85
@@ -781,7 +781,7 @@ Partial Class 内服病名
         'rbnS
         '
         Me.rbnS.AutoSize = True
-        Me.rbnS.Location = New System.Drawing.Point(752, 460)
+        Me.rbnS.Location = New System.Drawing.Point(752, 447)
         Me.rbnS.Name = "rbnS"
         Me.rbnS.Size = New System.Drawing.Size(33, 16)
         Me.rbnS.TabIndex = 86
@@ -792,7 +792,7 @@ Partial Class 内服病名
         'rbnT
         '
         Me.rbnT.AutoSize = True
-        Me.rbnT.Location = New System.Drawing.Point(786, 460)
+        Me.rbnT.Location = New System.Drawing.Point(786, 447)
         Me.rbnT.Name = "rbnT"
         Me.rbnT.Size = New System.Drawing.Size(31, 16)
         Me.rbnT.TabIndex = 87
@@ -803,7 +803,7 @@ Partial Class 内服病名
         'rbnN
         '
         Me.rbnN.AutoSize = True
-        Me.rbnN.Location = New System.Drawing.Point(819, 460)
+        Me.rbnN.Location = New System.Drawing.Point(819, 447)
         Me.rbnN.Name = "rbnN"
         Me.rbnN.Size = New System.Drawing.Size(33, 16)
         Me.rbnN.TabIndex = 88
@@ -814,7 +814,7 @@ Partial Class 内服病名
         'rbnKigou
         '
         Me.rbnKigou.AutoSize = True
-        Me.rbnKigou.Location = New System.Drawing.Point(640, 478)
+        Me.rbnKigou.Location = New System.Drawing.Point(640, 465)
         Me.rbnKigou.Name = "rbnKigou"
         Me.rbnKigou.Size = New System.Drawing.Size(47, 16)
         Me.rbnKigou.TabIndex = 89
@@ -825,7 +825,7 @@ Partial Class 内服病名
         'rbnH
         '
         Me.rbnH.AutoSize = True
-        Me.rbnH.Location = New System.Drawing.Point(684, 478)
+        Me.rbnH.Location = New System.Drawing.Point(684, 465)
         Me.rbnH.Name = "rbnH"
         Me.rbnH.Size = New System.Drawing.Size(33, 16)
         Me.rbnH.TabIndex = 90
@@ -836,7 +836,7 @@ Partial Class 内服病名
         'rbnM
         '
         Me.rbnM.AutoSize = True
-        Me.rbnM.Location = New System.Drawing.Point(718, 478)
+        Me.rbnM.Location = New System.Drawing.Point(718, 465)
         Me.rbnM.Name = "rbnM"
         Me.rbnM.Size = New System.Drawing.Size(32, 16)
         Me.rbnM.TabIndex = 91
@@ -847,7 +847,7 @@ Partial Class 内服病名
         'rbnY
         '
         Me.rbnY.AutoSize = True
-        Me.rbnY.Location = New System.Drawing.Point(752, 478)
+        Me.rbnY.Location = New System.Drawing.Point(752, 465)
         Me.rbnY.Name = "rbnY"
         Me.rbnY.Size = New System.Drawing.Size(33, 16)
         Me.rbnY.TabIndex = 92
@@ -858,7 +858,7 @@ Partial Class 内服病名
         'rbnR
         '
         Me.rbnR.AutoSize = True
-        Me.rbnR.Location = New System.Drawing.Point(786, 478)
+        Me.rbnR.Location = New System.Drawing.Point(786, 465)
         Me.rbnR.Name = "rbnR"
         Me.rbnR.Size = New System.Drawing.Size(31, 16)
         Me.rbnR.TabIndex = 93
@@ -869,7 +869,7 @@ Partial Class 内服病名
         'rbnW
         '
         Me.rbnW.AutoSize = True
-        Me.rbnW.Location = New System.Drawing.Point(819, 478)
+        Me.rbnW.Location = New System.Drawing.Point(819, 465)
         Me.rbnW.Name = "rbnW"
         Me.rbnW.Size = New System.Drawing.Size(32, 16)
         Me.rbnW.TabIndex = 94
@@ -880,10 +880,10 @@ Partial Class 内服病名
         'DataGridView2
         '
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.Location = New System.Drawing.Point(627, 511)
+        Me.DataGridView2.Location = New System.Drawing.Point(629, 500)
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowTemplate.Height = 21
-        Me.DataGridView2.Size = New System.Drawing.Size(251, 111)
+        Me.DataGridView2.Size = New System.Drawing.Size(251, 122)
         Me.DataGridView2.TabIndex = 95
         '
         'btnTouroku
@@ -907,9 +907,9 @@ Partial Class 内服病名
         'DataGridView3
         '
         Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView3.Location = New System.Drawing.Point(546, 12)
+        Me.DataGridView3.Location = New System.Drawing.Point(759, 80)
         Me.DataGridView3.Name = "DataGridView3"
-        Me.DataGridView3.Size = New System.Drawing.Size(94, 76)
+        Me.DataGridView3.Size = New System.Drawing.Size(10, 10)
         Me.DataGridView3.TabIndex = 98
         '
         'DataGridView4
@@ -917,9 +917,9 @@ Partial Class 内服病名
         Me.DataGridView4.AllowUserToAddRows = False
         Me.DataGridView4.AllowUserToDeleteRows = False
         Me.DataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView4.Location = New System.Drawing.Point(946, 64)
+        Me.DataGridView4.Location = New System.Drawing.Point(775, 80)
         Me.DataGridView4.Name = "DataGridView4"
-        Me.DataGridView4.Size = New System.Drawing.Size(487, 471)
+        Me.DataGridView4.Size = New System.Drawing.Size(10, 10)
         Me.DataGridView4.TabIndex = 99
         '
         'Label1
@@ -933,18 +933,18 @@ Partial Class 内服病名
         '
         'btnKuria
         '
-        Me.btnKuria.Location = New System.Drawing.Point(729, 14)
+        Me.btnKuria.Location = New System.Drawing.Point(759, 64)
         Me.btnKuria.Name = "btnKuria"
-        Me.btnKuria.Size = New System.Drawing.Size(79, 34)
+        Me.btnKuria.Size = New System.Drawing.Size(10, 10)
         Me.btnKuria.TabIndex = 101
         Me.btnKuria.Text = "クリア"
         Me.btnKuria.UseVisualStyleBackColor = True
         '
         'btnKousinn
         '
-        Me.btnKousinn.Location = New System.Drawing.Point(849, 28)
+        Me.btnKousinn.Location = New System.Drawing.Point(775, 64)
         Me.btnKousinn.Name = "btnKousinn"
-        Me.btnKousinn.Size = New System.Drawing.Size(38, 48)
+        Me.btnKousinn.Size = New System.Drawing.Size(10, 10)
         Me.btnKousinn.TabIndex = 102
         Me.btnKousinn.Text = "更新"
         Me.btnKousinn.UseVisualStyleBackColor = True
@@ -953,14 +953,14 @@ Partial Class 内服病名
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1451, 668)
+        Me.ClientSize = New System.Drawing.Size(917, 643)
+        Me.Controls.Add(Me.btnTouroku)
         Me.Controls.Add(Me.btnKousinn)
         Me.Controls.Add(Me.btnKuria)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.DataGridView4)
         Me.Controls.Add(Me.DataGridView3)
         Me.Controls.Add(Me.btnInnsatu)
-        Me.Controls.Add(Me.btnTouroku)
         Me.Controls.Add(Me.DataGridView2)
         Me.Controls.Add(Me.rbnW)
         Me.Controls.Add(Me.rbnR)

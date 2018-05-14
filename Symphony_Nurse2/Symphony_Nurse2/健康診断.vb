@@ -4,9 +4,17 @@ Imports Microsoft.Office.Interop
 Imports Microsoft.Office.Core
 Public Class 健康診断
 
+    Private Sub 健康診断_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            Dim forward As Boolean = e.Modifiers <> Keys.Shift
+            Me.SelectNextControl(Me.ActiveControl, forward, True, True, True)
+            e.Handled = True
+        End If
+    End Sub
+
     Private Sub 健康診断_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Me.StartPosition = FormStartPosition.Manual
-        Me.DesktopLocation = New Point(180, 50)
+        Me.DesktopLocation = New Point(0, 50)
 
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
@@ -145,25 +153,467 @@ line1:
             .Rows(99).Cells(1).Style.Alignment = DataGridViewContentAlignment.MiddleRight
         End With
 
+        lblID.Text = ""
+
+        KeyPreview = True
     End Sub
 
     Private Sub DataGridView1_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles DataGridView1.CellMouseClick
+        btnKuria.PerformClick()
+        DataGridView4.Columns.Clear()
 
-        Dim r As Integer = DataGridView1.CurrentRow.Index
-        lblName.Text = DataGridView1(1, r).Value
-        For i As Integer = 0 To DataGridView3.RowCount - 1
-
-        Next
+        Dim s As Integer = DataGridView1.CurrentRow.Index
+        lblName.Text = DataGridView1(1, s).Value
+        If DataGridView1(0, s).Value <> "" Then         '部屋番号がある行を選択したとき
+            If s < 11 Then
+                lblHeya.Text = "空　" & DataGridView1(0, s).Value
+                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                    If lblName.Text = DataGridView3(2, i).Value Then
+                        lblID.Text = DataGridView3(1, i).Value
+                        lblHurigana.Text = DataGridView3(3, i).Value
+                        Exit For
+                    End If
+                Next
+            ElseIf s < 22 Then
+                lblHeya.Text = "森　" & DataGridView1(0, s).Value
+                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                    If lblName.Text = DataGridView3(5, i).Value Then
+                        lblID.Text = DataGridView3(4, i).Value
+                        lblHurigana.Text = DataGridView3(6, i).Value
+                        Exit For
+                    End If
+                Next
+            ElseIf s < 33 Then
+                lblHeya.Text = "星　" & DataGridView1(0, s).Value
+                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                    If lblName.Text = DataGridView3(8, i).Value Then
+                        lblID.Text = DataGridView3(7, i).Value
+                        lblHurigana.Text = DataGridView3(9, i).Value
+                        Exit For
+                    End If
+                Next
+            ElseIf s < 44 Then
+                lblHeya.Text = "月　" & DataGridView1(0, s).Value
+                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                    If lblName.Text = DataGridView3(11, i).Value Then
+                        lblID.Text = DataGridView3(10, i).Value
+                        lblHurigana.Text = DataGridView3(12, i).Value
+                        Exit For
+                    End If
+                Next
+            ElseIf s < 55 Then
+                lblHeya.Text = "花　" & DataGridView1(0, s).Value
+                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                    If lblName.Text = DataGridView3(14, i).Value Then
+                        lblID.Text = DataGridView3(13, i).Value
+                        lblHurigana.Text = DataGridView3(15, i).Value
+                        Exit For
+                    End If
+                Next
+            ElseIf s < 66 Then
+                lblHeya.Text = "丘　" & DataGridView1(0, s).Value
+                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                    If lblName.Text = DataGridView3(17, i).Value Then
+                        lblID.Text = DataGridView3(16, i).Value
+                        lblHurigana.Text = DataGridView3(18, i).Value
+                        Exit For
+                    End If
+                Next
+            ElseIf s < 77 Then
+                lblHeya.Text = "虹　" & DataGridView1(0, s).Value
+                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                    If lblName.Text = DataGridView3(20, i).Value Then
+                        lblID.Text = DataGridView3(19, i).Value
+                        lblHurigana.Text = DataGridView3(21, i).Value
+                        Exit For
+                    End If
+                Next
+            ElseIf s < 88 Then
+                lblHeya.Text = "光　" & DataGridView1(0, s).Value
+                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                    If lblName.Text = DataGridView3(23, i).Value Then
+                        lblID.Text = DataGridView3(22, i).Value
+                        lblHurigana.Text = DataGridView3(24, i).Value
+                        Exit For
+                    End If
+                Next
+            ElseIf s < 99 Then
+                lblHeya.Text = "雪　" & DataGridView1(0, s).Value
+                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                    If lblName.Text = DataGridView3(26, i).Value Then
+                        lblID.Text = DataGridView3(25, i).Value
+                        lblHurigana.Text = DataGridView3(27, i).Value
+                        Exit For
+                    End If
+                Next
+            ElseIf s < 110 Then
+                lblHeya.Text = "風　" & DataGridView1(0, s).Value
+                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                    If lblName.Text = DataGridView3(29, i).Value Then
+                        lblID.Text = DataGridView3(28, i).Value
+                        lblHurigana.Text = DataGridView3(30, i).Value
+                        Exit For
+                    End If
+                Next
+            End If
+        Else         '部屋番号がない行を選択したとき
+            lblHeya.Text = ""
+            lblID.Text = ""
+            lblName.Text = ""
+            lblHurigana.Text = ""
+            '何もしない
+        End If
 
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
         Dim Adapter As New OleDbDataAdapter(SQLCm)
+        If lblID.Text <> "" Then
+            Dim Table As New DataTable
+            SQLCm.CommandText = "select * from Kensin WHERE Id = " & lblID.Text & " order by Gyo"
+            Adapter.Fill(Table)
+            DataGridView4.DataSource = Table
+
+            'データがあったら表示
+            If DataGridView4.Rows.Count > 14 Then
+                For Gyo As Integer = 1 To 15
+                    Controls("cmbSaiketu" & Gyo).Text = DataGridView4(7, Gyo - 1).Value
+                    If Gyo < 7 Then
+                        If IsDBNull(DataGridView4(8, Gyo - 1).Value) = False Then
+                            Controls("cmbKennsa" & Gyo).Text = DataGridView4(8, Gyo - 1).Value
+                        End If
+                    End If
+                    If Gyo < 5 Then
+                        If IsDBNull(DataGridView4(9, Gyo - 1).Value) = False Then
+                            Controls("txtTokki" & Gyo).Text = DataGridView4(9, Gyo - 1).Value
+                        End If
+                    End If
+                Next
+                cmbKikann.Text = DataGridView4(6, 0).Value
+                YmdBox1.setADStr(DataGridView4(10, 0).Value)
+            End If
+        End If
+
+        With DataGridView2
+            .RowTemplate.Height = 16
+            .AllowUserToAddRows = False '行追加禁止
+            .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
+            .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
+            .AllowUserToDeleteRows = False
+            '.RowHeadersVisible = False '行ヘッダー削除
+            .ColumnHeadersVisible = False '列ヘッダー削除
+            .ReadOnly = True '編集禁止
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect 'クリック時に行選択
+            .MultiSelect = False
+            .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
+            .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+        End With
+
+        Dim SQLCm2 As OleDbCommand = Cn.CreateCommand
+        Dim Adapter2 As New OleDbDataAdapter(SQLCm2)
+        Dim Table2 As New DataTable
+        SQLCm2.CommandText = "select * from Kenkou order by Kou"
+        Adapter2.Fill(Table2)
+        DataGridView2.DataSource = Table2
+
+        With DataGridView2
+            .RowHeadersWidth = 20
+            .Columns(0).Visible = False
+            .Columns(1).Width = 100
+        End With
+
+        For i As Integer = 1 To 15
+            CType(Controls("cmbSaiketu" & i), ComboBox).Items.Clear()
+        Next
+
+        For i As Integer = 1 To 6
+            CType(Controls("cmbKennsa" & i), ComboBox).Items.Clear()
+        Next
+
+        For i As Integer = 1 To 15
+            For r As Integer = 0 To DataGridView2.Rows.Count - 1
+                If DataGridView2(0, r).Value = 0 Then
+                    CType(Controls("cmbSaiketu" & i), ComboBox).Items.Add(DataGridView2(1, r).Value)
+                End If
+            Next
+        Next
+
+        For i As Integer = 1 To 6
+            For r As Integer = 0 To DataGridView2.Rows.Count - 1
+                If DataGridView2(0, r).Value = 1 Then
+                    CType(Controls("cmbKennsa" & i), ComboBox).Items.Add(DataGridView2(1, r).Value)
+                End If
+            Next
+        Next
+
+
+    End Sub
+
+    Private Sub DataGridView2_CellPainting(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellPaintingEventArgs) Handles DataGridView2.CellPainting
+        '列ヘッダを対象外しておかないと列ヘッダにも番号を表示してしまう
+
+        If e.ColumnIndex < 0 And e.RowIndex >= 0 Then
+
+            'セルを描画する
+
+            e.Paint(e.ClipBounds, DataGridViewPaintParts.All)
+
+            '行番号を描画する範囲を決定する
+
+            Dim idxRect As Rectangle = e.CellBounds
+
+            'e.Padding(値を表示する境界線からの間隔)を考慮して描画位置を決める
+
+            Dim rectHeight As Long = e.CellStyle.Padding.Top
+
+            Dim rectLeft As Long = e.CellStyle.Padding.Left
+
+            idxRect.Inflate(rectLeft, rectHeight)
+
+            '行番号を描画する
+
+            TextRenderer.DrawText(e.Graphics, (e.RowIndex + 1).ToString(), e.CellStyle.Font, idxRect, e.CellStyle.ForeColor, TextFormatFlags.Right Or TextFormatFlags.VerticalCenter)
+
+            '描画完了の通知
+
+            e.Handled = True
+
+        End If
+
+    End Sub
+
+    Private Sub btnKuria_Click(sender As System.Object, e As System.EventArgs) Handles btnKuria.Click
+        cmbKikann.Text = ""
+        For i As Integer = 1 To 15
+            Controls("cmbSaiketu" & i).Text = ""
+        Next
+        For i As Integer = 1 To 6
+            Controls("cmbKennsa" & i).Text = ""
+        Next
+        For i As Integer = 1 To 4
+            Controls("txtTokki" & i).Text = ""
+        Next
+        YmdBox1.clearText()
+    End Sub
+
+    Private Sub btnKousinn_Click(sender As System.Object, e As System.EventArgs) Handles btnKousinn.Click
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        Dim Adapter As New OleDbDataAdapter(SQLCm)
         Dim Table As New DataTable
-
-
-
-        'SQLCm.CommandText = "SELECT Cod, Ymd AS 日付, Kbn, Hm AS 時刻, Gyo, Text AS 訴え・観察・判断・処置, Sign FROM KirN" & page & " WHERE Cod = " & a & " ORDER BY Ymd DeSC, Hm DESC, Gyo ASC"
+        SQLCm.CommandText = "select * from Kensin WHERE Id = " & lblID.Text & " order by Gyo"
         Adapter.Fill(Table)
-        DataGridView1.DataSource = Table
+        DataGridView4.DataSource = Table
+
+        Dim SQLCm2 As OleDbCommand = Cn.CreateCommand
+        Dim Adapter2 As New OleDbDataAdapter(SQLCm2)
+        Dim Table2 As New DataTable
+        SQLCm2.CommandText = "select * from Kenkou order by Kou"
+        Adapter2.Fill(Table2)
+        DataGridView2.DataSource = Table2
+
+        For i As Integer = 1 To 15
+            CType(Controls("cmbSaiketu" & i), ComboBox).Items.Clear()
+        Next
+
+        For i As Integer = 1 To 6
+            CType(Controls("cmbKennsa" & i), ComboBox).Items.Clear()
+        Next
+
+        For i As Integer = 1 To 15
+            For r As Integer = 0 To DataGridView2.Rows.Count - 1
+                If DataGridView2(0, r).Value = 0 Then
+                    CType(Controls("cmbSaiketu" & i), ComboBox).Items.Add(DataGridView2(1, r).Value)
+                End If
+            Next
+        Next
+
+        For i As Integer = 1 To 6
+            For r As Integer = 0 To DataGridView2.Rows.Count - 1
+                If DataGridView2(0, r).Value = 1 Then
+                    CType(Controls("cmbKennsa" & i), ComboBox).Items.Add(DataGridView2(1, r).Value)
+                End If
+            Next
+        Next
+    End Sub
+
+    Private Sub btnTouroku_Click(sender As System.Object, e As System.EventArgs) Handles btnTouroku.Click
+        If YmdBox1.getADStr() = "" Then
+            MsgBox("日付を入力してください。")
+            Return
+        End If
+
+        If DataGridView4.Rows.Count <> 0 Then
+            'データがあったら変更
+            Hennkou()
+            btnKousinn.PerformClick()
+        Else
+            'データがなかったら新規追加
+            Tuika()
+            btnKousinn.PerformClick()
+        End If
+    End Sub
+
+    Private Sub Hennkou()
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        Dim SQL As String = ""
+        SQL = "DELETE FROM Kensin WHERE (Id = " & lblID.Text & ") AND (Ymd ='" & YmdBox1.getADStr() & "')"
+        SQLCm.CommandText = SQL
+        Cn.Open()
+        SQLCm.ExecuteNonQuery()
+        Cn.Close()
+
+        SQLCm.Dispose()
+        Cn.Dispose()
+
+        Tuika()
+    End Sub
+
+    Private Sub Tuika()
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        Dim Table As DataTable = DirectCast(DataGridView4.DataSource, DataTable)
+        Dim Row As DataRow = Table.NewRow
+
+        Cn.Open()
+        For Gyo As Integer = 1 To 15
+            If Gyo < 7 Then
+                Row("Ken") = Controls("CmbKennsa" & Gyo).Text
+            Else
+                Row("Ken") = ""
+            End If
+            If Gyo < 5 Then
+                Row("Tokki") = Controls("txtTokki" & Gyo).Text
+            Else
+                Row("Tokki") = ""
+            End If
+            Row("Id") = lblID.Text
+            Row("Nam") = lblName.Text
+            Row("Kana") = lblHurigana.Text
+            Row("Rm") = Strings.Right(lblHeya.Text, 3)
+            Row("Unt") = Strings.Left(lblHeya.Text, 1)
+            Row("Gyo") = Gyo
+            Row("Kikan") = cmbKikann.Text
+            Row("Sai") = Controls("cmbSaiketu" & Gyo).Text
+            Row("Ymd") = YmdBox1.getADStr()
+            Dim SQL As String = ""
+            SQL = "INSERT INTO Kensin (Id, Nam, Kana, Rm, Unt, Gyo, Kikan, Sai, Ken, Tokki, Ymd) VALUES ("
+            SQL &= Row("Id") & ", "
+            SQL &= "'" & Row("Nam") & "', "
+            SQL &= "'" & Row("Kana") & "', "
+            SQL &= "'" & Row("Rm") & "', "
+            SQL &= "'" & Row("Unt") & "', "
+            SQL &= "'" & Row("Gyo") & "', "
+            SQL &= "'" & Row("Kikan") & "', "
+            SQL &= "'" & Row("Sai") & "', "
+            SQL &= "'" & Row("Ken") & "', "
+            SQL &= "'" & Row("Tokki") & "', "
+            SQL &= "'" & Row("Ymd") & "' "
+            SQL &= ")"
+
+            SQLCm.CommandText = SQL
+            SQLCm.ExecuteNonQuery()
+        Next
+
+        Cn.Close()
+        SQLCm.Dispose()
+        Cn.Dispose()
+
+        'オート保存の部分
+        AutoHozonn()
+    End Sub
+
+    Private Sub AutoHozonn()
+        '採血項目のcmbboxを見る
+        For Saiketu As Integer = 1 To 15
+            If Controls("cmbSaiketu" & Saiketu).Text <> "" Then     'cmbboxが空じゃないとき
+                For i As Integer = 0 To DataGridView2.Rows.Count - 1
+                    If DataGridView2(0, i).Value = 0 AndAlso Controls("cmbSaiketu" & Saiketu).Text = DataGridView2(1, i).Value Then  '項目名が一緒
+                        GoTo line1  '同じものが見つかったら次のcmbboxを見る
+                    End If
+                Next
+                SaiketuKoumokuTuika(Saiketu)
+            Else        'cmbboxが空のとき
+                'なにもしない
+            End If
+line1:
+        Next
+
+        For Kensa As Integer = 1 To 6
+            If Controls("cmbKennsa" & Kensa).Text <> "" Then     'cmbboxが空じゃないとき
+                For i As Integer = 0 To DataGridView2.Rows.Count - 1
+                    If DataGridView2(0, i).Value = 1 AndAlso Controls("cmbKennsa" & Kensa).Text = DataGridView2(1, i).Value Then
+                        GoTo line2  '同じものが見つかったら次のcmbboxを見る
+                    End If
+                Next
+                KennsaTuika(Kensa)
+            Else        'cmbboxが空のとき
+                'なにもしない
+            End If
+line2:
+        Next
+    End Sub
+    Private Sub SaiketuKoumokuTuika(saiketuNo As Integer)
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        Dim Table As DataTable = DirectCast(DataGridView2.DataSource, DataTable)
+        Dim Row As DataRow = Table.NewRow
+
+        Cn.Open()
+
+        Row("Syu") = 0
+        Row("Kou") = Controls("cmbSaiketu" & saiketuNo).Text
+        Dim SQL As String = ""
+        SQL = "INSERT INTO Kenkou (Syu, Kou) VALUES ("
+        SQL &= Row("Syu") & ", "
+        SQL &= "'" & Row("Kou") & "' "
+        SQL &= ")"
+        SQLCm.CommandText = SQL
+        SQLCm.ExecuteNonQuery()
+
+        Cn.Close()
+        SQLCm.Dispose()
+        Cn.Dispose()
+
+    End Sub
+    Private Sub KennsaTuika(kensaNo As Integer)
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        Dim Table As DataTable = DirectCast(DataGridView2.DataSource, DataTable)
+        Dim Row As DataRow = Table.NewRow
+
+        Cn.Open()
+
+        Row("Syu") = 1
+        Row("Kou") = Controls("cmbKennsa" & kensaNo).Text
+        Dim SQL As String = ""
+        SQL = "INSERT INTO Kenkou (Syu, Kou) VALUES ("
+        SQL &= Row("Syu") & ", "
+        SQL &= "'" & Row("Kou") & "' "
+        SQL &= ")"
+        SQLCm.CommandText = SQL
+        SQLCm.ExecuteNonQuery()
+
+        Cn.Close()
+        SQLCm.Dispose()
+        Cn.Dispose()
+    End Sub
+
+    Private Sub btnSakujo_Click(sender As System.Object, e As System.EventArgs) Handles btnSakujo.Click
+        Dim i As Integer = DataGridView2.CurrentRow.Index
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        Dim SQL As String = ""
+        SQL = "DELETE FROM Kenkou WHERE Syu = '" & DataGridView2(0, i).Value & "' AND Kou = '" & DataGridView2(1, i).Value & "'"
+        SQLCm.CommandText = SQL
+        Cn.Open()
+        SQLCm.ExecuteNonQuery()
+        Cn.Close()
+
+        SQLCm.Dispose()
+        Cn.Dispose()
+
+        btnKousinn.PerformClick()
     End Sub
 End Class

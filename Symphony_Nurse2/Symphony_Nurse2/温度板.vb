@@ -90,7 +90,7 @@ Public Class 温度板
 
     Private Sub 温度板_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Me.StartPosition = FormStartPosition.Manual
-        Me.DesktopLocation = New Point(150, 50)
+        Me.DesktopLocation = New Point(0, 50)
 
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
@@ -132,7 +132,7 @@ Public Class 温度板
             .BackgroundColor = Color.FromKnownColor(KnownColor.Control)
         End With
 
-        SQLCm.CommandText = "SELECT autono, Id, Ymd AS 日付, Hm AS 時刻, Tanto As 記載者, Ondo AS 体温, Myaku As 脈, AtuU As 血圧（上）, AtuL As 血圧（下）, Ketu As 血糖値, Weight As 体重, Height As 身長, Syoti As 処置, Val As 補記 FROM OndoD WHERE Id = " & Val(lblID.Text) & " ORDER BY Ymd, Hm"
+        SQLCm.CommandText = "SELECT autono, Id, Ymd AS 日付, Hm AS 時刻, Tanto As 記載者, Ondo AS 体温, Myaku As 脈, AtuU As 血圧（上）, AtuL As 血圧（下）, Ketu As 血糖値, Weight As 体重, Height As 身長, Syoti As 処置, Val As 補記 FROM OndoD WHERE Id = " & 0 & " ORDER BY Ymd, Hm"
         Adapter.Fill(Table)
         DataGridView1.DataSource = Table
 
