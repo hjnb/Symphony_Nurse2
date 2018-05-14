@@ -44,7 +44,7 @@ Partial Class ユニット居室
         Me.dgvUnit.Location = New System.Drawing.Point(272, 21)
         Me.dgvUnit.Name = "dgvUnit"
         Me.dgvUnit.RowTemplate.Height = 21
-        Me.dgvUnit.Size = New System.Drawing.Size(137, 538)
+        Me.dgvUnit.Size = New System.Drawing.Size(135, 513)
         Me.dgvUnit.TabIndex = 1
         '
         'btnRegist
