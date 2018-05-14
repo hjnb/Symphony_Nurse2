@@ -118,18 +118,25 @@ Partial Class 内服病名
         Me.rbnR = New System.Windows.Forms.RadioButton()
         Me.rbnW = New System.Windows.Forms.RadioButton()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btnTouroku = New System.Windows.Forms.Button()
         Me.btnInnsatu = New System.Windows.Forms.Button()
+        Me.DataGridView3 = New System.Windows.Forms.DataGridView()
+        Me.DataGridView4 = New System.Windows.Forms.DataGridView()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.btnKuria = New System.Windows.Forms.Button()
+        Me.btnKousinn = New System.Windows.Forms.Button()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'DataGridView1
         '
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(34, 35)
+        Me.DataGridView1.Location = New System.Drawing.Point(25, 12)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(155, 558)
+        Me.DataGridView1.Size = New System.Drawing.Size(155, 598)
         Me.DataGridView1.TabIndex = 0
         '
         'lblHeya
@@ -146,11 +153,11 @@ Partial Class 内服病名
         '
         Me.lblID.AutoSize = True
         Me.lblID.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.lblID.Location = New System.Drawing.Point(230, 64)
+        Me.lblID.Location = New System.Drawing.Point(254, 64)
         Me.lblID.Name = "lblID"
-        Me.lblID.Size = New System.Drawing.Size(21, 13)
+        Me.lblID.Size = New System.Drawing.Size(14, 13)
         Me.lblID.TabIndex = 2
-        Me.lblID.Text = "ＩＤ"
+        Me.lblID.Text = "-"
         '
         'lblName
         '
@@ -879,14 +886,14 @@ Partial Class 内服病名
         Me.DataGridView2.Size = New System.Drawing.Size(251, 111)
         Me.DataGridView2.TabIndex = 95
         '
-        'Button1
+        'btnTouroku
         '
-        Me.Button1.Location = New System.Drawing.Point(737, 61)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(80, 44)
-        Me.Button1.TabIndex = 96
-        Me.Button1.Text = "登録"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnTouroku.Location = New System.Drawing.Point(737, 61)
+        Me.btnTouroku.Name = "btnTouroku"
+        Me.btnTouroku.Size = New System.Drawing.Size(80, 44)
+        Me.btnTouroku.TabIndex = 96
+        Me.btnTouroku.Text = "登録"
+        Me.btnTouroku.UseVisualStyleBackColor = True
         '
         'btnInnsatu
         '
@@ -897,13 +904,63 @@ Partial Class 内服病名
         Me.btnInnsatu.Text = "印刷"
         Me.btnInnsatu.UseVisualStyleBackColor = True
         '
+        'DataGridView3
+        '
+        Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView3.Location = New System.Drawing.Point(546, 12)
+        Me.DataGridView3.Name = "DataGridView3"
+        Me.DataGridView3.Size = New System.Drawing.Size(94, 76)
+        Me.DataGridView3.TabIndex = 98
+        '
+        'DataGridView4
+        '
+        Me.DataGridView4.AllowUserToAddRows = False
+        Me.DataGridView4.AllowUserToDeleteRows = False
+        Me.DataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView4.Location = New System.Drawing.Point(946, 64)
+        Me.DataGridView4.Name = "DataGridView4"
+        Me.DataGridView4.Size = New System.Drawing.Size(487, 471)
+        Me.DataGridView4.TabIndex = 99
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(230, 65)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(22, 12)
+        Me.Label1.TabIndex = 100
+        Me.Label1.Text = "ID/"
+        '
+        'btnKuria
+        '
+        Me.btnKuria.Location = New System.Drawing.Point(729, 14)
+        Me.btnKuria.Name = "btnKuria"
+        Me.btnKuria.Size = New System.Drawing.Size(79, 34)
+        Me.btnKuria.TabIndex = 101
+        Me.btnKuria.Text = "クリア"
+        Me.btnKuria.UseVisualStyleBackColor = True
+        '
+        'btnKousinn
+        '
+        Me.btnKousinn.Location = New System.Drawing.Point(849, 28)
+        Me.btnKousinn.Name = "btnKousinn"
+        Me.btnKousinn.Size = New System.Drawing.Size(38, 48)
+        Me.btnKousinn.TabIndex = 102
+        Me.btnKousinn.Text = "更新"
+        Me.btnKousinn.UseVisualStyleBackColor = True
+        '
         '内服病名
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(933, 668)
+        Me.ClientSize = New System.Drawing.Size(1451, 668)
+        Me.Controls.Add(Me.btnKousinn)
+        Me.Controls.Add(Me.btnKuria)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.DataGridView4)
+        Me.Controls.Add(Me.DataGridView3)
         Me.Controls.Add(Me.btnInnsatu)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btnTouroku)
         Me.Controls.Add(Me.DataGridView2)
         Me.Controls.Add(Me.rbnW)
         Me.Controls.Add(Me.rbnR)
@@ -1004,6 +1061,8 @@ Partial Class 内服病名
         Me.Text = "内服病名"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1104,6 +1163,11 @@ Partial Class 内服病名
     Friend WithEvents rbnR As System.Windows.Forms.RadioButton
     Friend WithEvents rbnW As System.Windows.Forms.RadioButton
     Friend WithEvents DataGridView2 As System.Windows.Forms.DataGridView
-    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents btnTouroku As System.Windows.Forms.Button
     Friend WithEvents btnInnsatu As System.Windows.Forms.Button
+    Friend WithEvents DataGridView3 As System.Windows.Forms.DataGridView
+    Friend WithEvents DataGridView4 As System.Windows.Forms.DataGridView
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents btnKuria As System.Windows.Forms.Button
+    Friend WithEvents btnKousinn As System.Windows.Forms.Button
 End Class
