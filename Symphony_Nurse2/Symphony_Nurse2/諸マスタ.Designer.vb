@@ -22,102 +22,106 @@ Partial Class 諸マスタ
     'コード エディターを使って変更しないでください。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.cmbItem = New System.Windows.Forms.ComboBox()
+        Me.contentBox = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.btnRegist = New System.Windows.Forms.Button()
+        Me.btnDelete = New System.Windows.Forms.Button()
+        Me.dgvVarious = New System.Windows.Forms.DataGridView()
+        CType(Me.dgvVarious, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'ComboBox1
+        'cmbItem
         '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(124, 30)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(121, 20)
-        Me.ComboBox1.TabIndex = 0
+        Me.cmbItem.FormattingEnabled = True
+        Me.cmbItem.Location = New System.Drawing.Point(83, 12)
+        Me.cmbItem.Name = "cmbItem"
+        Me.cmbItem.Size = New System.Drawing.Size(140, 20)
+        Me.cmbItem.TabIndex = 0
         '
-        'TextBox1
+        'contentBox
         '
-        Me.TextBox1.Location = New System.Drawing.Point(124, 86)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(121, 19)
-        Me.TextBox1.TabIndex = 1
+        Me.contentBox.Location = New System.Drawing.Point(83, 42)
+        Me.contentBox.Name = "contentBox"
+        Me.contentBox.Size = New System.Drawing.Size(140, 19)
+        Me.contentBox.TabIndex = 1
         '
         'Label1
         '
         Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Blue
-        Me.Label1.Location = New System.Drawing.Point(33, 33)
+        Me.Label1.Location = New System.Drawing.Point(19, 14)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(29, 12)
-        Me.Label1.TabIndex = 2
+        Me.Label1.Size = New System.Drawing.Size(33, 13)
+        Me.Label1.TabIndex = 20
         Me.Label1.Text = "項目"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.Blue
-        Me.Label2.Location = New System.Drawing.Point(33, 89)
+        Me.Label2.Location = New System.Drawing.Point(19, 44)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(29, 12)
-        Me.Label2.TabIndex = 3
+        Me.Label2.Size = New System.Drawing.Size(33, 13)
+        Me.Label2.TabIndex = 30
         Me.Label2.Text = "内容"
         '
-        'Button1
+        'btnRegist
         '
-        Me.Button1.Location = New System.Drawing.Point(145, 139)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(48, 23)
-        Me.Button1.TabIndex = 4
-        Me.Button1.Text = "登録"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnRegist.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnRegist.Location = New System.Drawing.Point(101, 73)
+        Me.btnRegist.Name = "btnRegist"
+        Me.btnRegist.Size = New System.Drawing.Size(59, 25)
+        Me.btnRegist.TabIndex = 2
+        Me.btnRegist.Text = "登録"
+        Me.btnRegist.UseVisualStyleBackColor = True
         '
-        'Button2
+        'btnDelete
         '
-        Me.Button2.Location = New System.Drawing.Point(197, 139)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(48, 23)
-        Me.Button2.TabIndex = 5
-        Me.Button2.Text = "削除"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.btnDelete.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.btnDelete.Location = New System.Drawing.Point(166, 73)
+        Me.btnDelete.Name = "btnDelete"
+        Me.btnDelete.Size = New System.Drawing.Size(59, 25)
+        Me.btnDelete.TabIndex = 4
+        Me.btnDelete.Text = "削除"
+        Me.btnDelete.UseVisualStyleBackColor = True
         '
-        'DataGridView1
+        'dgvVarious
         '
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(34, 194)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.RowTemplate.Height = 21
-        Me.DataGridView1.Size = New System.Drawing.Size(211, 279)
-        Me.DataGridView1.TabIndex = 6
+        Me.dgvVarious.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvVarious.Location = New System.Drawing.Point(24, 110)
+        Me.dgvVarious.Name = "dgvVarious"
+        Me.dgvVarious.RowTemplate.Height = 21
+        Me.dgvVarious.Size = New System.Drawing.Size(209, 341)
+        Me.dgvVarious.TabIndex = 3
         '
         '諸マスタ
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(286, 485)
-        Me.Controls.Add(Me.DataGridView1)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
+        Me.ClientSize = New System.Drawing.Size(255, 469)
+        Me.Controls.Add(Me.dgvVarious)
+        Me.Controls.Add(Me.btnDelete)
+        Me.Controls.Add(Me.btnRegist)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.TextBox1)
-        Me.Controls.Add(Me.ComboBox1)
+        Me.Controls.Add(Me.contentBox)
+        Me.Controls.Add(Me.cmbItem)
         Me.Name = "諸マスタ"
         Me.Text = "諸マスタ"
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvVarious, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents ComboBox1 As System.Windows.Forms.ComboBox
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents cmbItem As System.Windows.Forms.ComboBox
+    Friend WithEvents contentBox As System.Windows.Forms.TextBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents Button2 As System.Windows.Forms.Button
-    Friend WithEvents DataGridView1 As System.Windows.Forms.DataGridView
+    Friend WithEvents btnRegist As System.Windows.Forms.Button
+    Friend WithEvents btnDelete As System.Windows.Forms.Button
+    Friend WithEvents dgvVarious As System.Windows.Forms.DataGridView
 End Class
