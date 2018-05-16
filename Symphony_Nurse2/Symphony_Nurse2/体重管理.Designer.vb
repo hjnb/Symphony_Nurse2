@@ -97,19 +97,19 @@ Partial Class 体重管理
         'dgvUnitLeft
         '
         Me.dgvUnitLeft.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvUnitLeft.Location = New System.Drawing.Point(240, 44)
+        Me.dgvUnitLeft.Location = New System.Drawing.Point(241, 44)
         Me.dgvUnitLeft.Name = "dgvUnitLeft"
         Me.dgvUnitLeft.RowTemplate.Height = 21
-        Me.dgvUnitLeft.Size = New System.Drawing.Size(275, 488)
+        Me.dgvUnitLeft.Size = New System.Drawing.Size(273, 502)
         Me.dgvUnitLeft.TabIndex = 5
         '
         'dgvUnitRight
         '
         Me.dgvUnitRight.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvUnitRight.Location = New System.Drawing.Point(515, 44)
+        Me.dgvUnitRight.Location = New System.Drawing.Point(514, 44)
         Me.dgvUnitRight.Name = "dgvUnitRight"
         Me.dgvUnitRight.RowTemplate.Height = 21
-        Me.dgvUnitRight.Size = New System.Drawing.Size(275, 488)
+        Me.dgvUnitRight.Size = New System.Drawing.Size(273, 502)
         Me.dgvUnitRight.TabIndex = 6
         '
         'rbtnHonkan
@@ -183,7 +183,7 @@ Partial Class 体重管理
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.Label3.Location = New System.Drawing.Point(237, 541)
+        Me.Label3.Location = New System.Drawing.Point(237, 557)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(57, 13)
         Me.Label3.TabIndex = 14
@@ -193,7 +193,7 @@ Partial Class 体重管理
         '
         Me.labelUnit1.AutoSize = True
         Me.labelUnit1.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.labelUnit1.Location = New System.Drawing.Point(316, 543)
+        Me.labelUnit1.Location = New System.Drawing.Point(316, 559)
         Me.labelUnit1.Name = "labelUnit1"
         Me.labelUnit1.Size = New System.Drawing.Size(47, 13)
         Me.labelUnit1.TabIndex = 15
@@ -203,7 +203,7 @@ Partial Class 体重管理
         '
         Me.labelUnit3.AutoSize = True
         Me.labelUnit3.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.labelUnit3.Location = New System.Drawing.Point(316, 597)
+        Me.labelUnit3.Location = New System.Drawing.Point(316, 613)
         Me.labelUnit3.Name = "labelUnit3"
         Me.labelUnit3.Size = New System.Drawing.Size(47, 13)
         Me.labelUnit3.TabIndex = 19
@@ -213,7 +213,7 @@ Partial Class 体重管理
         '
         Me.labelUnit2.AutoSize = True
         Me.labelUnit2.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.labelUnit2.Location = New System.Drawing.Point(316, 569)
+        Me.labelUnit2.Location = New System.Drawing.Point(316, 585)
         Me.labelUnit2.Name = "labelUnit2"
         Me.labelUnit2.Size = New System.Drawing.Size(47, 13)
         Me.labelUnit2.TabIndex = 20
@@ -223,7 +223,7 @@ Partial Class 体重管理
         '
         Me.labelUnit5.AutoSize = True
         Me.labelUnit5.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.labelUnit5.Location = New System.Drawing.Point(578, 567)
+        Me.labelUnit5.Location = New System.Drawing.Point(578, 583)
         Me.labelUnit5.Name = "labelUnit5"
         Me.labelUnit5.Size = New System.Drawing.Size(47, 13)
         Me.labelUnit5.TabIndex = 23
@@ -233,7 +233,7 @@ Partial Class 体重管理
         '
         Me.labelUnit6.AutoSize = True
         Me.labelUnit6.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.labelUnit6.Location = New System.Drawing.Point(578, 595)
+        Me.labelUnit6.Location = New System.Drawing.Point(578, 611)
         Me.labelUnit6.Name = "labelUnit6"
         Me.labelUnit6.Size = New System.Drawing.Size(47, 13)
         Me.labelUnit6.TabIndex = 22
@@ -243,7 +243,7 @@ Partial Class 体重管理
         '
         Me.labelUnit4.AutoSize = True
         Me.labelUnit4.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.labelUnit4.Location = New System.Drawing.Point(578, 541)
+        Me.labelUnit4.Location = New System.Drawing.Point(578, 557)
         Me.labelUnit4.Name = "labelUnit4"
         Me.labelUnit4.Size = New System.Drawing.Size(47, 13)
         Me.labelUnit4.TabIndex = 21
@@ -255,7 +255,7 @@ Partial Class 体重管理
         Me.ymdBoxUnit1.EraText = ""
         Me.ymdBoxUnit1.FirstLabel = "."
         Me.ymdBoxUnit1.FontSize = 9
-        Me.ymdBoxUnit1.Location = New System.Drawing.Point(378, 537)
+        Me.ymdBoxUnit1.Location = New System.Drawing.Point(378, 553)
         Me.ymdBoxUnit1.MonthText = ""
         Me.ymdBoxUnit1.Name = "ymdBoxUnit1"
         Me.ymdBoxUnit1.SecondLabel = "."
@@ -268,7 +268,7 @@ Partial Class 体重管理
         Me.ymdBoxUnit3.EraText = ""
         Me.ymdBoxUnit3.FirstLabel = "."
         Me.ymdBoxUnit3.FontSize = 9
-        Me.ymdBoxUnit3.Location = New System.Drawing.Point(378, 593)
+        Me.ymdBoxUnit3.Location = New System.Drawing.Point(378, 609)
         Me.ymdBoxUnit3.MonthText = ""
         Me.ymdBoxUnit3.Name = "ymdBoxUnit3"
         Me.ymdBoxUnit3.SecondLabel = "."
@@ -281,7 +281,7 @@ Partial Class 体重管理
         Me.ymdBoxUnit2.EraText = ""
         Me.ymdBoxUnit2.FirstLabel = "."
         Me.ymdBoxUnit2.FontSize = 9
-        Me.ymdBoxUnit2.Location = New System.Drawing.Point(378, 565)
+        Me.ymdBoxUnit2.Location = New System.Drawing.Point(378, 581)
         Me.ymdBoxUnit2.MonthText = ""
         Me.ymdBoxUnit2.Name = "ymdBoxUnit2"
         Me.ymdBoxUnit2.SecondLabel = "."
@@ -294,7 +294,7 @@ Partial Class 体重管理
         Me.ymdBoxUnit5.EraText = ""
         Me.ymdBoxUnit5.FirstLabel = "."
         Me.ymdBoxUnit5.FontSize = 9
-        Me.ymdBoxUnit5.Location = New System.Drawing.Point(640, 564)
+        Me.ymdBoxUnit5.Location = New System.Drawing.Point(640, 580)
         Me.ymdBoxUnit5.MonthText = ""
         Me.ymdBoxUnit5.Name = "ymdBoxUnit5"
         Me.ymdBoxUnit5.SecondLabel = "."
@@ -307,7 +307,7 @@ Partial Class 体重管理
         Me.ymdBoxUnit6.EraText = ""
         Me.ymdBoxUnit6.FirstLabel = "."
         Me.ymdBoxUnit6.FontSize = 9
-        Me.ymdBoxUnit6.Location = New System.Drawing.Point(640, 592)
+        Me.ymdBoxUnit6.Location = New System.Drawing.Point(640, 608)
         Me.ymdBoxUnit6.MonthText = ""
         Me.ymdBoxUnit6.Name = "ymdBoxUnit6"
         Me.ymdBoxUnit6.SecondLabel = "."
@@ -320,7 +320,7 @@ Partial Class 体重管理
         Me.ymdBoxUnit4.EraText = ""
         Me.ymdBoxUnit4.FirstLabel = "."
         Me.ymdBoxUnit4.FontSize = 9
-        Me.ymdBoxUnit4.Location = New System.Drawing.Point(640, 536)
+        Me.ymdBoxUnit4.Location = New System.Drawing.Point(640, 552)
         Me.ymdBoxUnit4.MonthText = ""
         Me.ymdBoxUnit4.Name = "ymdBoxUnit4"
         Me.ymdBoxUnit4.SecondLabel = "."
@@ -331,7 +331,7 @@ Partial Class 体重管理
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(807, 617)
+        Me.ClientSize = New System.Drawing.Size(807, 642)
         Me.Controls.Add(Me.ymdBoxUnit5)
         Me.Controls.Add(Me.ymdBoxUnit6)
         Me.Controls.Add(Me.ymdBoxUnit4)
