@@ -5,11 +5,14 @@ Public Class 体重管理
     '選択している名前保持用
     Private selectedNam As String = ""
 
-    '選択しているセルの行のインデックス保持用
+    '選択している行のインデックス保持用(左、右ユニット共有)
     Private selectedRowIndex As Integer = 0
 
-    '選択しているセルの列のインデックス保持用
-    Private selectedColumnIndex As Integer = 0
+    '選択している列のインデックス保持用(左ユニット)
+    Private selectedUnitLeftColumnIndex As Integer = 0
+
+    '選択している列のインデックス保持用(右ユニット)
+    Private selectedUnitRightColumnIndex As Integer = 0
 
     'ラジオボタン背景色
     Private rbtnBackColor As Color = Color.FromArgb(255, 255, 0)
@@ -62,13 +65,21 @@ Public Class 体重管理
         Me.Top = 55
         Me.MaximizeBox = False
         Me.MinimizeBox = False
+
+        '初期設定等
         selectUserLabel.ForeColor = displayNameColor
         initYmdBox()
         createCellStyle()
 
+        'ラジオボタンを本館に設定（当月の本館のデータが表示される）
         rbtnHonkan.Checked = True
 
+        '利用者選択dgv表示
         displayUserMasterData()
+
+        '選択の初期位置
+        dgvUnitLeft("Room", 0).Selected = True
+        dgvUnitLeft.Focus()
     End Sub
 
     Private Sub displayUserMasterData()
@@ -120,22 +131,7 @@ Public Class 体重管理
         unitLeftAdapter.InsertCommand.Parameters.Add("@tuki", OleDbType.Char, 10, "Tuki")
         unitLeftAdapter.InsertCommand.Parameters.Add("@cmpr", OleDbType.Decimal, 10, "Cmpr")
 
-        'updateコマンド
-        unitLeftAdapter.UpdateCommand = New OleDbCommand("update Weit set Nam=@nam, Weit=@weit, Hana=@hana, Mori=@mori, Hosi=@hosi, Sora=@sora, Umi=@umi, Tuki=@tuki, Cmpr=@cmpr where Ym=@ym and Div=@div and Gyo=@gyo")
-        unitLeftAdapter.UpdateCommand.Parameters.Add("@nam", OleDbType.Char, 15, "Nam")
-        unitLeftAdapter.UpdateCommand.Parameters.Add("@weit", OleDbType.Decimal, 10, "Weit")
-        unitLeftAdapter.UpdateCommand.Parameters.Add("@hana", OleDbType.Char, 10, "Hana")
-        unitLeftAdapter.UpdateCommand.Parameters.Add("@mori", OleDbType.Char, 10, "Mori")
-        unitLeftAdapter.UpdateCommand.Parameters.Add("@hosi", OleDbType.Char, 10, "Hosi")
-        unitLeftAdapter.UpdateCommand.Parameters.Add("@sora", OleDbType.Char, 10, "Sora")
-        unitLeftAdapter.UpdateCommand.Parameters.Add("@umi", OleDbType.Char, 10, "Umi")
-        unitLeftAdapter.UpdateCommand.Parameters.Add("@tuki", OleDbType.Char, 10, "Tuki")
-        unitLeftAdapter.UpdateCommand.Parameters.Add("@cmpr", OleDbType.Decimal, 10, "Cmpr")
-        unitLeftAdapter.UpdateCommand.Parameters.Add("@ym", OleDbType.Char, 7, "Ym")
-        unitLeftAdapter.UpdateCommand.Parameters.Add("@div", OleDbType.Integer, 1, "Div")
-        unitLeftAdapter.UpdateCommand.Parameters.Add("@gyo", OleDbType.Integer, 1, "Gyo")
-
-        addBlankRow(unitLeftDt)
+        addBlankRow(unitLeftDt, 1)
         addRoomColumn(unitLeftDt)
         addRoomNum4UnitLeft()
 
@@ -181,22 +177,7 @@ Public Class 体重管理
         unitRightAdapter.InsertCommand.Parameters.Add("@tuki", OleDbType.Char, 10, "Tuki")
         unitRightAdapter.InsertCommand.Parameters.Add("@cmpr", OleDbType.Decimal, 10, "Cmpr")
 
-        'updateコマンド
-        unitRightAdapter.UpdateCommand = New OleDbCommand("update Weit set Nam=@nam, Weit=@weit, Hana=@hana, Mori=@mori, Hosi=@hosi, Sora=@sora, Umi=@umi, Tuki=@tuki, Cmpr=@cmpr where Ym=@ym and Div=@div and Gyo=@gyo")
-        unitRightAdapter.UpdateCommand.Parameters.Add("@nam", OleDbType.Char, 15, "Nam")
-        unitRightAdapter.UpdateCommand.Parameters.Add("@weit", OleDbType.Decimal, 10, "Weit")
-        unitRightAdapter.UpdateCommand.Parameters.Add("@hana", OleDbType.Char, 10, "Hana")
-        unitRightAdapter.UpdateCommand.Parameters.Add("@mori", OleDbType.Char, 10, "Mori")
-        unitRightAdapter.UpdateCommand.Parameters.Add("@hosi", OleDbType.Char, 10, "Hosi")
-        unitRightAdapter.UpdateCommand.Parameters.Add("@sora", OleDbType.Char, 10, "Sora")
-        unitRightAdapter.UpdateCommand.Parameters.Add("@umi", OleDbType.Char, 10, "Umi")
-        unitRightAdapter.UpdateCommand.Parameters.Add("@tuki", OleDbType.Char, 10, "Tuki")
-        unitRightAdapter.UpdateCommand.Parameters.Add("@cmpr", OleDbType.Decimal, 10, "Cmpr")
-        unitRightAdapter.UpdateCommand.Parameters.Add("@ym", OleDbType.Char, 7, "Ym")
-        unitRightAdapter.UpdateCommand.Parameters.Add("@div", OleDbType.Integer, 1, "Div")
-        unitRightAdapter.UpdateCommand.Parameters.Add("@gyo", OleDbType.Integer, 1, "Gyo")
-
-        addBlankRow(unitRightDt)
+        addBlankRow(unitRightDt, 2)
         addRoomColumn(unitRightDt)
         addRoomNum4UnitRight()
 
@@ -227,12 +208,18 @@ Public Class 体重管理
         Next
     End Sub
 
-    Private Sub addBlankRow(dt As DataTable)
+    Private Sub addBlankRow(dt As DataTable, type As Integer)
         Dim rowCount As Integer = dt.Rows.Count
         If rowCount < MAX_ROW_COUNT Then
             Dim row As DataRow
-            For i As Integer = rowCount To MAX_ROW_COUNT - 1
+            Dim rowCountPlus As Integer = If(type = 2, 30, 0)
+            Dim div As Integer = If(rbtnHonkan.Checked, 1, 2)
+            
+            For i As Integer = rowCount + 1 + rowCountPlus To MAX_ROW_COUNT + rowCountPlus
                 row = dt.NewRow()
+                row("Ym") = "2018/05"
+                row("Gyo") = i
+                row("div") = div
                 dt.Rows.Add(row)
             Next
         End If
@@ -413,22 +400,22 @@ Public Class 体重管理
             Return
         End If
 
-        If row("Sora") <> "" Then
+        If Not IsDBNull(row("Sora")) AndAlso row("Sora") <> "" Then
             ymdBoxUnit1.setADStr(row("Sora"))
         End If
-        If row("Mori") <> "" Then
+        If Not IsDBNull(row("Mori")) AndAlso row("Mori") <> "" Then
             ymdBoxUnit2.setADStr(row("Mori"))
         End If
-        If row("Hosi") <> "" Then
+        If Not IsDBNull(row("Hosi")) AndAlso row("Hosi") <> "" Then
             ymdBoxUnit3.setADStr(row("Hosi"))
         End If
-        If row("Tuki") <> "" Then
+        If Not IsDBNull(row("Tuki")) AndAlso row("Tuki") <> "" Then
             ymdBoxUnit4.setADStr(row("Tuki"))
         End If
-        If row("Hana") <> "" Then
+        If Not IsDBNull(row("Hana")) AndAlso row("Hana") <> "" Then
             ymdBoxUnit5.setADStr(row("Hana"))
         End If
-        If row("Umi") <> "" Then
+        If Not IsDBNull(row("Umi")) AndAlso row("Umi") <> "" Then
             ymdBoxUnit6.setADStr(row("Umi"))
         End If
     End Sub
@@ -489,10 +476,22 @@ Public Class 体重管理
         End If
     End Sub
 
+    Private Sub dgvUnitLeft_CellEnter(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvUnitLeft.CellEnter, dgvUnitRight.CellEnter
+        Dim dgv As DataGridView = CType(sender, DataGridView)
+
+        '選択行のインデックス取得
+        selectedRowIndex = dgv.CurrentCell.RowIndex
+
+        '選択列のインデックス取得
+        If dgv.Name = "dgvUnitLeft" Then
+            selectedUnitLeftColumnIndex = dgv.CurrentCell.ColumnIndex
+        ElseIf dgv.Name = "dgvUnitRight" Then
+            selectedUnitRightColumnIndex = dgv.CurrentCell.ColumnIndex
+        End If
+    End Sub
+
     Private Sub dgvUnit_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvUnitLeft.CellMouseClick, dgvUnitRight.CellMouseClick
         Dim dgv As DataGridView = CType(sender, DataGridView)
-        selectedRowIndex = dgv.CurrentCell.RowIndex
-        selectedColumnIndex = dgv.CurrentCell.ColumnIndex
         If selectedNam <> "" AndAlso dgv.Columns(e.ColumnIndex).Name = "Nam" Then
             dgv(e.ColumnIndex, e.RowIndex).Value = selectedNam
         End If
@@ -556,6 +555,73 @@ Public Class 体重管理
         cn.Close()
     End Sub
 
+    Private Sub dgvUnitLeft_GotFocus(sender As Object, e As System.EventArgs) Handles dgvUnitLeft.GotFocus
+        dgvUnitRight.ClearSelection()
+    End Sub
+
+    Private Sub dgvUnitRight_GotFocus(sender As Object, e As System.EventArgs) Handles dgvUnitRight.GotFocus
+        dgvUnitLeft.ClearSelection()
+    End Sub
+
+    Private Sub dgvUnitLeft_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles dgvUnitLeft.KeyDown
+        If (e.KeyCode = Keys.Right OrElse e.KeyCode = Keys.Tab) AndAlso dgvUnitLeft.Columns(selectedUnitLeftColumnIndex).Name = "Cmpr" Then
+            dgvUnitRight("Room", selectedRowIndex).Selected = True
+            dgvUnitRight.Focus()
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub dgvUnitRight_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles dgvUnitRight.KeyDown
+        If e.KeyCode = Keys.Left AndAlso dgvUnitRight.Columns(selectedUnitRightColumnIndex).Name = "Room" Then
+            dgvUnitLeft("Cmpr", selectedRowIndex).Selected = True
+            dgvUnitLeft.Focus()
+        ElseIf e.KeyCode = Keys.Tab AndAlso dgvUnitRight.Columns(selectedUnitRightColumnIndex).Name = "Cmpr" Then
+            If selectedRowIndex < MAX_ROW_COUNT - 1 Then
+                dgvUnitLeft("Room", selectedRowIndex + 1).Selected = True
+                dgvUnitLeft.Focus()
+                e.Handled = True
+            End If
+        End If
+    End Sub
+
+    Private Sub btnPrevNam_Click(sender As System.Object, e As System.EventArgs) Handles btnPrevNam.Click
+        Dim prevYmStr As String = "2018/04" 'とりあえず
+        Dim prevNamList As New Dictionary(Of Integer, String)
+        Dim div As Integer = If(rbtnHonkan.Checked, 1, 2)
+
+        Dim reader As System.Data.OleDb.OleDbDataReader
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        SQLCm.CommandText = "select Nam from Weit where Ym=@ym and Div=@div order by Gyo"
+        SQLCm.Parameters.Clear()
+        SQLCm.Parameters.Add("@ym", OleDbType.Char).Value = prevYmStr
+        SQLCm.Parameters.Add("@div", OleDbType.Integer).Value = div
+        Cn.Open()
+        reader = SQLCm.ExecuteReader()
+
+        While reader.Read() = True
+            prevNamList.Add(prevNamList.Count, reader("Nam"))
+        End While
+        reader.Close()
+        Cn.Close()
+
+        If prevNamList.Count = 0 Then
+            MsgBox("前月分が存在しません。")
+            Return
+        End If
+
+        For Each kvp As KeyValuePair(Of Integer, String) In prevNamList
+            If kvp.Key < MAX_ROW_COUNT Then
+                dgvUnitLeft("Nam", kvp.Key).Value = kvp.Value
+            Else
+                dgvUnitRight("Nam", kvp.Key - MAX_ROW_COUNT).Value = kvp.Value
+            End If
+        Next
+
+        dgvUnitLeft("Room", 0).Selected = True
+        dgvUnitLeft.Focus()
+    End Sub
+
     Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
         '全ての行の状態をAddedに
         unitLeftDt.AcceptChanges()
@@ -577,19 +643,22 @@ Public Class 体重管理
 
     End Sub
 
-    Private Sub dgvUnitLeft_GotFocus(sender As Object, e As System.EventArgs) Handles dgvUnitLeft.GotFocus
-        dgvUnitRight.ClearSelection()
+    Private Sub btnPrevCmpr_Click(sender As System.Object, e As System.EventArgs) Handles btnPrevCmpr.Click
+
     End Sub
 
-    Private Sub dgvUnitRight_GotFocus(sender As Object, e As System.EventArgs) Handles dgvUnitRight.GotFocus
-        dgvUnitLeft.ClearSelection()
-    End Sub
-
-    Private Sub dgvUnitLeft_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles dgvUnitLeft.KeyDown
-        If e.KeyCode = Keys.Right AndAlso dgvUnitLeft.Columns(selectedColumnIndex).Name = "Cmpr" Then
-            dgvUnitLeft.ClearSelection()
-            dgvUnitRight.Focus()
-            dgvUnitRight(12, selectedRowIndex).Selected = True
+    Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
+        Dim targetYmStr As String = "2018/04" 'とりあえず
+        Dim targetDiv As Integer = If(rbtnHonkan.Checked, 1, 2)
+        Dim result As DialogResult = MessageBox.Show("該当月の記録を抹消しますか？", "Nurse2", MessageBoxButtons.YesNo)
+        If result = Windows.Forms.DialogResult.Yes Then
+            deleteMonthData(targetYmStr, targetDiv)
+            '再表示
+            displayUnitLeftData(targetYmStr, targetDiv)
         End If
+    End Sub
+
+    Private Sub btnPrint_Click(sender As System.Object, e As System.EventArgs) Handles btnPrint.Click
+
     End Sub
 End Class
