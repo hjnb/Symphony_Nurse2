@@ -584,6 +584,14 @@ Public Class 体重管理
         End If
     End Sub
 
+    Private Sub calcCmprCell(dt As DataTable, prevNamWeitPair As Dictionary(Of String, Decimal))
+        For Each row As DataRow In dt.Rows
+            Dim prevWeitVal As Decimal = If(prevNamWeitPair.ContainsKey(row("Nam")), prevNamWeitPair(row("Nam")), 0)
+            Dim currentWeitVal As Decimal = If(IsDBNull(row("Weit")), 0, Decimal.Parse(row("Weit")))
+            row("Cmpr") = currentWeitVal - prevWeitVal
+        Next
+    End Sub
+
     Private Sub btnPrevNam_Click(sender As System.Object, e As System.EventArgs) Handles btnPrevNam.Click
         Dim prevYmStr As String = "2018/04" 'とりあえず
         Dim prevNamList As New Dictionary(Of Integer, String)
@@ -644,7 +652,33 @@ Public Class 体重管理
     End Sub
 
     Private Sub btnPrevCmpr_Click(sender As System.Object, e As System.EventArgs) Handles btnPrevCmpr.Click
+        '前月の氏名と体重のペア取得
+        Dim prevYmStr As String = "2018/03" 'とりあえず
+        Dim prevNameWeightDic As New Dictionary(Of String, Decimal)
+        Dim div As Integer = If(rbtnHonkan.Checked, 1, 2)
+        Dim reader As System.Data.OleDb.OleDbDataReader
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        SQLCm.CommandText = "select Nam, Weit from Weit where Ym=@ym and Div=@div"
+        SQLCm.Parameters.Clear()
+        SQLCm.Parameters.Add("@ym", OleDbType.Char).Value = prevYmStr
+        SQLCm.Parameters.Add("@div", OleDbType.Integer).Value = div
+        Cn.Open()
+        reader = SQLCm.ExecuteReader()
+        While reader.Read() = True
+            prevNameWeightDic(reader("Nam")) = reader("Weit")
+        End While
+        reader.Close()
+        Cn.Close()
+        prevNameWeightDic("") = 0
 
+        '現在入力されている氏名と体重のペアから前月との体重の増減を表示
+        calcCmprCell(unitLeftDt, prevNameWeightDic) '左ユニット
+        calcCmprCell(unitRightDt, prevNameWeightDic) '右ユニット
+
+        '選択を初期位置へ
+        dgvUnitLeft("Room", 0).Selected = True
+        dgvUnitLeft.Focus()
     End Sub
 
     Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
