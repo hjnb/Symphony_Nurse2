@@ -198,7 +198,7 @@ Public Class 利用者マスタ
         namBox.Text = nam
         kanaBox.Text = kana
         sexBox.Text = sex
-        birthYmdBox.setWarakiStr(birth)
+        birthYmdBox.setWarekiStr(birth)
         kaigoBox.Text = kaigo
         If dsp = 0 Then
             rbtnNotDisplay.Checked = True

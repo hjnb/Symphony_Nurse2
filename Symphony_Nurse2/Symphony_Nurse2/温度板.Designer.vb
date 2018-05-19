@@ -35,7 +35,6 @@ Partial Class 温度板
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
-        Me.YmdBox1 = New ymdBox.ymdBox()
         Me.TimeBox1 = New TimeBox.TimeBox()
         Me.cmbKisaisya = New System.Windows.Forms.ComboBox()
         Me.txtTaionn = New System.Windows.Forms.TextBox()
@@ -52,15 +51,12 @@ Partial Class 温度板
         Me.btnTouroku = New System.Windows.Forms.Button()
         Me.btnSakujo = New System.Windows.Forms.Button()
         Me.btnInnsatu = New System.Windows.Forms.Button()
-        Me.btnDaySita = New System.Windows.Forms.Button()
-        Me.btnDayUe = New System.Windows.Forms.Button()
-        Me.btnTimeSita = New System.Windows.Forms.Button()
-        Me.btnTimeUe = New System.Windows.Forms.Button()
         Me.lstSyoti = New System.Windows.Forms.ListBox()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
         Me.btnKousinn = New System.Windows.Forms.Button()
         Me.btnKuria = New System.Windows.Forms.Button()
         Me.DataGridView3 = New System.Windows.Forms.DataGridView()
+        Me.AdBox1 = New ADBox.adBox()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -80,7 +76,7 @@ Partial Class 温度板
         '
         Me.Label2.AutoSize = True
         Me.Label2.ForeColor = System.Drawing.Color.Blue
-        Me.Label2.Location = New System.Drawing.Point(219, 28)
+        Me.Label2.Location = New System.Drawing.Point(257, 28)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(29, 12)
         Me.Label2.TabIndex = 1
@@ -89,7 +85,7 @@ Partial Class 温度板
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(357, 28)
+        Me.Label3.Location = New System.Drawing.Point(395, 28)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(41, 12)
         Me.Label3.TabIndex = 2
@@ -100,7 +96,7 @@ Partial Class 温度板
         Me.lblID.AutoSize = True
         Me.lblID.Font = New System.Drawing.Font("MS UI Gothic", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.lblID.ForeColor = System.Drawing.Color.Blue
-        Me.lblID.Location = New System.Drawing.Point(543, 25)
+        Me.lblID.Location = New System.Drawing.Point(560, 25)
         Me.lblID.Name = "lblID"
         Me.lblID.Size = New System.Drawing.Size(28, 19)
         Me.lblID.TabIndex = 3
@@ -189,33 +185,20 @@ Partial Class 温度板
         Me.Label13.TabIndex = 12
         Me.Label13.Text = "処置"
         '
-        'YmdBox1
-        '
-        Me.YmdBox1.DateText = ""
-        Me.YmdBox1.EraText = ""
-        Me.YmdBox1.FirstLabel = "."
-        Me.YmdBox1.FontSize = 9
-        Me.YmdBox1.Location = New System.Drawing.Point(78, 24)
-        Me.YmdBox1.MonthText = ""
-        Me.YmdBox1.Name = "YmdBox1"
-        Me.YmdBox1.SecondLabel = "."
-        Me.YmdBox1.Size = New System.Drawing.Size(98, 23)
-        Me.YmdBox1.TabIndex = 13
-        '
         'TimeBox1
         '
         Me.TimeBox1.HourText = "14"
-        Me.TimeBox1.Location = New System.Drawing.Point(254, 23)
+        Me.TimeBox1.Location = New System.Drawing.Point(290, 18)
         Me.TimeBox1.MinuteText = "36"
         Me.TimeBox1.Name = "TimeBox1"
-        Me.TimeBox1.Size = New System.Drawing.Size(67, 23)
+        Me.TimeBox1.Size = New System.Drawing.Size(97, 33)
         Me.TimeBox1.TabIndex = 14
         '
         'cmbKisaisya
         '
         Me.cmbKisaisya.FormattingEnabled = True
         Me.cmbKisaisya.ImeMode = System.Windows.Forms.ImeMode.Hiragana
-        Me.cmbKisaisya.Location = New System.Drawing.Point(404, 25)
+        Me.cmbKisaisya.Location = New System.Drawing.Point(442, 25)
         Me.cmbKisaisya.Name = "cmbKisaisya"
         Me.cmbKisaisya.Size = New System.Drawing.Size(88, 20)
         Me.cmbKisaisya.TabIndex = 15
@@ -331,42 +314,6 @@ Partial Class 温度板
         Me.btnInnsatu.Text = "印刷"
         Me.btnInnsatu.UseVisualStyleBackColor = True
         '
-        'btnDaySita
-        '
-        Me.btnDaySita.Location = New System.Drawing.Point(176, 34)
-        Me.btnDaySita.Name = "btnDaySita"
-        Me.btnDaySita.Size = New System.Drawing.Size(24, 22)
-        Me.btnDaySita.TabIndex = 84
-        Me.btnDaySita.Text = "▼"
-        Me.btnDaySita.UseVisualStyleBackColor = True
-        '
-        'btnDayUe
-        '
-        Me.btnDayUe.Location = New System.Drawing.Point(176, 13)
-        Me.btnDayUe.Name = "btnDayUe"
-        Me.btnDayUe.Size = New System.Drawing.Size(24, 22)
-        Me.btnDayUe.TabIndex = 83
-        Me.btnDayUe.Text = "▲"
-        Me.btnDayUe.UseVisualStyleBackColor = True
-        '
-        'btnTimeSita
-        '
-        Me.btnTimeSita.Location = New System.Drawing.Point(315, 34)
-        Me.btnTimeSita.Name = "btnTimeSita"
-        Me.btnTimeSita.Size = New System.Drawing.Size(24, 22)
-        Me.btnTimeSita.TabIndex = 86
-        Me.btnTimeSita.Text = "▼"
-        Me.btnTimeSita.UseVisualStyleBackColor = True
-        '
-        'btnTimeUe
-        '
-        Me.btnTimeUe.Location = New System.Drawing.Point(315, 13)
-        Me.btnTimeUe.Name = "btnTimeUe"
-        Me.btnTimeUe.Size = New System.Drawing.Size(24, 22)
-        Me.btnTimeUe.TabIndex = 85
-        Me.btnTimeUe.Text = "▲"
-        Me.btnTimeUe.UseVisualStyleBackColor = True
-        '
         'lstSyoti
         '
         Me.lstSyoti.FormattingEnabled = True
@@ -412,21 +359,28 @@ Partial Class 温度板
         Me.DataGridView3.Size = New System.Drawing.Size(10, 10)
         Me.DataGridView3.TabIndex = 91
         '
+        'AdBox1
+        '
+        Me.AdBox1.dateText = "19"
+        Me.AdBox1.Location = New System.Drawing.Point(71, 15)
+        Me.AdBox1.monthText = "05"
+        Me.AdBox1.Name = "AdBox1"
+        Me.AdBox1.Size = New System.Drawing.Size(180, 43)
+        Me.AdBox1.TabIndex = 92
+        Me.AdBox1.yearText = "2018"
+        '
         '温度板
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(850, 699)
+        Me.Controls.Add(Me.AdBox1)
         Me.Controls.Add(Me.btnTouroku)
         Me.Controls.Add(Me.DataGridView3)
         Me.Controls.Add(Me.btnKuria)
         Me.Controls.Add(Me.btnKousinn)
         Me.Controls.Add(Me.DataGridView2)
         Me.Controls.Add(Me.lstSyoti)
-        Me.Controls.Add(Me.btnTimeSita)
-        Me.Controls.Add(Me.btnTimeUe)
-        Me.Controls.Add(Me.btnDaySita)
-        Me.Controls.Add(Me.btnDayUe)
         Me.Controls.Add(Me.btnInnsatu)
         Me.Controls.Add(Me.btnSakujo)
         Me.Controls.Add(Me.DataGridView1)
@@ -442,7 +396,6 @@ Partial Class 温度板
         Me.Controls.Add(Me.txtTaionn)
         Me.Controls.Add(Me.cmbKisaisya)
         Me.Controls.Add(Me.TimeBox1)
-        Me.Controls.Add(Me.YmdBox1)
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.Label11)
@@ -478,7 +431,6 @@ Partial Class 温度板
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents Label13 As System.Windows.Forms.Label
-    Friend WithEvents YmdBox1 As ymdBox.ymdBox
     Friend WithEvents TimeBox1 As TimeBox.TimeBox
     Friend WithEvents cmbKisaisya As System.Windows.Forms.ComboBox
     Friend WithEvents txtTaionn As System.Windows.Forms.TextBox
@@ -495,13 +447,10 @@ Partial Class 温度板
     Friend WithEvents btnTouroku As System.Windows.Forms.Button
     Friend WithEvents btnSakujo As System.Windows.Forms.Button
     Friend WithEvents btnInnsatu As System.Windows.Forms.Button
-    Friend WithEvents btnDaySita As System.Windows.Forms.Button
-    Friend WithEvents btnDayUe As System.Windows.Forms.Button
-    Friend WithEvents btnTimeSita As System.Windows.Forms.Button
-    Friend WithEvents btnTimeUe As System.Windows.Forms.Button
     Friend WithEvents lstSyoti As System.Windows.Forms.ListBox
     Friend WithEvents DataGridView2 As System.Windows.Forms.DataGridView
     Friend WithEvents btnKousinn As System.Windows.Forms.Button
     Friend WithEvents btnKuria As System.Windows.Forms.Button
     Friend WithEvents DataGridView3 As System.Windows.Forms.DataGridView
+    Friend WithEvents AdBox1 As ADBox.adBox
 End Class

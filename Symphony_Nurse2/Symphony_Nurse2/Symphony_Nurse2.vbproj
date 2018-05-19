@@ -49,6 +49,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ADBox">
+      <HintPath>\\primergytx100s1\Hakojun\事務\さかもと\Symphony_Nurse2\ADBox.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel1">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 10.0\Visual Studio Tools for Office\PIA\Office14\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>

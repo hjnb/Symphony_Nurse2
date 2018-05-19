@@ -102,9 +102,6 @@ Partial Class 内服病名
         Me.txtTokki2 = New System.Windows.Forms.TextBox()
         Me.txtTokki3 = New System.Windows.Forms.TextBox()
         Me.txtTokki4 = New System.Windows.Forms.TextBox()
-        Me.YmdBox1 = New ymdBox.ymdBox()
-        Me.btnUe = New System.Windows.Forms.Button()
-        Me.btnSita = New System.Windows.Forms.Button()
         Me.rbnSubete = New System.Windows.Forms.RadioButton()
         Me.rbnA = New System.Windows.Forms.RadioButton()
         Me.rbnK = New System.Windows.Forms.RadioButton()
@@ -125,10 +122,17 @@ Partial Class 内服病名
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnKuria = New System.Windows.Forms.Button()
         Me.btnKousinn = New System.Windows.Forms.Button()
+        Me.txtNaihukuX = New System.Windows.Forms.TextBox()
+        Me.txtRyouX = New System.Windows.Forms.TextBox()
+        Me.txtJikannX = New System.Windows.Forms.TextBox()
+        Me.DataGridView5 = New System.Windows.Forms.DataGridView()
+        Me.txtKatatiX = New System.Windows.Forms.TextBox()
+        Me.YmdBox1 = New ymdBox.ymdBox()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'DataGridView1
@@ -212,6 +216,7 @@ Partial Class 内服病名
         '
         'txtByoumei1
         '
+        Me.txtByoumei1.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtByoumei1.Location = New System.Drawing.Point(308, 112)
         Me.txtByoumei1.Name = "txtByoumei1"
         Me.txtByoumei1.Size = New System.Drawing.Size(352, 19)
@@ -219,6 +224,7 @@ Partial Class 内服病名
         '
         'txtByoumei2
         '
+        Me.txtByoumei2.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtByoumei2.Location = New System.Drawing.Point(308, 130)
         Me.txtByoumei2.Name = "txtByoumei2"
         Me.txtByoumei2.Size = New System.Drawing.Size(352, 19)
@@ -226,6 +232,7 @@ Partial Class 内服病名
         '
         'txtByoumei3
         '
+        Me.txtByoumei3.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtByoumei3.Location = New System.Drawing.Point(308, 148)
         Me.txtByoumei3.Name = "txtByoumei3"
         Me.txtByoumei3.Size = New System.Drawing.Size(352, 19)
@@ -233,6 +240,7 @@ Partial Class 内服病名
         '
         'txtByoumei4
         '
+        Me.txtByoumei4.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtByoumei4.Location = New System.Drawing.Point(308, 166)
         Me.txtByoumei4.Name = "txtByoumei4"
         Me.txtByoumei4.Size = New System.Drawing.Size(352, 19)
@@ -240,6 +248,7 @@ Partial Class 内服病名
         '
         'txtNaihuku1
         '
+        Me.txtNaihuku1.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku1.Location = New System.Drawing.Point(308, 215)
         Me.txtNaihuku1.Name = "txtNaihuku1"
         Me.txtNaihuku1.Size = New System.Drawing.Size(157, 19)
@@ -261,6 +270,7 @@ Partial Class 内服病名
         '
         'txtJikann1
         '
+        Me.txtJikann1.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann1.Location = New System.Drawing.Point(529, 215)
         Me.txtJikann1.Name = "txtJikann1"
         Me.txtJikann1.Size = New System.Drawing.Size(57, 19)
@@ -268,6 +278,7 @@ Partial Class 内服病名
         '
         'txtJikann2
         '
+        Me.txtJikann2.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann2.Location = New System.Drawing.Point(529, 233)
         Me.txtJikann2.Name = "txtJikann2"
         Me.txtJikann2.Size = New System.Drawing.Size(57, 19)
@@ -289,6 +300,7 @@ Partial Class 内服病名
         '
         'txtNaihuku2
         '
+        Me.txtNaihuku2.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku2.Location = New System.Drawing.Point(308, 233)
         Me.txtNaihuku2.Name = "txtNaihuku2"
         Me.txtNaihuku2.Size = New System.Drawing.Size(157, 19)
@@ -296,6 +308,7 @@ Partial Class 内服病名
         '
         'txtJikann3
         '
+        Me.txtJikann3.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann3.Location = New System.Drawing.Point(529, 251)
         Me.txtJikann3.Name = "txtJikann3"
         Me.txtJikann3.Size = New System.Drawing.Size(57, 19)
@@ -317,6 +330,7 @@ Partial Class 内服病名
         '
         'txtNaihuku3
         '
+        Me.txtNaihuku3.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku3.Location = New System.Drawing.Point(308, 251)
         Me.txtNaihuku3.Name = "txtNaihuku3"
         Me.txtNaihuku3.Size = New System.Drawing.Size(157, 19)
@@ -324,6 +338,7 @@ Partial Class 内服病名
         '
         'txtJikann4
         '
+        Me.txtJikann4.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann4.Location = New System.Drawing.Point(529, 269)
         Me.txtJikann4.Name = "txtJikann4"
         Me.txtJikann4.Size = New System.Drawing.Size(57, 19)
@@ -345,6 +360,7 @@ Partial Class 内服病名
         '
         'txtNaihuku4
         '
+        Me.txtNaihuku4.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku4.Location = New System.Drawing.Point(308, 269)
         Me.txtNaihuku4.Name = "txtNaihuku4"
         Me.txtNaihuku4.Size = New System.Drawing.Size(157, 19)
@@ -352,6 +368,7 @@ Partial Class 内服病名
         '
         'txtJikann5
         '
+        Me.txtJikann5.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann5.Location = New System.Drawing.Point(529, 287)
         Me.txtJikann5.Name = "txtJikann5"
         Me.txtJikann5.Size = New System.Drawing.Size(57, 19)
@@ -373,6 +390,7 @@ Partial Class 内服病名
         '
         'txtNaihuku5
         '
+        Me.txtNaihuku5.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku5.Location = New System.Drawing.Point(308, 287)
         Me.txtNaihuku5.Name = "txtNaihuku5"
         Me.txtNaihuku5.Size = New System.Drawing.Size(157, 19)
@@ -380,6 +398,7 @@ Partial Class 内服病名
         '
         'txtJikann6
         '
+        Me.txtJikann6.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann6.Location = New System.Drawing.Point(529, 305)
         Me.txtJikann6.Name = "txtJikann6"
         Me.txtJikann6.Size = New System.Drawing.Size(57, 19)
@@ -401,6 +420,7 @@ Partial Class 内服病名
         '
         'txtNaihuku6
         '
+        Me.txtNaihuku6.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku6.Location = New System.Drawing.Point(308, 305)
         Me.txtNaihuku6.Name = "txtNaihuku6"
         Me.txtNaihuku6.Size = New System.Drawing.Size(157, 19)
@@ -408,6 +428,7 @@ Partial Class 内服病名
         '
         'txtJikann7
         '
+        Me.txtJikann7.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann7.Location = New System.Drawing.Point(529, 323)
         Me.txtJikann7.Name = "txtJikann7"
         Me.txtJikann7.Size = New System.Drawing.Size(57, 19)
@@ -429,6 +450,7 @@ Partial Class 内服病名
         '
         'txtNaihuku7
         '
+        Me.txtNaihuku7.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku7.Location = New System.Drawing.Point(308, 323)
         Me.txtNaihuku7.Name = "txtNaihuku7"
         Me.txtNaihuku7.Size = New System.Drawing.Size(157, 19)
@@ -436,6 +458,7 @@ Partial Class 内服病名
         '
         'txtJikann8
         '
+        Me.txtJikann8.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann8.Location = New System.Drawing.Point(529, 341)
         Me.txtJikann8.Name = "txtJikann8"
         Me.txtJikann8.Size = New System.Drawing.Size(57, 19)
@@ -457,6 +480,7 @@ Partial Class 内服病名
         '
         'txtNaihuku8
         '
+        Me.txtNaihuku8.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku8.Location = New System.Drawing.Point(308, 341)
         Me.txtNaihuku8.Name = "txtNaihuku8"
         Me.txtNaihuku8.Size = New System.Drawing.Size(157, 19)
@@ -464,6 +488,7 @@ Partial Class 内服病名
         '
         'txtJikann9
         '
+        Me.txtJikann9.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann9.Location = New System.Drawing.Point(807, 215)
         Me.txtJikann9.Name = "txtJikann9"
         Me.txtJikann9.Size = New System.Drawing.Size(57, 19)
@@ -485,6 +510,7 @@ Partial Class 内服病名
         '
         'txtNaihuku9
         '
+        Me.txtNaihuku9.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku9.Location = New System.Drawing.Point(586, 215)
         Me.txtNaihuku9.Name = "txtNaihuku9"
         Me.txtNaihuku9.Size = New System.Drawing.Size(157, 19)
@@ -492,6 +518,7 @@ Partial Class 内服病名
         '
         'txtJikann10
         '
+        Me.txtJikann10.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann10.Location = New System.Drawing.Point(807, 233)
         Me.txtJikann10.Name = "txtJikann10"
         Me.txtJikann10.Size = New System.Drawing.Size(57, 19)
@@ -513,6 +540,7 @@ Partial Class 内服病名
         '
         'txtNaihuku10
         '
+        Me.txtNaihuku10.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku10.Location = New System.Drawing.Point(586, 233)
         Me.txtNaihuku10.Name = "txtNaihuku10"
         Me.txtNaihuku10.Size = New System.Drawing.Size(157, 19)
@@ -520,6 +548,7 @@ Partial Class 内服病名
         '
         'txtJikann11
         '
+        Me.txtJikann11.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann11.Location = New System.Drawing.Point(807, 251)
         Me.txtJikann11.Name = "txtJikann11"
         Me.txtJikann11.Size = New System.Drawing.Size(57, 19)
@@ -541,6 +570,7 @@ Partial Class 内服病名
         '
         'txtNaihuku11
         '
+        Me.txtNaihuku11.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku11.Location = New System.Drawing.Point(586, 251)
         Me.txtNaihuku11.Name = "txtNaihuku11"
         Me.txtNaihuku11.Size = New System.Drawing.Size(157, 19)
@@ -548,6 +578,7 @@ Partial Class 内服病名
         '
         'txtJikann12
         '
+        Me.txtJikann12.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann12.Location = New System.Drawing.Point(807, 269)
         Me.txtJikann12.Name = "txtJikann12"
         Me.txtJikann12.Size = New System.Drawing.Size(57, 19)
@@ -569,6 +600,7 @@ Partial Class 内服病名
         '
         'txtNaihuku12
         '
+        Me.txtNaihuku12.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku12.Location = New System.Drawing.Point(586, 269)
         Me.txtNaihuku12.Name = "txtNaihuku12"
         Me.txtNaihuku12.Size = New System.Drawing.Size(157, 19)
@@ -576,6 +608,7 @@ Partial Class 内服病名
         '
         'txtJikann13
         '
+        Me.txtJikann13.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann13.Location = New System.Drawing.Point(807, 287)
         Me.txtJikann13.Name = "txtJikann13"
         Me.txtJikann13.Size = New System.Drawing.Size(57, 19)
@@ -597,6 +630,7 @@ Partial Class 内服病名
         '
         'txtNaihuku13
         '
+        Me.txtNaihuku13.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku13.Location = New System.Drawing.Point(586, 287)
         Me.txtNaihuku13.Name = "txtNaihuku13"
         Me.txtNaihuku13.Size = New System.Drawing.Size(157, 19)
@@ -604,6 +638,7 @@ Partial Class 内服病名
         '
         'txtJikann14
         '
+        Me.txtJikann14.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann14.Location = New System.Drawing.Point(807, 305)
         Me.txtJikann14.Name = "txtJikann14"
         Me.txtJikann14.Size = New System.Drawing.Size(57, 19)
@@ -625,6 +660,7 @@ Partial Class 内服病名
         '
         'txtNaihuku14
         '
+        Me.txtNaihuku14.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku14.Location = New System.Drawing.Point(586, 305)
         Me.txtNaihuku14.Name = "txtNaihuku14"
         Me.txtNaihuku14.Size = New System.Drawing.Size(157, 19)
@@ -632,6 +668,7 @@ Partial Class 内服病名
         '
         'txtJikann15
         '
+        Me.txtJikann15.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann15.Location = New System.Drawing.Point(807, 323)
         Me.txtJikann15.Name = "txtJikann15"
         Me.txtJikann15.Size = New System.Drawing.Size(57, 19)
@@ -653,6 +690,7 @@ Partial Class 内服病名
         '
         'txtNaihuku15
         '
+        Me.txtNaihuku15.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku15.Location = New System.Drawing.Point(586, 323)
         Me.txtNaihuku15.Name = "txtNaihuku15"
         Me.txtNaihuku15.Size = New System.Drawing.Size(157, 19)
@@ -660,6 +698,7 @@ Partial Class 内服病名
         '
         'txtJikann16
         '
+        Me.txtJikann16.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtJikann16.Location = New System.Drawing.Point(807, 341)
         Me.txtJikann16.Name = "txtJikann16"
         Me.txtJikann16.Size = New System.Drawing.Size(57, 19)
@@ -681,6 +720,7 @@ Partial Class 内服病名
         '
         'txtNaihuku16
         '
+        Me.txtNaihuku16.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtNaihuku16.Location = New System.Drawing.Point(586, 341)
         Me.txtNaihuku16.Name = "txtNaihuku16"
         Me.txtNaihuku16.Size = New System.Drawing.Size(157, 19)
@@ -688,6 +728,7 @@ Partial Class 内服病名
         '
         'txtTokki1
         '
+        Me.txtTokki1.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtTokki1.Location = New System.Drawing.Point(308, 394)
         Me.txtTokki1.Name = "txtTokki1"
         Me.txtTokki1.Size = New System.Drawing.Size(278, 19)
@@ -695,6 +736,7 @@ Partial Class 内服病名
         '
         'txtTokki2
         '
+        Me.txtTokki2.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtTokki2.Location = New System.Drawing.Point(308, 412)
         Me.txtTokki2.Name = "txtTokki2"
         Me.txtTokki2.Size = New System.Drawing.Size(278, 19)
@@ -702,6 +744,7 @@ Partial Class 内服病名
         '
         'txtTokki3
         '
+        Me.txtTokki3.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtTokki3.Location = New System.Drawing.Point(308, 430)
         Me.txtTokki3.Name = "txtTokki3"
         Me.txtTokki3.Size = New System.Drawing.Size(278, 19)
@@ -709,41 +752,11 @@ Partial Class 内服病名
         '
         'txtTokki4
         '
+        Me.txtTokki4.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtTokki4.Location = New System.Drawing.Point(308, 448)
         Me.txtTokki4.Name = "txtTokki4"
         Me.txtTokki4.Size = New System.Drawing.Size(278, 19)
         Me.txtTokki4.TabIndex = 79
-        '
-        'YmdBox1
-        '
-        Me.YmdBox1.DateText = ""
-        Me.YmdBox1.EraText = ""
-        Me.YmdBox1.FirstLabel = "."
-        Me.YmdBox1.FontSize = 14
-        Me.YmdBox1.Location = New System.Drawing.Point(308, 500)
-        Me.YmdBox1.MonthText = ""
-        Me.YmdBox1.Name = "YmdBox1"
-        Me.YmdBox1.SecondLabel = "."
-        Me.YmdBox1.Size = New System.Drawing.Size(110, 30)
-        Me.YmdBox1.TabIndex = 80
-        '
-        'btnUe
-        '
-        Me.btnUe.Location = New System.Drawing.Point(424, 493)
-        Me.btnUe.Name = "btnUe"
-        Me.btnUe.Size = New System.Drawing.Size(24, 22)
-        Me.btnUe.TabIndex = 81
-        Me.btnUe.Text = "▲"
-        Me.btnUe.UseVisualStyleBackColor = True
-        '
-        'btnSita
-        '
-        Me.btnSita.Location = New System.Drawing.Point(424, 514)
-        Me.btnSita.Name = "btnSita"
-        Me.btnSita.Size = New System.Drawing.Size(24, 22)
-        Me.btnSita.TabIndex = 82
-        Me.btnSita.Text = "▼"
-        Me.btnSita.UseVisualStyleBackColor = True
         '
         'rbnSubete
         '
@@ -752,7 +765,6 @@ Partial Class 内服病名
         Me.rbnSubete.Name = "rbnSubete"
         Me.rbnSubete.Size = New System.Drawing.Size(44, 16)
         Me.rbnSubete.TabIndex = 83
-        Me.rbnSubete.TabStop = True
         Me.rbnSubete.Text = "全て"
         Me.rbnSubete.UseVisualStyleBackColor = True
         '
@@ -763,7 +775,6 @@ Partial Class 内服病名
         Me.rbnA.Name = "rbnA"
         Me.rbnA.Size = New System.Drawing.Size(32, 16)
         Me.rbnA.TabIndex = 84
-        Me.rbnA.TabStop = True
         Me.rbnA.Text = "ア"
         Me.rbnA.UseVisualStyleBackColor = True
         '
@@ -774,7 +785,6 @@ Partial Class 内服病名
         Me.rbnK.Name = "rbnK"
         Me.rbnK.Size = New System.Drawing.Size(32, 16)
         Me.rbnK.TabIndex = 85
-        Me.rbnK.TabStop = True
         Me.rbnK.Text = "カ"
         Me.rbnK.UseVisualStyleBackColor = True
         '
@@ -785,7 +795,6 @@ Partial Class 内服病名
         Me.rbnS.Name = "rbnS"
         Me.rbnS.Size = New System.Drawing.Size(33, 16)
         Me.rbnS.TabIndex = 86
-        Me.rbnS.TabStop = True
         Me.rbnS.Text = "サ"
         Me.rbnS.UseVisualStyleBackColor = True
         '
@@ -796,7 +805,6 @@ Partial Class 内服病名
         Me.rbnT.Name = "rbnT"
         Me.rbnT.Size = New System.Drawing.Size(31, 16)
         Me.rbnT.TabIndex = 87
-        Me.rbnT.TabStop = True
         Me.rbnT.Text = "タ"
         Me.rbnT.UseVisualStyleBackColor = True
         '
@@ -807,7 +815,6 @@ Partial Class 内服病名
         Me.rbnN.Name = "rbnN"
         Me.rbnN.Size = New System.Drawing.Size(33, 16)
         Me.rbnN.TabIndex = 88
-        Me.rbnN.TabStop = True
         Me.rbnN.Text = "ナ"
         Me.rbnN.UseVisualStyleBackColor = True
         '
@@ -818,7 +825,6 @@ Partial Class 内服病名
         Me.rbnKigou.Name = "rbnKigou"
         Me.rbnKigou.Size = New System.Drawing.Size(47, 16)
         Me.rbnKigou.TabIndex = 89
-        Me.rbnKigou.TabStop = True
         Me.rbnKigou.Text = "記号"
         Me.rbnKigou.UseVisualStyleBackColor = True
         '
@@ -829,7 +835,6 @@ Partial Class 内服病名
         Me.rbnH.Name = "rbnH"
         Me.rbnH.Size = New System.Drawing.Size(33, 16)
         Me.rbnH.TabIndex = 90
-        Me.rbnH.TabStop = True
         Me.rbnH.Text = "ハ"
         Me.rbnH.UseVisualStyleBackColor = True
         '
@@ -840,7 +845,6 @@ Partial Class 内服病名
         Me.rbnM.Name = "rbnM"
         Me.rbnM.Size = New System.Drawing.Size(32, 16)
         Me.rbnM.TabIndex = 91
-        Me.rbnM.TabStop = True
         Me.rbnM.Text = "マ"
         Me.rbnM.UseVisualStyleBackColor = True
         '
@@ -851,7 +855,6 @@ Partial Class 内服病名
         Me.rbnY.Name = "rbnY"
         Me.rbnY.Size = New System.Drawing.Size(33, 16)
         Me.rbnY.TabIndex = 92
-        Me.rbnY.TabStop = True
         Me.rbnY.Text = "ヤ"
         Me.rbnY.UseVisualStyleBackColor = True
         '
@@ -862,7 +865,6 @@ Partial Class 内服病名
         Me.rbnR.Name = "rbnR"
         Me.rbnR.Size = New System.Drawing.Size(31, 16)
         Me.rbnR.TabIndex = 93
-        Me.rbnR.TabStop = True
         Me.rbnR.Text = "ラ"
         Me.rbnR.UseVisualStyleBackColor = True
         '
@@ -873,17 +875,24 @@ Partial Class 内服病名
         Me.rbnW.Name = "rbnW"
         Me.rbnW.Size = New System.Drawing.Size(32, 16)
         Me.rbnW.TabIndex = 94
-        Me.rbnW.TabStop = True
         Me.rbnW.Text = "ワ"
         Me.rbnW.UseVisualStyleBackColor = True
         '
         'DataGridView2
         '
+        Me.DataGridView2.AllowUserToAddRows = False
+        Me.DataGridView2.AllowUserToDeleteRows = False
+        Me.DataGridView2.AllowUserToResizeColumns = False
+        Me.DataGridView2.AllowUserToResizeRows = False
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView2.ColumnHeadersVisible = False
         Me.DataGridView2.Location = New System.Drawing.Point(629, 500)
+        Me.DataGridView2.MultiSelect = False
         Me.DataGridView2.Name = "DataGridView2"
+        Me.DataGridView2.ReadOnly = True
         Me.DataGridView2.RowTemplate.Height = 21
-        Me.DataGridView2.Size = New System.Drawing.Size(251, 122)
+        Me.DataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.DataGridView2.Size = New System.Drawing.Size(251, 110)
         Me.DataGridView2.TabIndex = 95
         '
         'btnTouroku
@@ -949,12 +958,70 @@ Partial Class 内服病名
         Me.btnKousinn.Text = "更新"
         Me.btnKousinn.UseVisualStyleBackColor = True
         '
+        'txtNaihukuX
+        '
+        Me.txtNaihukuX.Location = New System.Drawing.Point(487, 28)
+        Me.txtNaihukuX.Name = "txtNaihukuX"
+        Me.txtNaihukuX.Size = New System.Drawing.Size(53, 19)
+        Me.txtNaihukuX.TabIndex = 103
+        Me.txtNaihukuX.Visible = False
+        '
+        'txtRyouX
+        '
+        Me.txtRyouX.Location = New System.Drawing.Point(546, 28)
+        Me.txtRyouX.Name = "txtRyouX"
+        Me.txtRyouX.Size = New System.Drawing.Size(40, 19)
+        Me.txtRyouX.TabIndex = 104
+        Me.txtRyouX.Visible = False
+        '
+        'txtJikannX
+        '
+        Me.txtJikannX.Location = New System.Drawing.Point(629, 28)
+        Me.txtJikannX.Name = "txtJikannX"
+        Me.txtJikannX.Size = New System.Drawing.Size(29, 19)
+        Me.txtJikannX.TabIndex = 105
+        Me.txtJikannX.Visible = False
+        '
+        'DataGridView5
+        '
+        Me.DataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView5.Location = New System.Drawing.Point(798, 95)
+        Me.DataGridView5.Name = "DataGridView5"
+        Me.DataGridView5.RowTemplate.Height = 21
+        Me.DataGridView5.Size = New System.Drawing.Size(10, 10)
+        Me.DataGridView5.TabIndex = 106
+        '
+        'txtKatatiX
+        '
+        Me.txtKatatiX.Location = New System.Drawing.Point(603, 28)
+        Me.txtKatatiX.Name = "txtKatatiX"
+        Me.txtKatatiX.Size = New System.Drawing.Size(20, 19)
+        Me.txtKatatiX.TabIndex = 107
+        Me.txtKatatiX.Visible = False
+        '
+        'YmdBox1
+        '
+        Me.YmdBox1.boxType = 3
+        Me.YmdBox1.DateText = ""
+        Me.YmdBox1.EraText = ""
+        Me.YmdBox1.Location = New System.Drawing.Point(283, 491)
+        Me.YmdBox1.MonthText = ""
+        Me.YmdBox1.Name = "YmdBox1"
+        Me.YmdBox1.Size = New System.Drawing.Size(145, 46)
+        Me.YmdBox1.TabIndex = 108
+        '
         '内服病名
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(917, 643)
+        Me.ClientSize = New System.Drawing.Size(903, 643)
+        Me.Controls.Add(Me.YmdBox1)
+        Me.Controls.Add(Me.txtKatatiX)
         Me.Controls.Add(Me.btnTouroku)
+        Me.Controls.Add(Me.DataGridView5)
+        Me.Controls.Add(Me.txtJikannX)
+        Me.Controls.Add(Me.txtRyouX)
+        Me.Controls.Add(Me.txtNaihukuX)
         Me.Controls.Add(Me.btnKousinn)
         Me.Controls.Add(Me.btnKuria)
         Me.Controls.Add(Me.Label1)
@@ -974,9 +1041,6 @@ Partial Class 内服病名
         Me.Controls.Add(Me.rbnK)
         Me.Controls.Add(Me.rbnA)
         Me.Controls.Add(Me.rbnSubete)
-        Me.Controls.Add(Me.btnSita)
-        Me.Controls.Add(Me.btnUe)
-        Me.Controls.Add(Me.YmdBox1)
         Me.Controls.Add(Me.txtTokki4)
         Me.Controls.Add(Me.txtTokki3)
         Me.Controls.Add(Me.txtTokki2)
@@ -1063,6 +1127,7 @@ Partial Class 内服病名
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1147,9 +1212,6 @@ Partial Class 内服病名
     Friend WithEvents txtTokki2 As System.Windows.Forms.TextBox
     Friend WithEvents txtTokki3 As System.Windows.Forms.TextBox
     Friend WithEvents txtTokki4 As System.Windows.Forms.TextBox
-    Friend WithEvents YmdBox1 As ymdBox.ymdBox
-    Friend WithEvents btnUe As System.Windows.Forms.Button
-    Friend WithEvents btnSita As System.Windows.Forms.Button
     Friend WithEvents rbnSubete As System.Windows.Forms.RadioButton
     Friend WithEvents rbnA As System.Windows.Forms.RadioButton
     Friend WithEvents rbnK As System.Windows.Forms.RadioButton
@@ -1170,4 +1232,10 @@ Partial Class 内服病名
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents btnKuria As System.Windows.Forms.Button
     Friend WithEvents btnKousinn As System.Windows.Forms.Button
+    Friend WithEvents txtNaihukuX As System.Windows.Forms.TextBox
+    Friend WithEvents txtRyouX As System.Windows.Forms.TextBox
+    Friend WithEvents txtJikannX As System.Windows.Forms.TextBox
+    Friend WithEvents DataGridView5 As System.Windows.Forms.DataGridView
+    Friend WithEvents txtKatatiX As System.Windows.Forms.TextBox
+    Friend WithEvents YmdBox1 As ymdBox.ymdBox
 End Class

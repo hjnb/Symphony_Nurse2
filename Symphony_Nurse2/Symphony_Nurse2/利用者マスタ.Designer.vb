@@ -217,12 +217,9 @@ Partial Class 利用者マスタ
         '
         Me.birthYmdBox.DateText = ""
         Me.birthYmdBox.EraText = ""
-        Me.birthYmdBox.FirstLabel = "."
-        Me.birthYmdBox.FontSize = 9
         Me.birthYmdBox.Location = New System.Drawing.Point(361, 84)
         Me.birthYmdBox.MonthText = ""
         Me.birthYmdBox.Name = "birthYmdBox"
-        Me.birthYmdBox.SecondLabel = "."
         Me.birthYmdBox.Size = New System.Drawing.Size(88, 24)
         Me.birthYmdBox.TabIndex = 4
         '

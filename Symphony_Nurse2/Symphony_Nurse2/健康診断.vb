@@ -16,6 +16,21 @@ Public Class 健康診断
         Me.StartPosition = FormStartPosition.Manual
         Me.DesktopLocation = New Point(0, 50)
 
+        With DataGridView1
+            .RowTemplate.Height = 18
+            .AllowUserToAddRows = False '行追加禁止
+            .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
+            .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
+            .AllowUserToDeleteRows = False
+            .RowHeadersVisible = False '行ヘッダー削除
+            .ColumnHeadersVisible = False '列ヘッダー削除
+            .ReadOnly = True '編集禁止
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect 'クリック時に行選択
+            .MultiSelect = False
+            .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
+            .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+        End With
+
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
         Dim Adapter As New OleDbDataAdapter(SQLCm)
@@ -29,18 +44,6 @@ Public Class 健康診断
             .Columns.Add("Nam", "氏名")
             .Columns(0).Width = 30
             .Columns(1).Width = 100
-            .RowTemplate.Height = 18
-            .AllowUserToAddRows = False '行追加禁止
-            .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
-            .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
-            .AllowUserToDeleteRows = False
-            .RowHeadersVisible = False '行ヘッダー削除
-            .ColumnHeadersVisible = False '列ヘッダー削除
-            .ReadOnly = True '編集禁止
-            .SelectionMode = DataGridViewSelectionMode.FullRowSelect 'クリック時に行選択
-            .MultiSelect = False
-            .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
-            .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         End With
 
         '名前をセット
@@ -156,6 +159,44 @@ line1:
         lblID.Text = ""
 
         KeyPreview = True
+
+        With DataGridView5
+            .RowTemplate.Height = 16
+            .AllowUserToAddRows = False '行追加禁止
+            .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
+            .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
+            .AllowUserToDeleteRows = False
+            '.RowHeadersVisible = False '行ヘッダー削除
+            .ColumnHeadersVisible = False '列ヘッダー削除
+            .ReadOnly = True '編集禁止
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect 'クリック時に行選択
+            .MultiSelect = False
+            .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
+            .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+        End With
+
+        Dim SQLCm5 As OleDbCommand = Cn.CreateCommand
+        Dim Adapter5 As New OleDbDataAdapter(SQLCm5)
+        Dim Table5 As New DataTable
+        SQLCm5.CommandText = "select * from Kenkou order by Kou"
+        Adapter5.Fill(Table5)
+        DataGridView5.DataSource = Table5
+
+        For i As Integer = 1 To 15
+            For r As Integer = 0 To DataGridView5.Rows.Count - 1
+                If DataGridView5(0, r).Value = 0 Then
+                    CType(Controls("cmbSaiketu" & i), ComboBox).Items.Add(DataGridView5(1, r).Value)
+                End If
+            Next
+        Next
+
+        For i As Integer = 1 To 6
+            For r As Integer = 0 To DataGridView5.Rows.Count - 1
+                If DataGridView5(0, r).Value = 1 Then
+                    CType(Controls("cmbKennsa" & i), ComboBox).Items.Add(DataGridView5(1, r).Value)
+                End If
+            Next
+        Next
     End Sub
 
     Private Sub DataGridView1_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles DataGridView1.CellMouseClick
@@ -164,10 +205,11 @@ line1:
 
         Dim s As Integer = DataGridView1.CurrentRow.Index
         lblName.Text = DataGridView1(1, s).Value
+        Dim DGV3rowcount As Integer = DataGridView3.Rows.Count
         If DataGridView1(0, s).Value <> "" Then         '部屋番号がある行を選択したとき
             If s < 11 Then
                 lblHeya.Text = "空　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(2, i).Value Then
                         lblID.Text = DataGridView3(1, i).Value
                         lblHurigana.Text = DataGridView3(3, i).Value
@@ -176,7 +218,7 @@ line1:
                 Next
             ElseIf s < 22 Then
                 lblHeya.Text = "森　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(5, i).Value Then
                         lblID.Text = DataGridView3(4, i).Value
                         lblHurigana.Text = DataGridView3(6, i).Value
@@ -185,7 +227,7 @@ line1:
                 Next
             ElseIf s < 33 Then
                 lblHeya.Text = "星　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(8, i).Value Then
                         lblID.Text = DataGridView3(7, i).Value
                         lblHurigana.Text = DataGridView3(9, i).Value
@@ -194,7 +236,7 @@ line1:
                 Next
             ElseIf s < 44 Then
                 lblHeya.Text = "月　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(11, i).Value Then
                         lblID.Text = DataGridView3(10, i).Value
                         lblHurigana.Text = DataGridView3(12, i).Value
@@ -203,7 +245,7 @@ line1:
                 Next
             ElseIf s < 55 Then
                 lblHeya.Text = "花　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(14, i).Value Then
                         lblID.Text = DataGridView3(13, i).Value
                         lblHurigana.Text = DataGridView3(15, i).Value
@@ -212,7 +254,7 @@ line1:
                 Next
             ElseIf s < 66 Then
                 lblHeya.Text = "丘　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(17, i).Value Then
                         lblID.Text = DataGridView3(16, i).Value
                         lblHurigana.Text = DataGridView3(18, i).Value
@@ -221,7 +263,7 @@ line1:
                 Next
             ElseIf s < 77 Then
                 lblHeya.Text = "虹　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(20, i).Value Then
                         lblID.Text = DataGridView3(19, i).Value
                         lblHurigana.Text = DataGridView3(21, i).Value
@@ -230,7 +272,7 @@ line1:
                 Next
             ElseIf s < 88 Then
                 lblHeya.Text = "光　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(23, i).Value Then
                         lblID.Text = DataGridView3(22, i).Value
                         lblHurigana.Text = DataGridView3(24, i).Value
@@ -239,7 +281,7 @@ line1:
                 Next
             ElseIf s < 99 Then
                 lblHeya.Text = "雪　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(26, i).Value Then
                         lblID.Text = DataGridView3(25, i).Value
                         lblHurigana.Text = DataGridView3(27, i).Value
@@ -248,7 +290,7 @@ line1:
                 Next
             ElseIf s < 110 Then
                 lblHeya.Text = "風　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(29, i).Value Then
                         lblID.Text = DataGridView3(28, i).Value
                         lblHurigana.Text = DataGridView3(30, i).Value
@@ -293,57 +335,64 @@ line1:
             End If
         End If
 
-        With DataGridView2
-            .RowTemplate.Height = 16
-            .AllowUserToAddRows = False '行追加禁止
-            .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
-            .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
-            .AllowUserToDeleteRows = False
-            '.RowHeadersVisible = False '行ヘッダー削除
-            .ColumnHeadersVisible = False '列ヘッダー削除
-            .ReadOnly = True '編集禁止
-            .SelectionMode = DataGridViewSelectionMode.FullRowSelect 'クリック時に行選択
-            .MultiSelect = False
-            .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
-            .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-        End With
+        If DataGridView2.Rows.Count > 1 Then
 
-        Dim SQLCm2 As OleDbCommand = Cn.CreateCommand
-        Dim Adapter2 As New OleDbDataAdapter(SQLCm2)
-        Dim Table2 As New DataTable
-        SQLCm2.CommandText = "select * from Kenkou order by Kou"
-        Adapter2.Fill(Table2)
-        DataGridView2.DataSource = Table2
+        Else
+            With DataGridView2
+                .RowTemplate.Height = 16
+                .AllowUserToAddRows = False '行追加禁止
+                .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
+                .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
+                .AllowUserToDeleteRows = False
+                '.RowHeadersVisible = False '行ヘッダー削除
+                .ColumnHeadersVisible = False '列ヘッダー削除
+                .ReadOnly = True '編集禁止
+                .SelectionMode = DataGridViewSelectionMode.FullRowSelect 'クリック時に行選択
+                .MultiSelect = False
+                .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
+                .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+            End With
 
-        With DataGridView2
-            .RowHeadersWidth = 20
-            .Columns(0).Visible = False
-            .Columns(1).Width = 100
-        End With
+            Dim SQLCm2 As OleDbCommand = Cn.CreateCommand
+            Dim Adapter2 As New OleDbDataAdapter(SQLCm2)
+            Dim Table2 As New DataTable
+            SQLCm2.CommandText = "select * from Kenkou order by Kou"
+            Adapter2.Fill(Table2)
+            DataGridView2.DataSource = Table2
 
-        For i As Integer = 1 To 15
-            CType(Controls("cmbSaiketu" & i), ComboBox).Items.Clear()
-        Next
+            With DataGridView2
+                .RowHeadersWidth = 20
+                .Columns(0).Visible = False
+                .Columns(1).Width = 100
+            End With
 
-        For i As Integer = 1 To 6
-            CType(Controls("cmbKennsa" & i), ComboBox).Items.Clear()
-        Next
+            'For i As Integer = 1 To 15
+            '    CType(Controls("cmbSaiketu" & i), ComboBox).Items.Clear()
+            'Next
 
-        For i As Integer = 1 To 15
-            For r As Integer = 0 To DataGridView2.Rows.Count - 1
-                If DataGridView2(0, r).Value = 0 Then
-                    CType(Controls("cmbSaiketu" & i), ComboBox).Items.Add(DataGridView2(1, r).Value)
-                End If
-            Next
-        Next
+            'For i As Integer = 1 To 6
+            '    CType(Controls("cmbKennsa" & i), ComboBox).Items.Clear()
+            'Next
 
-        For i As Integer = 1 To 6
-            For r As Integer = 0 To DataGridView2.Rows.Count - 1
-                If DataGridView2(0, r).Value = 1 Then
-                    CType(Controls("cmbKennsa" & i), ComboBox).Items.Add(DataGridView2(1, r).Value)
-                End If
-            Next
-        Next
+            'For i As Integer = 1 To 15
+            '    For r As Integer = 0 To DataGridView2.Rows.Count - 1
+            '        If DataGridView2(0, r).Value = 0 Then
+            '            CType(Controls("cmbSaiketu" & i), ComboBox).Items.Add(DataGridView2(1, r).Value)
+            '        End If
+            '    Next
+            'Next
+
+            'For i As Integer = 1 To 6
+            '    For r As Integer = 0 To DataGridView2.Rows.Count - 1
+            '        If DataGridView2(0, r).Value = 1 Then
+            '            CType(Controls("cmbKennsa" & i), ComboBox).Items.Add(DataGridView2(1, r).Value)
+            '        End If
+            '    Next
+            'Next
+
+        End If
+
+        
 
 
     End Sub
@@ -453,12 +502,11 @@ line1:
             btnKousinn.PerformClick()
         End If
     End Sub
-
     Private Sub Hennkou()
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
         Dim SQL As String = ""
-        SQL = "DELETE FROM Kensin WHERE (Id = " & lblID.Text & ") AND (Ymd ='" & YmdBox1.getADStr() & "')"
+        SQL = "DELETE FROM Kensin WHERE Id = " & lblID.Text
         SQLCm.CommandText = SQL
         Cn.Open()
         SQLCm.ExecuteNonQuery()
@@ -469,7 +517,6 @@ line1:
 
         Tuika()
     End Sub
-
     Private Sub Tuika()
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
@@ -521,10 +568,9 @@ line1:
         Cn.Dispose()
 
         'オート保存の部分
-        AutoHozonn()
+        AutoSave()
     End Sub
-
-    Private Sub AutoHozonn()
+    Private Sub AutoSave()
         '採血項目のcmbboxを見る
         For Saiketu As Integer = 1 To 15
             If Controls("cmbSaiketu" & Saiketu).Text <> "" Then     'cmbboxが空じゃないとき

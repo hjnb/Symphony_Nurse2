@@ -58,9 +58,6 @@ Partial Class 健康診断
         Me.txtTokki2 = New System.Windows.Forms.TextBox()
         Me.txtTokki3 = New System.Windows.Forms.TextBox()
         Me.txtTokki4 = New System.Windows.Forms.TextBox()
-        Me.YmdBox1 = New ymdBox.ymdBox()
-        Me.btnSita = New System.Windows.Forms.Button()
-        Me.btnUe = New System.Windows.Forms.Button()
         Me.btnTouroku = New System.Windows.Forms.Button()
         Me.btnInnsatu = New System.Windows.Forms.Button()
         Me.DataGridView2 = New System.Windows.Forms.DataGridView()
@@ -76,10 +73,13 @@ Partial Class 健康診断
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
+        Me.DataGridView5 = New System.Windows.Forms.DataGridView()
+        Me.YmdBox1 = New ymdBox.ymdBox()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'DataGridView1
@@ -186,6 +186,7 @@ Partial Class 健康診断
         'cmbKikann
         '
         Me.cmbKikann.FormattingEnabled = True
+        Me.cmbKikann.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbKikann.Items.AddRange(New Object() {"１ヶ月毎", "３ヶ月毎", "６ヶ月毎"})
         Me.cmbKikann.Location = New System.Drawing.Point(347, 79)
         Me.cmbKikann.Name = "cmbKikann"
@@ -195,6 +196,7 @@ Partial Class 健康診断
         'cmbSaiketu1
         '
         Me.cmbSaiketu1.FormattingEnabled = True
+        Me.cmbSaiketu1.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu1.Location = New System.Drawing.Point(347, 123)
         Me.cmbSaiketu1.Name = "cmbSaiketu1"
         Me.cmbSaiketu1.Size = New System.Drawing.Size(134, 20)
@@ -203,6 +205,7 @@ Partial Class 健康診断
         'cmbSaiketu2
         '
         Me.cmbSaiketu2.FormattingEnabled = True
+        Me.cmbSaiketu2.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu2.Location = New System.Drawing.Point(347, 142)
         Me.cmbSaiketu2.Name = "cmbSaiketu2"
         Me.cmbSaiketu2.Size = New System.Drawing.Size(134, 20)
@@ -211,6 +214,7 @@ Partial Class 健康診断
         'cmbSaiketu3
         '
         Me.cmbSaiketu3.FormattingEnabled = True
+        Me.cmbSaiketu3.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu3.Location = New System.Drawing.Point(347, 161)
         Me.cmbSaiketu3.Name = "cmbSaiketu3"
         Me.cmbSaiketu3.Size = New System.Drawing.Size(134, 20)
@@ -219,6 +223,7 @@ Partial Class 健康診断
         'cmbSaiketu4
         '
         Me.cmbSaiketu4.FormattingEnabled = True
+        Me.cmbSaiketu4.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu4.Location = New System.Drawing.Point(347, 180)
         Me.cmbSaiketu4.Name = "cmbSaiketu4"
         Me.cmbSaiketu4.Size = New System.Drawing.Size(134, 20)
@@ -227,6 +232,7 @@ Partial Class 健康診断
         'cmbSaiketu5
         '
         Me.cmbSaiketu5.FormattingEnabled = True
+        Me.cmbSaiketu5.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu5.Location = New System.Drawing.Point(347, 199)
         Me.cmbSaiketu5.Name = "cmbSaiketu5"
         Me.cmbSaiketu5.Size = New System.Drawing.Size(134, 20)
@@ -235,6 +241,7 @@ Partial Class 健康診断
         'cmbSaiketu10
         '
         Me.cmbSaiketu10.FormattingEnabled = True
+        Me.cmbSaiketu10.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu10.Location = New System.Drawing.Point(480, 199)
         Me.cmbSaiketu10.Name = "cmbSaiketu10"
         Me.cmbSaiketu10.Size = New System.Drawing.Size(133, 20)
@@ -243,6 +250,7 @@ Partial Class 健康診断
         'cmbSaiketu9
         '
         Me.cmbSaiketu9.FormattingEnabled = True
+        Me.cmbSaiketu9.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu9.Location = New System.Drawing.Point(480, 180)
         Me.cmbSaiketu9.Name = "cmbSaiketu9"
         Me.cmbSaiketu9.Size = New System.Drawing.Size(133, 20)
@@ -251,6 +259,7 @@ Partial Class 健康診断
         'cmbSaiketu8
         '
         Me.cmbSaiketu8.FormattingEnabled = True
+        Me.cmbSaiketu8.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu8.Location = New System.Drawing.Point(480, 161)
         Me.cmbSaiketu8.Name = "cmbSaiketu8"
         Me.cmbSaiketu8.Size = New System.Drawing.Size(133, 20)
@@ -259,6 +268,7 @@ Partial Class 健康診断
         'cmbSaiketu7
         '
         Me.cmbSaiketu7.FormattingEnabled = True
+        Me.cmbSaiketu7.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu7.Location = New System.Drawing.Point(480, 142)
         Me.cmbSaiketu7.Name = "cmbSaiketu7"
         Me.cmbSaiketu7.Size = New System.Drawing.Size(133, 20)
@@ -267,6 +277,7 @@ Partial Class 健康診断
         'cmbSaiketu6
         '
         Me.cmbSaiketu6.FormattingEnabled = True
+        Me.cmbSaiketu6.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu6.Location = New System.Drawing.Point(480, 123)
         Me.cmbSaiketu6.Name = "cmbSaiketu6"
         Me.cmbSaiketu6.Size = New System.Drawing.Size(133, 20)
@@ -275,6 +286,7 @@ Partial Class 健康診断
         'cmbSaiketu15
         '
         Me.cmbSaiketu15.FormattingEnabled = True
+        Me.cmbSaiketu15.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu15.Location = New System.Drawing.Point(612, 199)
         Me.cmbSaiketu15.Name = "cmbSaiketu15"
         Me.cmbSaiketu15.Size = New System.Drawing.Size(141, 20)
@@ -283,6 +295,7 @@ Partial Class 健康診断
         'cmbSaiketu14
         '
         Me.cmbSaiketu14.FormattingEnabled = True
+        Me.cmbSaiketu14.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu14.Location = New System.Drawing.Point(612, 180)
         Me.cmbSaiketu14.Name = "cmbSaiketu14"
         Me.cmbSaiketu14.Size = New System.Drawing.Size(141, 20)
@@ -291,6 +304,7 @@ Partial Class 健康診断
         'cmbSaiketu13
         '
         Me.cmbSaiketu13.FormattingEnabled = True
+        Me.cmbSaiketu13.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu13.Location = New System.Drawing.Point(612, 161)
         Me.cmbSaiketu13.Name = "cmbSaiketu13"
         Me.cmbSaiketu13.Size = New System.Drawing.Size(141, 20)
@@ -299,6 +313,7 @@ Partial Class 健康診断
         'cmbSaiketu12
         '
         Me.cmbSaiketu12.FormattingEnabled = True
+        Me.cmbSaiketu12.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu12.Location = New System.Drawing.Point(612, 142)
         Me.cmbSaiketu12.Name = "cmbSaiketu12"
         Me.cmbSaiketu12.Size = New System.Drawing.Size(141, 20)
@@ -307,6 +322,7 @@ Partial Class 健康診断
         'cmbSaiketu11
         '
         Me.cmbSaiketu11.FormattingEnabled = True
+        Me.cmbSaiketu11.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbSaiketu11.Location = New System.Drawing.Point(612, 123)
         Me.cmbSaiketu11.Name = "cmbSaiketu11"
         Me.cmbSaiketu11.Size = New System.Drawing.Size(141, 20)
@@ -315,6 +331,7 @@ Partial Class 健康診断
         'cmbKennsa1
         '
         Me.cmbKennsa1.FormattingEnabled = True
+        Me.cmbKennsa1.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbKennsa1.Location = New System.Drawing.Point(347, 242)
         Me.cmbKennsa1.Name = "cmbKennsa1"
         Me.cmbKennsa1.Size = New System.Drawing.Size(134, 20)
@@ -323,6 +340,7 @@ Partial Class 健康診断
         'cmbKennsa2
         '
         Me.cmbKennsa2.FormattingEnabled = True
+        Me.cmbKennsa2.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbKennsa2.Location = New System.Drawing.Point(347, 261)
         Me.cmbKennsa2.Name = "cmbKennsa2"
         Me.cmbKennsa2.Size = New System.Drawing.Size(134, 20)
@@ -331,6 +349,7 @@ Partial Class 健康診断
         'cmbKennsa3
         '
         Me.cmbKennsa3.FormattingEnabled = True
+        Me.cmbKennsa3.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbKennsa3.Location = New System.Drawing.Point(347, 280)
         Me.cmbKennsa3.Name = "cmbKennsa3"
         Me.cmbKennsa3.Size = New System.Drawing.Size(134, 20)
@@ -339,6 +358,7 @@ Partial Class 健康診断
         'cmbKennsa4
         '
         Me.cmbKennsa4.FormattingEnabled = True
+        Me.cmbKennsa4.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbKennsa4.Location = New System.Drawing.Point(347, 299)
         Me.cmbKennsa4.Name = "cmbKennsa4"
         Me.cmbKennsa4.Size = New System.Drawing.Size(134, 20)
@@ -347,6 +367,7 @@ Partial Class 健康診断
         'cmbKennsa5
         '
         Me.cmbKennsa5.FormattingEnabled = True
+        Me.cmbKennsa5.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbKennsa5.Location = New System.Drawing.Point(347, 318)
         Me.cmbKennsa5.Name = "cmbKennsa5"
         Me.cmbKennsa5.Size = New System.Drawing.Size(134, 20)
@@ -355,6 +376,7 @@ Partial Class 健康診断
         'cmbKennsa6
         '
         Me.cmbKennsa6.FormattingEnabled = True
+        Me.cmbKennsa6.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.cmbKennsa6.Location = New System.Drawing.Point(347, 337)
         Me.cmbKennsa6.Name = "cmbKennsa6"
         Me.cmbKennsa6.Size = New System.Drawing.Size(134, 20)
@@ -362,6 +384,7 @@ Partial Class 健康診断
         '
         'txtTokki1
         '
+        Me.txtTokki1.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtTokki1.Location = New System.Drawing.Point(347, 385)
         Me.txtTokki1.Name = "txtTokki1"
         Me.txtTokki1.Size = New System.Drawing.Size(243, 19)
@@ -369,6 +392,7 @@ Partial Class 健康診断
         '
         'txtTokki2
         '
+        Me.txtTokki2.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtTokki2.Location = New System.Drawing.Point(347, 403)
         Me.txtTokki2.Name = "txtTokki2"
         Me.txtTokki2.Size = New System.Drawing.Size(243, 19)
@@ -376,6 +400,7 @@ Partial Class 健康診断
         '
         'txtTokki3
         '
+        Me.txtTokki3.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtTokki3.Location = New System.Drawing.Point(347, 421)
         Me.txtTokki3.Name = "txtTokki3"
         Me.txtTokki3.Size = New System.Drawing.Size(243, 19)
@@ -383,41 +408,11 @@ Partial Class 健康診断
         '
         'txtTokki4
         '
+        Me.txtTokki4.ImeMode = System.Windows.Forms.ImeMode.Hiragana
         Me.txtTokki4.Location = New System.Drawing.Point(347, 439)
         Me.txtTokki4.Name = "txtTokki4"
         Me.txtTokki4.Size = New System.Drawing.Size(243, 19)
         Me.txtTokki4.TabIndex = 38
-        '
-        'YmdBox1
-        '
-        Me.YmdBox1.DateText = ""
-        Me.YmdBox1.EraText = ""
-        Me.YmdBox1.FirstLabel = "."
-        Me.YmdBox1.FontSize = 14
-        Me.YmdBox1.Location = New System.Drawing.Point(347, 490)
-        Me.YmdBox1.MonthText = ""
-        Me.YmdBox1.Name = "YmdBox1"
-        Me.YmdBox1.SecondLabel = "."
-        Me.YmdBox1.Size = New System.Drawing.Size(110, 30)
-        Me.YmdBox1.TabIndex = 39
-        '
-        'btnSita
-        '
-        Me.btnSita.Location = New System.Drawing.Point(467, 504)
-        Me.btnSita.Name = "btnSita"
-        Me.btnSita.Size = New System.Drawing.Size(24, 22)
-        Me.btnSita.TabIndex = 84
-        Me.btnSita.Text = "▼"
-        Me.btnSita.UseVisualStyleBackColor = True
-        '
-        'btnUe
-        '
-        Me.btnUe.Location = New System.Drawing.Point(467, 483)
-        Me.btnUe.Name = "btnUe"
-        Me.btnUe.Size = New System.Drawing.Size(24, 22)
-        Me.btnUe.TabIndex = 83
-        Me.btnUe.Text = "▲"
-        Me.btnUe.UseVisualStyleBackColor = True
         '
         'btnTouroku
         '
@@ -554,11 +549,34 @@ Partial Class 健康診断
         Me.Label12.TabIndex = 110
         Me.Label12.Text = "Label12"
         '
+        'DataGridView5
+        '
+        Me.DataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView5.Location = New System.Drawing.Point(621, 65)
+        Me.DataGridView5.Name = "DataGridView5"
+        Me.DataGridView5.RowTemplate.Height = 21
+        Me.DataGridView5.Size = New System.Drawing.Size(10, 10)
+        Me.DataGridView5.TabIndex = 111
+        '
+        'YmdBox1
+        '
+        Me.YmdBox1.boxType = 3
+        Me.YmdBox1.DateText = ""
+        Me.YmdBox1.EraText = ""
+        Me.YmdBox1.Location = New System.Drawing.Point(347, 482)
+        Me.YmdBox1.MonthText = ""
+        Me.YmdBox1.Name = "YmdBox1"
+        Me.YmdBox1.Size = New System.Drawing.Size(145, 46)
+        Me.YmdBox1.TabIndex = 112
+        '
         '健康診断
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(864, 718)
+        Me.ClientSize = New System.Drawing.Size(851, 718)
+        Me.Controls.Add(Me.YmdBox1)
+        Me.Controls.Add(Me.btnTouroku)
+        Me.Controls.Add(Me.DataGridView5)
         Me.Controls.Add(Me.btnInnsatu)
         Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.Label11)
@@ -573,10 +591,6 @@ Partial Class 健康診断
         Me.Controls.Add(Me.DataGridView3)
         Me.Controls.Add(Me.btnSakujo)
         Me.Controls.Add(Me.DataGridView2)
-        Me.Controls.Add(Me.btnTouroku)
-        Me.Controls.Add(Me.btnSita)
-        Me.Controls.Add(Me.btnUe)
-        Me.Controls.Add(Me.YmdBox1)
         Me.Controls.Add(Me.txtTokki4)
         Me.Controls.Add(Me.txtTokki3)
         Me.Controls.Add(Me.txtTokki2)
@@ -619,6 +633,7 @@ Partial Class 健康診断
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -659,9 +674,6 @@ Partial Class 健康診断
     Friend WithEvents txtTokki2 As System.Windows.Forms.TextBox
     Friend WithEvents txtTokki3 As System.Windows.Forms.TextBox
     Friend WithEvents txtTokki4 As System.Windows.Forms.TextBox
-    Friend WithEvents YmdBox1 As ymdBox.ymdBox
-    Friend WithEvents btnSita As System.Windows.Forms.Button
-    Friend WithEvents btnUe As System.Windows.Forms.Button
     Friend WithEvents btnTouroku As System.Windows.Forms.Button
     Friend WithEvents btnInnsatu As System.Windows.Forms.Button
     Friend WithEvents DataGridView2 As System.Windows.Forms.DataGridView
@@ -677,4 +689,6 @@ Partial Class 健康診断
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents DataGridView5 As System.Windows.Forms.DataGridView
+    Friend WithEvents YmdBox1 As ymdBox.ymdBox
 End Class

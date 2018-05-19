@@ -90,7 +90,7 @@ Public Class 温度板
 
     Private Sub 温度板_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Me.StartPosition = FormStartPosition.Manual
-        Me.DesktopLocation = New Point(0, 50)
+        Me.DesktopLocation = New Point(210, 50)
 
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
@@ -200,7 +200,7 @@ Public Class 温度板
 
     Private Sub DataGridView1_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles DataGridView1.CellMouseClick
         Dim r As Integer = DataGridView1.CurrentRow.Index
-        YmdBox1.setADStr(DataGridView1(2, r).Value)
+        AdBox1.setADStr(DataGridView1(2, r).Value)
         TimeBox1.HourText = Strings.Left(DataGridView1(3, r).Value, 2)
         TimeBox1.MinuteText = Strings.Right(DataGridView1(3, r).Value, 2)
         cmbKisaisya.Text = DataGridView1(4, r).Value
@@ -260,14 +260,14 @@ Public Class 温度板
     End Sub
 
     Private Sub btnTouroku_Click(sender As System.Object, e As System.EventArgs) Handles btnTouroku.Click
-        If YmdBox1.getADStr() = "" Then
+        If AdBox1.getADStr() = "" Then
             MsgBox("日付を入力してください。")
             Return
         End If
 
         Dim count As Integer = DataGridView1.Rows.Count
         For i As Integer = 0 To count - 1
-            If YmdBox1.getADStr() = DataGridView1("日付", i).Value AndAlso TimeBox1.GetTime() = DataGridView1("時刻", i).Value Then
+            If AdBox1.getADStr() = DataGridView1("日付", i).Value AndAlso TimeBox1.GetTime() = DataGridView1("時刻", i).Value Then
                 '日付と時刻が同じ行があったら変更
                 Hennkou()
                 btnKousinn.PerformClick()
@@ -283,7 +283,7 @@ Public Class 温度板
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
         Dim SQL As String = ""
-        SQL = "DELETE FROM OndoD WHERE (Id = " & lblID.Text & ") AND (Ymd ='" & YmdBox1.getADStr() & "') AND (Hm = '" & TimeBox1.GetTime() & "')"
+        SQL = "DELETE FROM OndoD WHERE (Id = " & lblID.Text & ") AND (Ymd ='" & AdBox1.getADStr() & "') AND (Hm = '" & TimeBox1.GetTime() & "')"
         SQLCm.CommandText = SQL
         Cn.Open()
         SQLCm.ExecuteNonQuery()
@@ -302,7 +302,7 @@ Public Class 温度板
         Dim Row As DataRow = Table.NewRow
 
         Row("Id") = lblID.Text
-        Row("日付") = YmdBox1.getADStr()
+        Row("日付") = AdBox1.getADStr()
         Row("時刻") = TimeBox1.GetTime()
         Row("記載者") = cmbKisaisya.Text
         Row("体温") = txtTaionn.Text
@@ -347,7 +347,7 @@ Public Class 温度板
             Return
         End If
 
-        If YmdBox1.getADStr() <> DataGridView1("日付", selectedRowIndex).Value OrElse TimeBox1.GetTime() <> DataGridView1("時刻", selectedRowIndex).Value AndAlso MessageBox.Show("データを削除しますか？", "削除確認", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.No Then
+        If AdBox1.getADStr() <> DataGridView1("日付", selectedRowIndex).Value OrElse TimeBox1.GetTime() <> DataGridView1("時刻", selectedRowIndex).Value AndAlso MessageBox.Show("データを削除しますか？", "削除確認", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.No Then
             Return
         Else
             Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
@@ -442,7 +442,7 @@ Public Class 温度板
     End Sub
 
     Private Sub btnKuria_Click(sender As System.Object, e As System.EventArgs) Handles btnKuria.Click
-        YmdBox1.clearText()
+        AdBox1.clearText()
         cmbKisaisya.Text = ""
         txtTaionn.Text = ""
         txtMyaku.Text = ""
@@ -455,4 +455,36 @@ Public Class 温度板
         txtSyoti1.Text = ""
         txtSyoti2.Text = ""
     End Sub
+
+    Private Sub btnTimeUe_Click(sender As System.Object, e As System.EventArgs)
+
+
+
+    End Sub
+
+    Private Sub btnTimeSita_Click(sender As System.Object, e As System.EventArgs)
+
+    End Sub
+
+    Private Sub textBoxinput_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles txtTaionn.KeyDown, txtMyaku.KeyDown, txtKetuatuUe.KeyDown, txtKetuatuSita.KeyDown, txtKettouti.KeyDown, txtSinntyou.KeyDown, txtTaijuu.KeyDown
+        'アクティブなコントロールを取得
+        Dim cControl As TextBox = Me.ActiveControl  'イベント発生は指定のテキストボックスのときだけなのでTextBox型で宣言
+
+        If e.KeyCode = Windows.Forms.Keys.Left Then
+            'カーソルを左に動かす
+        ElseIf e.KeyCode = Windows.Forms.Keys.Right Then
+            'カーソルを右に動かす
+        ElseIf (Keys.NumPad0 <= e.KeyCode AndAlso e.KeyCode <= Keys.NumPad9) OrElse (Keys.D0 <= e.KeyCode AndAlso e.KeyCode <= Keys.D9) Then
+            '数字の処理
+        ElseIf e.KeyCode = Keys.Decimal OrElse e.KeyCode = 190 Then
+            '小数点の処理
+        ElseIf cControl.SelectionLength > 0 AndAlso e.KeyCode = Keys.Delete Then    'アクティブなコントロールで選択されている文字数が1文字以上のとき
+            '文字が選択されてDelキーが押された処理
+            cControl.SelectedText = ""      'アクティブなコントロールで選択された文字を空にする
+        Else
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+
+    
 End Class

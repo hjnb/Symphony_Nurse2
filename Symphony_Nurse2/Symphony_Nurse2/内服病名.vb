@@ -16,6 +16,36 @@ Public Class 内服病名
         Me.StartPosition = FormStartPosition.Manual
         Me.DesktopLocation = New Point(0, 50)
 
+        With DataGridView1
+            .RowTemplate.Height = 18
+            .AllowUserToAddRows = False '行追加禁止
+            .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
+            .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
+            .AllowUserToDeleteRows = False
+            .RowHeadersVisible = False '行ヘッダー削除
+            .ColumnHeadersVisible = False '列ヘッダー削除
+            .ReadOnly = True '編集禁止
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect 'クリック時に行選択
+            .MultiSelect = False
+            .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
+            .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+        End With
+
+        With DataGridView2
+            .RowTemplate.Height = 16
+            .AllowUserToAddRows = False '行追加禁止
+            .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
+            .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
+            .AllowUserToDeleteRows = False
+            '.RowHeadersVisible = False '行ヘッダー削除
+            .ColumnHeadersVisible = False '列ヘッダー削除
+            .ReadOnly = True '編集禁止
+            .SelectionMode = DataGridViewSelectionMode.FullRowSelect 'クリック時に行選択
+            .MultiSelect = False
+            .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
+            .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+        End With
+
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
         Dim Adapter As New OleDbDataAdapter(SQLCm)
@@ -29,18 +59,6 @@ Public Class 内服病名
             .Columns.Add("Nam", "氏名")
             .Columns(0).Width = 30
             .Columns(1).Width = 100
-            .RowTemplate.Height = 18
-            .AllowUserToAddRows = False '行追加禁止
-            .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
-            .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
-            .AllowUserToDeleteRows = False
-            .RowHeadersVisible = False '行ヘッダー削除
-            .ColumnHeadersVisible = False '列ヘッダー削除
-            .ReadOnly = True '編集禁止
-            .SelectionMode = DataGridViewSelectionMode.FullRowSelect 'クリック時に行選択
-            .MultiSelect = False
-            .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
-            .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         End With
 
         '名前をセット
@@ -156,6 +174,16 @@ line1:
         lblID.Text = ""
 
         KeyPreview = True
+
+        rbnSubete.Checked = True
+
+        Dim SQLCm5 As OleDbCommand = Cn.CreateCommand
+        Dim Adapter5 As New OleDbDataAdapter(SQLCm5)
+        Dim Table5 As New DataTable
+
+        SQLCm5.CommandText = "select Md1, Md2, Md4 from BshtMd order by Md1, Md2, Md4"
+        Adapter5.Fill(Table5)
+        DataGridView5.DataSource = Table5
     End Sub
 
     Private Sub DataGridView1_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles DataGridView1.CellMouseClick
@@ -163,10 +191,11 @@ line1:
         DataGridView4.Columns.Clear()
         Dim s As Integer = DataGridView1.CurrentRow.Index
         lblName.Text = DataGridView1(1, s).Value
+        Dim DGV3rowcount As Integer = DataGridView3.Rows.Count
         If DataGridView1(0, s).Value <> "" Then         '部屋番号がある行を選択したとき
             If s < 11 Then
                 lblHeya.Text = "空　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(2, i).Value Then
                         lblID.Text = DataGridView3(1, i).Value
                         Exit For
@@ -174,7 +203,7 @@ line1:
                 Next
             ElseIf s < 22 Then
                 lblHeya.Text = "森　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(5, i).Value Then
                         lblID.Text = DataGridView3(4, i).Value
                         Exit For
@@ -182,7 +211,7 @@ line1:
                 Next
             ElseIf s < 33 Then
                 lblHeya.Text = "星　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(8, i).Value Then
                         lblID.Text = DataGridView3(7, i).Value
                         Exit For
@@ -190,7 +219,7 @@ line1:
                 Next
             ElseIf s < 44 Then
                 lblHeya.Text = "月　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(11, i).Value Then
                         lblID.Text = DataGridView3(10, i).Value
                         Exit For
@@ -198,7 +227,7 @@ line1:
                 Next
             ElseIf s < 55 Then
                 lblHeya.Text = "花　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(14, i).Value Then
                         lblID.Text = DataGridView3(13, i).Value
                         Exit For
@@ -206,7 +235,7 @@ line1:
                 Next
             ElseIf s < 66 Then
                 lblHeya.Text = "丘　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(17, i).Value Then
                         lblID.Text = DataGridView3(16, i).Value
                         Exit For
@@ -214,7 +243,7 @@ line1:
                 Next
             ElseIf s < 77 Then
                 lblHeya.Text = "虹　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(20, i).Value Then
                         lblID.Text = DataGridView3(19, i).Value
                         Exit For
@@ -222,7 +251,7 @@ line1:
                 Next
             ElseIf s < 88 Then
                 lblHeya.Text = "光　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(23, i).Value Then
                         lblID.Text = DataGridView3(22, i).Value
                         Exit For
@@ -230,7 +259,7 @@ line1:
                 Next
             ElseIf s < 99 Then
                 lblHeya.Text = "雪　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(26, i).Value Then
                         lblID.Text = DataGridView3(25, i).Value
                         Exit For
@@ -238,7 +267,7 @@ line1:
                 Next
             ElseIf s < 110 Then
                 lblHeya.Text = "風　" & DataGridView1(0, s).Value
-                For i As Integer = 0 To DataGridView3.Rows.Count - 1
+                For i As Integer = 0 To DGV3rowcount - 1
                     If lblName.Text = DataGridView3(29, i).Value Then
                         lblID.Text = DataGridView3(28, i).Value
                         Exit For
@@ -279,9 +308,52 @@ line1:
                 Next
                 YmdBox1.setADStr(DataGridView4(11, 0).Value)
             End If
-
         End If
 
+    End Sub
+
+    Private Sub DataGridView2_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles DataGridView2.CellMouseClick
+        Xclear()
+        Dim x As Integer = DataGridView2.CurrentRow.Index
+        If rbnKigou.Checked = True Then
+            txtKatatiX.Text = DataGridView2(1, x).Value
+        ElseIf rbnKigou.Checked = False Then
+            txtNaihukuX.Text = DataGridView2(0, x).Value
+            txtRyouX.Text = DataGridView2(1, x).Value
+            txtJikannX.Text = DataGridView2(2, x).Value
+        End If
+    End Sub
+
+    Private Sub DataGridView2_CellPainting(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellPaintingEventArgs) Handles DataGridView2.CellPainting
+        '列ヘッダを対象外しておかないと列ヘッダにも番号を表示してしまう
+
+        If e.ColumnIndex < 0 And e.RowIndex >= 0 Then
+
+            'セルを描画する
+
+            e.Paint(e.ClipBounds, DataGridViewPaintParts.All)
+
+            '行番号を描画する範囲を決定する
+
+            Dim idxRect As Rectangle = e.CellBounds
+
+            'e.Padding(値を表示する境界線からの間隔)を考慮して描画位置を決める
+
+            Dim rectHeight As Long = e.CellStyle.Padding.Top
+
+            Dim rectLeft As Long = e.CellStyle.Padding.Left
+
+            idxRect.Inflate(rectLeft, rectHeight)
+
+            '行番号を描画する
+
+            TextRenderer.DrawText(e.Graphics, (e.RowIndex + 1).ToString(), e.CellStyle.Font, idxRect, e.CellStyle.ForeColor, TextFormatFlags.Right Or TextFormatFlags.VerticalCenter)
+
+            '描画完了の通知
+
+            e.Handled = True
+
+        End If
 
     End Sub
 
@@ -323,7 +395,7 @@ line1:
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
         Dim SQL As String = ""
-        SQL = "DELETE FROM BSht WHERE (Id = " & lblID.Text & ") AND (Ymd ='" & YmdBox1.getADStr() & "')"
+        SQL = "DELETE FROM BSht WHERE Id = " & lblID.Text
         SQLCm.CommandText = SQL
         Cn.Open()
         SQLCm.ExecuteNonQuery()
@@ -383,8 +455,51 @@ line1:
         Cn.Close()
         SQLCm.Dispose()
         Cn.Dispose()
-    End Sub
 
+        'オート保存の部分
+        AutoSave()
+    End Sub
+    Private Sub AutoSave()
+        '内服のtextboxを見る
+        For Naihuku As Integer = 1 To 16
+            If Controls("txtNaihuku" & Naihuku).Text <> "" Then     'textboxが空じゃないとき
+                For i As Integer = 0 To DataGridView5.Rows.Count - 1
+                    If DataGridView5(0, i).Value = Controls("txtNaihuku" & Naihuku).Text AndAlso DataGridView5(1, i).Value = Controls("txtRyou" & Naihuku).Text AndAlso DataGridView5(2, i).Value = Controls("txtJikann" & Naihuku).Text Then  '項目名が一緒
+                        GoTo line1  '同じものが見つかったら次のtextboxを見る
+                    End If
+                Next
+                NaihukuTuika(Naihuku)
+            Else        'textboxが空のとき
+                'なにもしない
+            End If
+line1:
+        Next
+    End Sub
+    Private Sub NaihukuTuika(NaihukuNo As Integer)
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        Dim Table As DataTable = DirectCast(DataGridView5.DataSource, DataTable)
+        Dim Row As DataRow = Table.NewRow
+
+        Cn.Open()
+
+        Row("Md1") = Controls("txtNaihuku" & NaihukuNo).Text
+        Row("Md2") = Controls("txtRyou" & NaihukuNo).Text
+        Row("Md4") = Controls("txtJikann" & NaihukuNo).Text
+        Dim SQL As String = ""
+        SQL = "INSERT INTO BShtMd (Md1, Md2, Md4) VALUES ("
+        SQL &= "'" & Row("Md1") & "', "
+        SQL &= "'" & Row("Md2") & "', "
+        SQL &= "'" & Row("Md4") & "' "
+        SQL &= ")"
+        SQLCm.CommandText = SQL
+        SQLCm.ExecuteNonQuery()
+
+        Cn.Close()
+        SQLCm.Dispose()
+        Cn.Dispose()
+
+    End Sub
     Private Sub btnInnsatu_Click(sender As System.Object, e As System.EventArgs) Handles btnInnsatu.Click
 
     End Sub
@@ -397,55 +512,337 @@ line1:
         SQLCm.CommandText = "select * from BSht WHERE Id = " & lblID.Text & " order by Gyo"
         Adapter.Fill(Table)
         DataGridView4.DataSource = Table
-    End Sub
 
-    Private Sub rbnSubete_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnSubete.CheckedChanged
+        Dim SQLCm5 As OleDbCommand = Cn.CreateCommand
+        Dim Adapter5 As New OleDbDataAdapter(SQLCm5)
+        Dim Table5 As New DataTable
+        SQLCm5.CommandText = "select Md1, Md2, Md4 from BshtMd order by Md1, Md2, Md4"
+        Adapter5.Fill(Table5)
+        DataGridView5.DataSource = Table5
 
+        If rbnSubete.Checked = True Then
+            rbnSubete.Checked = False
+            rbnSubete.Checked = True
+        ElseIf rbnKigou.Checked = True Then
+            rbnKigou.Checked = False
+            rbnKigou.Checked = True
+        ElseIf rbnA.Checked = True Then
+            rbnA.Checked = False
+            rbnA.Checked = True
+        ElseIf rbnK.Checked = True Then
+            rbnK.Checked = False
+            rbnK.Checked = True
+        ElseIf rbnS.Checked = True Then
+            rbnS.Checked = False
+            rbnS.Checked = True
+        ElseIf rbnT.Checked = True Then
+            rbnT.Checked = False
+            rbnT.Checked = True
+        ElseIf rbnN.Checked = True Then
+            rbnN.Checked = False
+            rbnN.Checked = True
+        ElseIf rbnH.Checked = True Then
+            rbnH.Checked = False
+            rbnH.Checked = True
+        ElseIf rbnM.Checked = True Then
+            rbnM.Checked = False
+            rbnM.Checked = True
+        ElseIf rbnY.Checked = True Then
+            rbnY.Checked = False
+            rbnY.Checked = True
+        ElseIf rbnR.Checked = True Then
+            rbnR.Checked = False
+            rbnR.Checked = True
+        ElseIf rbnW.Checked = True Then
+            rbnW.Checked = False
+            rbnW.Checked = True
+        End If
     End Sub
 
     Private Sub rbnKigou_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnKigou.CheckedChanged
+        DataGridView2.DataSource.Clear()
+        Dim Table As New DataTable
+        Table.Columns.Add("Md1")
+        Table.Columns.Add("Md2")
+        Table.Columns.Add("Md4")
+        For i As Integer = 1 To 3
+            Dim row As DataRow = Table.NewRow
+            row("Md1") = ""
+            row("Md2") = ""
+            row("Md4") = ""
+            Table.Rows.Add(row)
+        Next
 
+        DataGridView2.DataSource = Table
+
+        DataGridView2(0, 0).Value = "-"
+        DataGridView2(0, 1).Value = "-"
+        DataGridView2(0, 2).Value = "-"
+        DataGridView2(1, 0).Value = "┐"
+        DataGridView2(1, 1).Value = "｜"
+        DataGridView2(1, 2).Value = "┘"
     End Sub
+    Private Sub rbn_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnSubete.CheckedChanged, rbnA.CheckedChanged, rbnK.CheckedChanged, rbnS.CheckedChanged, rbnT.CheckedChanged, rbnN.CheckedChanged, rbnH.CheckedChanged, rbnM.CheckedChanged, rbnY.CheckedChanged, rbnR.CheckedChanged, rbnW.CheckedChanged
+        Dim rbn As RadioButton = CType(sender, RadioButton)
+        Dim rbnName As String = rbn.Text
 
-    Private Sub rbnA_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnA.CheckedChanged
+        DataGridView2.Columns.Clear()
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        Dim Adapter As New OleDbDataAdapter(SQLCm)
+        Dim Table As New DataTable
 
+        If rbnName = "全て" Then
+            SQLCm.CommandText = "select Md1, Md2, Md4 from BshtMd order by Md1, Md2, Md4"
+        ElseIf rbnName = "ア" Then
+            SQLCm.CommandText = "select Md1, Md2, Md4 from BshtMd WHERE Md1 LIKE '[ア-オ]%' order by Md1, Md2, Md4"
+        ElseIf rbnName = "カ" Then
+            SQLCm.CommandText = "select Md1, Md2, Md4 from BshtMd WHERE Md1 LIKE '[カ-コ]%' order by Md1, Md2, Md4"
+        ElseIf rbnName = "サ" Then
+            SQLCm.CommandText = "select Md1, Md2, Md4 from BshtMd WHERE Md1 LIKE '[サ-ソ]%' order by Md1, Md2, Md4"
+        ElseIf rbnName = "タ" Then
+            SQLCm.CommandText = "select Md1, Md2, Md4 from BshtMd WHERE Md1 LIKE '[タ-ト]%' order by Md1, Md2, Md4"
+        ElseIf rbnName = "ナ" Then
+            SQLCm.CommandText = "select Md1, Md2, Md4 from BshtMd WHERE Md1 LIKE '[ナ-ノ]%' order by Md1, Md2, Md4"
+        ElseIf rbnName = "ハ" Then
+            SQLCm.CommandText = "select Md1, Md2, Md4 from BshtMd WHERE Md1 LIKE '[ハ-ホ]%' order by Md1, Md2, Md4"
+        ElseIf rbnName = "マ" Then
+            SQLCm.CommandText = "select Md1, Md2, Md4 from BshtMd WHERE Md1 LIKE '[マ-モ]%' order by Md1, Md2, Md4"
+        ElseIf rbnName = "ヤ" Then
+            SQLCm.CommandText = "select Md1, Md2, Md4 from BshtMd WHERE Md1 LIKE '[ヤ-ヨ]%' order by Md1, Md2, Md4"
+        ElseIf rbnName = "ラ" Then
+            SQLCm.CommandText = "select Md1, Md2, Md4 from BshtMd WHERE Md1 LIKE '[ラ-ロ]%' order by Md1, Md2, Md4"
+        ElseIf rbnName = "ワ" Then
+            SQLCm.CommandText = "select Md1, Md2, Md4 from BshtMd WHERE Md1 LIKE '[ワ-ン]%' order by Md1, Md2, Md4"
+        End If
+
+        Adapter.Fill(Table)
+        DataGridView2.DataSource = Table
+
+        With DataGridView2
+            .RowHeadersWidth = 30
+            .Columns(0).Width = 90
+            .Columns(1).Width = 45
+            .Columns(2).Width = 67
+        End With
     End Sub
-
-    Private Sub rbnK_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnK.CheckedChanged
-
+    
+    Private Sub Xclear()
+        txtNaihukuX.Text = ""
+        txtRyouX.Text = ""
+        txtKatatiX.Text = ""
+        txtJikannX.Text = ""
     End Sub
+    Private Sub NaihukuGyo1_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku1.Click, txtRyou1.Click, txtKatati1.Click, txtJikann1.Click
+        'Dim a As TextBox = CType(sender, TextBox)
+        'MsgBox(a.Name)
 
-    Private Sub rbnS_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnS.CheckedChanged
-
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku1.Text = txtNaihukuX.Text
+            txtRyou1.Text = txtRyouX.Text
+            txtJikann1.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati1.Text = txtKatatiX.Text
+            End If
+        Xclear()
+        End If
     End Sub
-
-    Private Sub rbnT_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnT.CheckedChanged
-
+    Private Sub NaihukuGyo2_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku2.Click, txtRyou2.Click, txtKatati2.Click, txtJikann2.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku2.Text = txtNaihukuX.Text
+            txtRyou2.Text = txtRyouX.Text
+            txtJikann2.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati2.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
     End Sub
-
-    Private Sub rbnN_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnN.CheckedChanged
-
+    Private Sub NaihukuGyo3_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku3.Click, txtRyou3.Click, txtKatati3.Click, txtJikann3.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku3.Text = txtNaihukuX.Text
+            txtRyou3.Text = txtRyouX.Text
+            txtJikann3.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati3.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
     End Sub
-
-    Private Sub rbnH_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnH.CheckedChanged
-
+    Private Sub NaihukuGyo4_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku4.Click, txtRyou4.Click, txtKatati4.Click, txtJikann4.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku4.Text = txtNaihukuX.Text
+            txtRyou4.Text = txtRyouX.Text
+            txtJikann4.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati4.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
     End Sub
-
-    Private Sub rbnM_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnM.CheckedChanged
-
+    Private Sub NaihukuGyo5_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku5.Click, txtRyou5.Click, txtKatati5.Click, txtJikann5.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku5.Text = txtNaihukuX.Text
+            txtRyou5.Text = txtRyouX.Text
+            txtJikann5.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati5.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
     End Sub
-
-    Private Sub rbnY_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnY.CheckedChanged
-
+    Private Sub NaihukuGyo6_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku6.Click, txtRyou6.Click, txtKatati6.Click, txtJikann6.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku6.Text = txtNaihukuX.Text
+            txtRyou6.Text = txtRyouX.Text
+            txtJikann6.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati6.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
     End Sub
-
-    Private Sub rbnR_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnR.CheckedChanged
-
+    Private Sub NaihukuGyo7_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku7.Click, txtRyou7.Click, txtKatati7.Click, txtJikann7.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku7.Text = txtNaihukuX.Text
+            txtRyou7.Text = txtRyouX.Text
+            txtJikann7.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati7.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
     End Sub
-
-    Private Sub rbnW_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles rbnW.CheckedChanged
-
+    Private Sub NaihukuGyo8_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku8.Click, txtRyou8.Click, txtKatati8.Click, txtJikann8.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku8.Text = txtNaihukuX.Text
+            txtRyou8.Text = txtRyouX.Text
+            txtJikann8.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati8.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
     End Sub
-
+    Private Sub NaihukuGyo9_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku9.Click, txtRyou9.Click, txtKatati9.Click, txtJikann9.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku9.Text = txtNaihukuX.Text
+            txtRyou9.Text = txtRyouX.Text
+            txtJikann9.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati9.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
+    End Sub
+    Private Sub NaihukuGyo10_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku10.Click, txtRyou10.Click, txtKatati10.Click, txtJikann10.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku10.Text = txtNaihukuX.Text
+            txtRyou10.Text = txtRyouX.Text
+            txtJikann10.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati10.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
+    End Sub
+    Private Sub NaihukuGyo11_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku11.Click, txtRyou11.Click, txtKatati11.Click, txtJikann11.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku11.Text = txtNaihukuX.Text
+            txtRyou11.Text = txtRyouX.Text
+            txtJikann11.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati11.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
+    End Sub
+    Private Sub NaihukuGyo12_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku12.Click, txtRyou12.Click, txtKatati12.Click, txtJikann12.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku12.Text = txtNaihukuX.Text
+            txtRyou12.Text = txtRyouX.Text
+            txtJikann12.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati12.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
+    End Sub
+    Private Sub NaihukuGyo13_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku13.Click, txtRyou13.Click, txtKatati13.Click, txtJikann13.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku13.Text = txtNaihukuX.Text
+            txtRyou13.Text = txtRyouX.Text
+            txtJikann13.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati13.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
+    End Sub
+    Private Sub NaihukuGyo14_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku14.Click, txtRyou14.Click, txtKatati14.Click, txtJikann14.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku14.Text = txtNaihukuX.Text
+            txtRyou14.Text = txtRyouX.Text
+            txtJikann14.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati14.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
+    End Sub
+    Private Sub NaihukuGyo15_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku15.Click, txtRyou15.Click, txtKatati15.Click, txtJikann15.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku15.Text = txtNaihukuX.Text
+            txtRyou15.Text = txtRyouX.Text
+            txtJikann15.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati15.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
+    End Sub
+    Private Sub NaihukuGyo16_Click(sender As Object, e As System.EventArgs) Handles txtNaihuku16.Click, txtRyou16.Click, txtKatati16.Click, txtJikann16.Click
+        If txtNaihukuX.Text <> "" Then
+            txtNaihuku16.Text = txtNaihukuX.Text
+            txtRyou16.Text = txtRyouX.Text
+            txtJikann16.Text = txtJikannX.Text
+            Xclear()
+        Else
+            If txtKatatiX.Text <> "" Then
+                txtKatati16.Text = txtKatatiX.Text
+            End If
+            Xclear()
+        End If
+    End Sub
 
 End Class
