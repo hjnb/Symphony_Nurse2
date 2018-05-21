@@ -98,7 +98,12 @@ Public Class 温度板
         Dim Table As New DataTable
 
         lblName.Text = TopForm.userNam.Text
-        lblID.Text = TopForm.userId.Text
+        If TopForm.userId.Text = "" Then
+            lblID.Text = "0"
+        Else
+            lblID.Text = TopForm.userId.Text
+        End If
+
 
         Dim dtNow As DateTime = DateTime.Now
         Dim tsNow As TimeSpan = dtNow.TimeOfDay
@@ -478,9 +483,15 @@ Public Class 温度板
             '数字の処理
         ElseIf e.KeyCode = Keys.Decimal OrElse e.KeyCode = 190 Then
             '小数点の処理
-        ElseIf cControl.SelectionLength > 0 AndAlso e.KeyCode = Keys.Delete Then    'アクティブなコントロールで選択されている文字数が1文字以上のとき
-            '文字が選択されてDelキーが押された処理
-            cControl.SelectedText = ""      'アクティブなコントロールで選択された文字を空にする
+        ElseIf cControl.SelectionLength > 0 AndAlso e.KeyCode = Keys.Delete Then    'アクティブなコントロールで選択されている文字数が1文字以上且つDelキーが押されたとき
+            If cControl.Name = "txtTaijuu" AndAlso Val(txtTaijuu.Text) = 0 Then     'アクティブなコントロールがtxtTaijuuでテキストの中身が0のとき
+                e.SuppressKeyPress = True   '何もしない
+            ElseIf cControl.Name = "txtTaijuu" AndAlso Val(txtTaijuu.Text) <> 0 Then     'アクティブなコントロールがtxtTaijuuでテキストの中身が0ではないとき
+                txtTaijuu.Text = "0.00"     '値を0.00にする
+                e.SuppressKeyPress = True
+            Else
+                '文字が選択されてDelキーが押された処理
+            End If
         Else
             e.SuppressKeyPress = True
         End If

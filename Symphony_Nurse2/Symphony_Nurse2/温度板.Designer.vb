@@ -98,9 +98,9 @@ Partial Class 温度板
         Me.lblID.ForeColor = System.Drawing.Color.Blue
         Me.lblID.Location = New System.Drawing.Point(560, 25)
         Me.lblID.Name = "lblID"
-        Me.lblID.Size = New System.Drawing.Size(28, 19)
+        Me.lblID.Size = New System.Drawing.Size(26, 19)
         Me.lblID.TabIndex = 3
-        Me.lblID.Text = "ＩＤ"
+        Me.lblID.Text = "ID"
         '
         'lblName
         '
@@ -251,6 +251,8 @@ Partial Class 温度板
         Me.txtTaijuu.Name = "txtTaijuu"
         Me.txtTaijuu.Size = New System.Drawing.Size(48, 19)
         Me.txtTaijuu.TabIndex = 22
+        Me.txtTaijuu.Text = "0.00"
+        Me.txtTaijuu.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'cmbSyoti
         '
@@ -361,7 +363,7 @@ Partial Class 温度板
         '
         'AdBox1
         '
-        Me.AdBox1.dateText = "19"
+        Me.AdBox1.dateText = "21"
         Me.AdBox1.Location = New System.Drawing.Point(71, 15)
         Me.AdBox1.monthText = "05"
         Me.AdBox1.Name = "AdBox1"
