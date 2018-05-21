@@ -186,12 +186,9 @@ Partial Class 温度板
         '
         Me.YmdBox1.DateText = ""
         Me.YmdBox1.EraText = ""
-        Me.YmdBox1.FirstLabel = "."
-        Me.YmdBox1.FontSize = 9
         Me.YmdBox1.Location = New System.Drawing.Point(78, 24)
         Me.YmdBox1.MonthText = ""
         Me.YmdBox1.Name = "YmdBox1"
-        Me.YmdBox1.SecondLabel = "."
         Me.YmdBox1.Size = New System.Drawing.Size(98, 23)
         Me.YmdBox1.TabIndex = 13
         '

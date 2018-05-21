@@ -711,12 +711,9 @@ Partial Class 内服病名
         '
         Me.YmdBox1.DateText = ""
         Me.YmdBox1.EraText = ""
-        Me.YmdBox1.FirstLabel = "."
-        Me.YmdBox1.FontSize = 14
         Me.YmdBox1.Location = New System.Drawing.Point(308, 500)
         Me.YmdBox1.MonthText = ""
         Me.YmdBox1.Name = "YmdBox1"
-        Me.YmdBox1.SecondLabel = "."
         Me.YmdBox1.Size = New System.Drawing.Size(110, 30)
         Me.YmdBox1.TabIndex = 80
         '

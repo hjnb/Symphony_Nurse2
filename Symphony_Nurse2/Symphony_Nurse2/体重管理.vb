@@ -134,6 +134,7 @@ Public Class 体重管理
         addBlankRow(unitLeftDt, 1)
         addRoomColumn(unitLeftDt)
         addRoomNum4UnitLeft()
+        settingNoNameRow(unitLeftDt)
 
         dgvUnitLeft.DataSource = unitLeftDt
 
@@ -180,6 +181,7 @@ Public Class 体重管理
         addBlankRow(unitRightDt, 2)
         addRoomColumn(unitRightDt)
         addRoomNum4UnitRight()
+        settingNoNameRow(unitRightDt)
 
         dgvUnitRight.DataSource = unitRightDt
 
@@ -217,12 +219,21 @@ Public Class 体重管理
             
             For i As Integer = rowCount + 1 + rowCountPlus To MAX_ROW_COUNT + rowCountPlus
                 row = dt.NewRow()
-                row("Ym") = "2018/05"
+                row("Ym") = dspYmBox.getADStr4Ym()
                 row("Gyo") = i
                 row("div") = div
                 dt.Rows.Add(row)
             Next
         End If
+    End Sub
+
+    Private Sub settingNoNameRow(dt As DataTable)
+        For Each row As DataRow In dt.Rows
+            If IsDBNull(row("Nam")) OrElse row("Nam") = "" Then
+                row("Weit") = DBNull.Value
+                row("Cmpr") = DBNull.Value
+            End If
+        Next
     End Sub
 
     Private Sub createCellStyle()
@@ -234,12 +245,12 @@ Public Class 体重管理
         '体重列のセルスタイル
         weitColumnCellStyle = New DataGridViewCellStyle()
         weitColumnCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-        weitColumnCellStyle.Format = "#,##0.00"
+        weitColumnCellStyle.Format = "##0.00"
 
         '前月比のセルスタイル
         cmprColumnCellStyle = New DataGridViewCellStyle()
         cmprColumnCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-        cmprColumnCellStyle.Format = "#,##0.00"
+        cmprColumnCellStyle.Format = "##0.00"
 
     End Sub
 
@@ -492,7 +503,7 @@ Public Class 体重管理
 
     Private Sub dgvUnit_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvUnitLeft.CellMouseClick, dgvUnitRight.CellMouseClick
         Dim dgv As DataGridView = CType(sender, DataGridView)
-        If selectedNam <> "" AndAlso dgv.Columns(e.ColumnIndex).Name = "Nam" Then
+        If e.RowIndex >= 0 AndAlso selectedNam <> "" AndAlso dgv.Columns(e.ColumnIndex).Name = "Nam" Then
             dgv(e.ColumnIndex, e.RowIndex).Value = selectedNam
         End If
     End Sub
@@ -503,10 +514,13 @@ Public Class 体重管理
             dgv("Nam", e.RowIndex).Value = ""
             dgv("Weit", e.RowIndex).Value = DBNull.Value
             dgv("Cmpr", e.RowIndex).Value = DBNull.Value
+        ElseIf e.RowIndex > -1 AndAlso dgv.Columns(e.ColumnIndex).Name = "Weit" Then
+            'dgv.BeginEdit(False)
         End If
     End Sub
 
     Private Sub dgvUnit_CellPainting(sender As Object, e As System.Windows.Forms.DataGridViewCellPaintingEventArgs) Handles dgvUnitLeft.CellPainting, dgvUnitRight.CellPainting
+        Dim dgv As DataGridView = CType(sender, DataGridView)
         If (e.RowIndex Mod 10 = 0) AndAlso (e.PaintParts And DataGridViewPaintParts.Border) = DataGridViewPaintParts.Border Then
             e.AdvancedBorderStyle.Top = DataGridViewAdvancedCellBorderStyle.Inset
         End If
@@ -520,19 +534,20 @@ Public Class 体重管理
         Dim rbtnText As String = rbtn.Text
 
         If rbtn.Checked = True Then
+            Dim currentYmStr As String = dspYmBox.getADStr4Ym()
             rbtn.BackColor = rbtnBackColor
             If rbtnText = "本館" Then
                 '選択年月の本館のデータ表示
-                displayUnitLeftData("2018/04", 1)
-                displayUnitRightData("2018/04", 1)
+                displayUnitLeftData(currentYmStr, 1)
+                displayUnitRightData(currentYmStr, 1)
 
                 '測定日のラベル部分設定
                 settingUnitLabel(rbtnText)
 
             ElseIf rbtnText = "ｱﾈｯｸｽ" Then
                 '選択年月のｱﾈｯｸｽのデータ表示
-                displayUnitLeftData("2018/04", 2)
-                displayUnitRightData("2018/04", 2)
+                displayUnitLeftData(currentYmStr, 2)
+                displayUnitRightData(currentYmStr, 2)
 
                 '測定日のラベル部分設定
                 settingUnitLabel(rbtnText)
@@ -553,6 +568,152 @@ Public Class 体重管理
         cn.Open()
         SQLCm.ExecuteNonQuery()
         cn.Close()
+    End Sub
+
+    Private Sub dataGridViewTextBox_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs)
+        Dim tb As TextBox = CType(sender, TextBox)
+        Dim inputIntStr As String = tb.Text.Split(".")(0) '整数部
+        Dim inputDecimalStr As String = tb.Text.Split(".")(1) '小数部
+        Dim currentSelectionStart As Integer = tb.SelectionStart '現在選択位置
+        Dim maxSelectionStart As Integer = tb.Text.Length '最大値
+        Dim decimalPointSelectionStart As Integer = maxSelectionStart - 3 ' 小数点の位置
+
+        If e.KeyCode = Windows.Forms.Keys.Left Then
+            'カーソルを左に動かす
+            If currentSelectionStart <> 0 Then
+                tb.SelectionStart -= 1
+                If currentSelectionStart = maxSelectionStart - 1 OrElse currentSelectionStart = maxSelectionStart Then
+                    tb.SelectionStart = maxSelectionStart - 2
+                    tb.Select(tb.SelectionStart, 1)
+                Else
+                    tb.SelectionLength = 0
+                End If
+            End If
+            e.SuppressKeyPress = True
+        ElseIf e.KeyCode = Windows.Forms.Keys.Right Then
+            'カーソルを右に動かす
+            If currentSelectionStart <> maxSelectionStart Then
+                tb.SelectionStart += 1
+                If currentSelectionStart = decimalPointSelectionStart Then
+                    tb.Select(tb.SelectionStart, 1)
+                ElseIf currentSelectionStart = maxSelectionStart - 2 OrElse currentSelectionStart = maxSelectionStart - 1 Then
+                    tb.Select(maxSelectionStart - 1, 1)
+                End If
+            End If
+            e.SuppressKeyPress = True
+        ElseIf (Keys.NumPad0 <= e.KeyCode AndAlso e.KeyCode <= Keys.NumPad9) OrElse (Keys.D0 <= e.KeyCode AndAlso e.KeyCode <= Keys.D9) Then
+            Dim keyDownChar As String = If(Keys.NumPad0 <= e.KeyCode, Chr(e.KeyCode - 48), Chr(e.KeyCode))
+            '数字の入力
+            If currentSelectionStart > decimalPointSelectionStart Then
+                '小数部の入力
+                If currentSelectionStart = maxSelectionStart - 2 Then
+                    '小数第一位
+                    tb.Text = inputIntStr & "." & keyDownChar & inputDecimalStr.Substring(1, 1)
+                    tb.SelectionStart = currentSelectionStart + 1
+                    tb.Select(tb.SelectionStart, 1)
+                ElseIf currentSelectionStart = maxSelectionStart - 1 OrElse currentSelectionStart = maxSelectionStart Then
+                    '小数第二位
+                    tb.Text = inputIntStr & "." & inputDecimalStr.Substring(0, 1) & keyDownChar
+                    tb.SelectionStart = currentSelectionStart
+                    tb.Select(tb.SelectionStart, 1)
+                End If
+            Else
+                '整数部の入力
+                If inputIntStr.Length < 3 Then
+                    If inputIntStr = "0" Then
+                        tb.Text = keyDownChar & "." & inputDecimalStr
+                        tb.SelectionStart = 1
+                    Else
+                        If Not (currentSelectionStart = 0 AndAlso keyDownChar = "0") Then
+                            tb.Text = inputIntStr.Insert(tb.SelectionStart, keyDownChar) & "." & inputDecimalStr
+                            tb.SelectionStart = currentSelectionStart + 1
+                        End If
+                    End If
+                End If
+            End If
+            e.SuppressKeyPress = True
+        ElseIf e.KeyCode = Keys.Decimal OrElse e.KeyCode = Keys.OemPeriod Then
+            '小数点の入力
+            If currentSelectionStart = decimalPointSelectionStart Then
+                tb.SelectionStart += 1
+                tb.Select(tb.SelectionStart, 1)
+            End If
+            e.SuppressKeyPress = True
+        ElseIf e.KeyCode = Keys.Back Then
+            If currentSelectionStart > decimalPointSelectionStart Then
+                '小数部の削除
+                If currentSelectionStart = maxSelectionStart - 2 Then
+                    '小数第一位
+                    tb.Text = inputIntStr & "." & "0" & inputDecimalStr.Substring(1, 1)
+                    tb.SelectionStart = currentSelectionStart - 1
+                    tb.SelectionLength = 0
+                ElseIf currentSelectionStart = maxSelectionStart - 1 OrElse currentSelectionStart = maxSelectionStart Then
+                    '小数第二位
+                    tb.Text = inputIntStr & "." & inputDecimalStr.Substring(0, 1) & "0"
+                    tb.SelectionStart = decimalPointSelectionStart + 1
+                    tb.Select(tb.SelectionStart, 1)
+                End If
+            Else
+                '整数部の削除
+                If currentSelectionStart <> 0 Then
+                    If inputIntStr.Length = 1 AndAlso currentSelectionStart = decimalPointSelectionStart Then
+                        tb.Text = "0." & inputDecimalStr
+                        tb.SelectionStart = currentSelectionStart
+                    Else
+                        tb.Text = inputIntStr.Remove(currentSelectionStart - 1, 1) & "." & inputDecimalStr
+                        tb.SelectionStart = currentSelectionStart - 1
+                    End If
+                End If
+            End If
+            e.SuppressKeyPress = True
+        Else
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+
+    Private Sub dataGridViewTextBox_MouseClick(sender As Object, e As System.Windows.Forms.MouseEventArgs)
+        Dim tb As TextBox = CType(sender, TextBox)
+        Dim currentSelectionStart As Integer = tb.SelectionStart
+        Dim maxSelectionStart As Integer = tb.Text.Length
+        tb.SelectionLength = 0
+        If currentSelectionStart = maxSelectionStart Then
+            tb.Select(currentSelectionStart - 1, 1)
+        ElseIf currentSelectionStart = maxSelectionStart - 2 OrElse currentSelectionStart = maxSelectionStart - 1 Then
+            tb.Select(currentSelectionStart, 1)
+        End If
+    End Sub
+
+    Private Sub dgvUnit_CellEndEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvUnitLeft.CellEndEdit, dgvUnitRight.CellEndEdit
+        Dim dgv As DataGridView = CType(sender, DataGridView)
+        If dgv("Weit", e.RowIndex).Value = 0 AndAlso IsDBNull(dgv("Nam", e.RowIndex).Value) Then
+            dgv(e.ColumnIndex, e.RowIndex).Value = DBNull.Value
+        End If
+    End Sub
+
+    Private Sub dgvUnit_EditingControlShowing(sender As Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs) Handles dgvUnitLeft.EditingControlShowing, dgvUnitRight.EditingControlShowing
+        '表示されているコントロールがDataGridViewTextBoxEditingControlか調べる
+        If TypeOf e.Control Is DataGridViewTextBoxEditingControl Then
+            Dim dgv As DataGridView = CType(sender, DataGridView)
+
+            '編集のために表示されているコントロールを取得
+            Dim tb As DataGridViewTextBoxEditingControl = CType(e.Control, DataGridViewTextBoxEditingControl)
+            tb.ImeMode = Windows.Forms.ImeMode.Disable
+            tb.ContextMenu = New ContextMenu()
+            If tb.Text = "" Then
+                tb.Text = "0.00"
+            End If
+
+            'イベントハンドラを削除
+            RemoveHandler tb.KeyDown, AddressOf dataGridViewTextBox_KeyDown
+            RemoveHandler tb.MouseClick, AddressOf dataGridViewTextBox_MouseClick
+
+            '該当する列か調べる
+            If dgv.CurrentCell.OwningColumn.Name = "Weit" Then
+                'イベントハンドラを追加()
+                AddHandler tb.KeyDown, AddressOf dataGridViewTextBox_KeyDown
+                AddHandler tb.MouseClick, AddressOf dataGridViewTextBox_MouseClick
+            End If
+        End If
     End Sub
 
     Private Sub dgvUnitLeft_GotFocus(sender As Object, e As System.EventArgs) Handles dgvUnitLeft.GotFocus
@@ -586,14 +747,14 @@ Public Class 体重管理
 
     Private Sub calcCmprCell(dt As DataTable, prevNamWeitPair As Dictionary(Of String, Decimal))
         For Each row As DataRow In dt.Rows
-            Dim prevWeitVal As Decimal = If(prevNamWeitPair.ContainsKey(row("Nam")), prevNamWeitPair(row("Nam")), 0)
+            Dim prevWeitVal As Decimal = If(prevNamWeitPair.ContainsKey(checkDBNullValue(row("Nam"))), prevNamWeitPair(checkDBNullValue(row("Nam"))), 0)
             Dim currentWeitVal As Decimal = If(IsDBNull(row("Weit")), 0, Decimal.Parse(row("Weit")))
             row("Cmpr") = currentWeitVal - prevWeitVal
         Next
     End Sub
 
     Private Sub btnPrevNam_Click(sender As System.Object, e As System.EventArgs) Handles btnPrevNam.Click
-        Dim prevYmStr As String = "2018/04" 'とりあえず
+        Dim prevYmStr As String = dspYmBox.getPrevYmStr()
         Dim prevNamList As New Dictionary(Of Integer, String)
         Dim div As Integer = If(rbtnHonkan.Checked, 1, 2)
 
@@ -618,6 +779,18 @@ Public Class 体重管理
             Return
         End If
 
+        '氏名、体重、前月比の列の値をクリア
+        For Each row As DataRow In unitLeftDt.Rows
+            row("Nam") = DBNull.Value
+            row("Weit") = DBNull.Value
+            row("Cmpr") = DBNull.Value
+        Next
+        For Each row As DataRow In unitRightDt.Rows
+            row("Nam") = DBNull.Value
+            row("Weit") = DBNull.Value
+            row("Cmpr") = DBNull.Value
+        Next
+
         For Each kvp As KeyValuePair(Of Integer, String) In prevNamList
             If kvp.Key < MAX_ROW_COUNT Then
                 dgvUnitLeft("Nam", kvp.Key).Value = kvp.Value
@@ -631,29 +804,58 @@ Public Class 体重管理
     End Sub
 
     Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
+        '測定日のデータをGyo=1の行に設定
+        Dim measurementRow As DataRow = unitLeftDt.Rows(0)
+        measurementRow("Sora") = ymdBoxUnit1.getADStr()
+        measurementRow("Mori") = ymdBoxUnit2.getADStr()
+        measurementRow("Hosi") = ymdBoxUnit3.getADStr()
+        measurementRow("Tuki") = ymdBoxUnit4.getADStr()
+        measurementRow("Hana") = ymdBoxUnit5.getADStr()
+        measurementRow("Umi") = ymdBoxUnit6.getADStr()
+
+        '体重、前月比が空の場合は0とする
+        For Each row As DataRow In unitLeftDt.Rows
+            If IsDBNull(row("Weit")) Then
+                row("Weit") = 0
+            End If
+            If IsDBNull(row("Cmpr")) Then
+                row("Cmpr") = 0
+            End If
+        Next
+        For Each row As DataRow In unitRightDt.Rows
+            If IsDBNull(row("Weit")) Then
+                row("Weit") = 0
+            End If
+            If IsDBNull(row("Cmpr")) Then
+                row("Cmpr") = 0
+            End If
+        Next
+
         '全ての行の状態をAddedに
         unitLeftDt.AcceptChanges()
         unitRightDt.AcceptChanges()
         settingAddedRowState(unitLeftDt)
         settingAddedRowState(unitRightDt)
 
+        Dim currentYmStr As String = dspYmBox.getADStr4Ym()
+
         'delete
         Dim div As Integer = If(rbtnHonkan.Checked, 1, 2)
-        deleteMonthData("2018/04", div)
+        deleteMonthData(currentYmStr, div)
 
         'insert
         unitLeftAdapter.Update(unitLeftDt)
         unitRightAdapter.Update(unitRightDt)
 
         '再表示
-        displayUnitLeftData("2018/04", div)
-        displayUnitRightData("2018/04", div)
+        displayUnitLeftData(currentYmStr, div)
+        displayUnitRightData(currentYmStr, div)
 
     End Sub
 
     Private Sub btnPrevCmpr_Click(sender As System.Object, e As System.EventArgs) Handles btnPrevCmpr.Click
         '前月の氏名と体重のペア取得
-        Dim prevYmStr As String = "2018/03" 'とりあえず
+        Dim prevYmStr As String = dspYmBox.getPrevYmStr()
         Dim prevNameWeightDic As New Dictionary(Of String, Decimal)
         Dim div As Integer = If(rbtnHonkan.Checked, 1, 2)
         Dim reader As System.Data.OleDb.OleDbDataReader
@@ -677,22 +879,48 @@ Public Class 体重管理
         calcCmprCell(unitRightDt, prevNameWeightDic) '右ユニット
 
         '選択を初期位置へ
+        dgvUnitRight("Room", 0).Selected = True
+        dgvUnitRight.Focus()
         dgvUnitLeft("Room", 0).Selected = True
         dgvUnitLeft.Focus()
     End Sub
 
     Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
-        Dim targetYmStr As String = "2018/04" 'とりあえず
+        Dim targetYmStr As String = dspYmBox.getADStr4Ym()
         Dim targetDiv As Integer = If(rbtnHonkan.Checked, 1, 2)
         Dim result As DialogResult = MessageBox.Show("該当月の記録を抹消しますか？", "Nurse2", MessageBoxButtons.YesNo)
         If result = Windows.Forms.DialogResult.Yes Then
             deleteMonthData(targetYmStr, targetDiv)
             '再表示
             displayUnitLeftData(targetYmStr, targetDiv)
+            displayUnitRightData(targetYmStr, targetDiv)
         End If
     End Sub
 
     Private Sub btnPrint_Click(sender As System.Object, e As System.EventArgs) Handles btnPrint.Click
 
     End Sub
+
+    Private Sub dspYmBox_LabelTextChage(sender As Object, e As System.EventArgs) Handles dspYmBox.YmLabelTextChage
+        Dim currentYmStr As String = dspYmBox.getADStr4Ym()
+        Dim rbtnText As String = If(rbtnHonkan.Checked, "本館", "ｱﾈｯｸｽ")
+        If rbtnText = "本館" Then
+            '選択年月の本館のデータ表示
+            displayUnitLeftData(currentYmStr, 1)
+            displayUnitRightData(currentYmStr, 1)
+
+            '測定日のラベル部分設定
+            settingUnitLabel(rbtnText)
+
+        ElseIf rbtnText = "ｱﾈｯｸｽ" Then
+            '選択年月のｱﾈｯｸｽのデータ表示
+            displayUnitLeftData(currentYmStr, 2)
+            displayUnitRightData(currentYmStr, 2)
+
+            '測定日のラベル部分設定
+            settingUnitLabel(rbtnText)
+
+        End If
+    End Sub
+
 End Class
