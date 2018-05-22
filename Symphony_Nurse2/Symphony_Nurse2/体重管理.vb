@@ -14,6 +14,9 @@ Public Class 体重管理
     '選択している列のインデックス保持用(右ユニット)
     Private selectedUnitRightColumnIndex As Integer = 0
 
+    'セル選択時に直接数値を入力した場合の制御フラグ
+    Private directInputFlg As Boolean = True
+
     'ラジオボタン背景色
     Private rbtnBackColor As Color = Color.FromArgb(255, 255, 0)
 
@@ -487,7 +490,7 @@ Public Class 体重管理
         End If
     End Sub
 
-    Private Sub dgvUnitLeft_CellEnter(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvUnitLeft.CellEnter, dgvUnitRight.CellEnter
+    Private Sub dgvUnit_CellEnter(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvUnitLeft.CellEnter, dgvUnitRight.CellEnter
         Dim dgv As DataGridView = CType(sender, DataGridView)
 
         '選択行のインデックス取得
@@ -514,8 +517,6 @@ Public Class 体重管理
             dgv("Nam", e.RowIndex).Value = ""
             dgv("Weit", e.RowIndex).Value = DBNull.Value
             dgv("Cmpr", e.RowIndex).Value = DBNull.Value
-        ElseIf e.RowIndex > -1 AndAlso dgv.Columns(e.ColumnIndex).Name = "Weit" Then
-            'dgv.BeginEdit(False)
         End If
     End Sub
 
@@ -523,6 +524,13 @@ Public Class 体重管理
         Dim dgv As DataGridView = CType(sender, DataGridView)
         If (e.RowIndex Mod 10 = 0) AndAlso (e.PaintParts And DataGridViewPaintParts.Border) = DataGridViewPaintParts.Border Then
             e.AdvancedBorderStyle.Top = DataGridViewAdvancedCellBorderStyle.Inset
+        End If
+
+        If Not IsNothing(dgv.EditingControl) AndAlso dgv.Columns(e.ColumnIndex).Name = "Weit" AndAlso directInputFlg Then
+            Dim tb As DataGridViewTextBoxEditingControl = CType(dgv.EditingControl, DataGridViewTextBoxEditingControl)
+            tb.SelectionLength = 0
+            tb.SelectionStart = tb.TextLength - 3
+            directInputFlg = False
         End If
     End Sub
 
@@ -574,8 +582,8 @@ Public Class 体重管理
         Dim tb As TextBox = CType(sender, TextBox)
         Dim inputIntStr As String = tb.Text.Split(".")(0) '整数部
         Dim inputDecimalStr As String = tb.Text.Split(".")(1) '小数部
-        Dim currentSelectionStart As Integer = tb.SelectionStart '現在選択位置
         Dim maxSelectionStart As Integer = tb.Text.Length '最大値
+        Dim currentSelectionStart As Integer = If(directInputFlg, maxSelectionStart - 3, tb.SelectionStart) '現在選択位置
         Dim decimalPointSelectionStart As Integer = maxSelectionStart - 3 ' 小数点の位置
 
         If e.KeyCode = Windows.Forms.Keys.Left Then
@@ -625,7 +633,7 @@ Public Class 体重管理
                         tb.SelectionStart = 1
                     Else
                         If Not (currentSelectionStart = 0 AndAlso keyDownChar = "0") Then
-                            tb.Text = inputIntStr.Insert(tb.SelectionStart, keyDownChar) & "." & inputDecimalStr
+                            tb.Text = inputIntStr.Insert(currentSelectionStart, keyDownChar) & "." & inputDecimalStr
                             tb.SelectionStart = currentSelectionStart + 1
                         End If
                     End If
@@ -685,9 +693,10 @@ Public Class 体重管理
 
     Private Sub dgvUnit_CellEndEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvUnitLeft.CellEndEdit, dgvUnitRight.CellEndEdit
         Dim dgv As DataGridView = CType(sender, DataGridView)
-        If dgv("Weit", e.RowIndex).Value = 0 AndAlso IsDBNull(dgv("Nam", e.RowIndex).Value) Then
+        If dgv("Weit", e.RowIndex).Value = 0 AndAlso (IsDBNull(dgv("Nam", e.RowIndex).Value) OrElse dgv("Nam", e.RowIndex).Value = "") Then
             dgv(e.ColumnIndex, e.RowIndex).Value = DBNull.Value
         End If
+        directInputFlg = True
     End Sub
 
     Private Sub dgvUnit_EditingControlShowing(sender As Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs) Handles dgvUnitLeft.EditingControlShowing, dgvUnitRight.EditingControlShowing
@@ -709,7 +718,7 @@ Public Class 体重管理
 
             '該当する列か調べる
             If dgv.CurrentCell.OwningColumn.Name = "Weit" Then
-                'イベントハンドラを追加()
+                'イベントハンドラを追加
                 AddHandler tb.KeyDown, AddressOf dataGridViewTextBox_KeyDown
                 AddHandler tb.MouseClick, AddressOf dataGridViewTextBox_MouseClick
             End If

@@ -26,8 +26,6 @@ Partial Class 体重管理
         Me.selectUserLabel = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.dgvUnitLeft = New System.Windows.Forms.DataGridView()
-        Me.dgvUnitRight = New System.Windows.Forms.DataGridView()
         Me.rbtnHonkan = New System.Windows.Forms.RadioButton()
         Me.rbtnAnex = New System.Windows.Forms.RadioButton()
         Me.btnPrevNam = New System.Windows.Forms.Button()
@@ -49,9 +47,11 @@ Partial Class 体重管理
         Me.ymdBoxUnit6 = New ymdBox.ymdBox()
         Me.ymdBoxUnit4 = New ymdBox.ymdBox()
         Me.dspYmBox = New ymdBox.ymdBox()
+        Me.dgvUnitRight = New Symphony_Nurse2.ExDataGridView()
+        Me.dgvUnitLeft = New Symphony_Nurse2.ExDataGridView()
         CType(Me.dgvUser, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgvUnitLeft, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvUnitRight, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgvUnitLeft, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgvUser
@@ -94,24 +94,6 @@ Partial Class 体重管理
         Me.Label2.Size = New System.Drawing.Size(149, 13)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "削除：　室号をダブルクリック"
-        '
-        'dgvUnitLeft
-        '
-        Me.dgvUnitLeft.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvUnitLeft.Location = New System.Drawing.Point(241, 44)
-        Me.dgvUnitLeft.Name = "dgvUnitLeft"
-        Me.dgvUnitLeft.RowTemplate.Height = 21
-        Me.dgvUnitLeft.Size = New System.Drawing.Size(273, 502)
-        Me.dgvUnitLeft.TabIndex = 5
-        '
-        'dgvUnitRight
-        '
-        Me.dgvUnitRight.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvUnitRight.Location = New System.Drawing.Point(514, 44)
-        Me.dgvUnitRight.Name = "dgvUnitRight"
-        Me.dgvUnitRight.RowTemplate.Height = 21
-        Me.dgvUnitRight.Size = New System.Drawing.Size(273, 502)
-        Me.dgvUnitRight.TabIndex = 6
         '
         'rbtnHonkan
         '
@@ -341,11 +323,31 @@ Partial Class 体重管理
         Me.dspYmBox.Size = New System.Drawing.Size(95, 40)
         Me.dspYmBox.TabIndex = 106
         '
+        'dgvUnitRight
+        '
+        Me.dgvUnitRight.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvUnitRight.Location = New System.Drawing.Point(514, 44)
+        Me.dgvUnitRight.Name = "dgvUnitRight"
+        Me.dgvUnitRight.RowTemplate.Height = 21
+        Me.dgvUnitRight.Size = New System.Drawing.Size(273, 502)
+        Me.dgvUnitRight.TabIndex = 107
+        '
+        'dgvUnitLeft
+        '
+        Me.dgvUnitLeft.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvUnitLeft.Location = New System.Drawing.Point(241, 44)
+        Me.dgvUnitLeft.Name = "dgvUnitLeft"
+        Me.dgvUnitLeft.RowTemplate.Height = 21
+        Me.dgvUnitLeft.Size = New System.Drawing.Size(273, 502)
+        Me.dgvUnitLeft.TabIndex = 108
+        '
         '体重管理
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(807, 653)
+        Me.Controls.Add(Me.dgvUnitLeft)
+        Me.Controls.Add(Me.dgvUnitRight)
         Me.Controls.Add(Me.dspYmBox)
         Me.Controls.Add(Me.ymdBoxUnit5)
         Me.Controls.Add(Me.ymdBoxUnit6)
@@ -367,8 +369,6 @@ Partial Class 体重管理
         Me.Controls.Add(Me.btnPrevNam)
         Me.Controls.Add(Me.rbtnAnex)
         Me.Controls.Add(Me.rbtnHonkan)
-        Me.Controls.Add(Me.dgvUnitRight)
-        Me.Controls.Add(Me.dgvUnitLeft)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.selectUserLabel)
@@ -376,8 +376,8 @@ Partial Class 体重管理
         Me.Name = "体重管理"
         Me.Text = "体重管理"
         CType(Me.dgvUser, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvUnitLeft, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvUnitRight, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvUnitLeft, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -386,8 +386,6 @@ Partial Class 体重管理
     Friend WithEvents selectUserLabel As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents dgvUnitLeft As System.Windows.Forms.DataGridView
-    Friend WithEvents dgvUnitRight As System.Windows.Forms.DataGridView
     Friend WithEvents rbtnHonkan As System.Windows.Forms.RadioButton
     Friend WithEvents rbtnAnex As System.Windows.Forms.RadioButton
     Friend WithEvents btnPrevNam As System.Windows.Forms.Button
@@ -409,4 +407,6 @@ Partial Class 体重管理
     Friend WithEvents ymdBoxUnit6 As ymdBox.ymdBox
     Friend WithEvents ymdBoxUnit4 As ymdBox.ymdBox
     Friend WithEvents dspYmBox As ymdBox.ymdBox
+    Friend WithEvents dgvUnitRight As Symphony_Nurse2.ExDataGridView
+    Friend WithEvents dgvUnitLeft As Symphony_Nurse2.ExDataGridView
 End Class
