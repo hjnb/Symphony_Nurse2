@@ -734,7 +734,7 @@ Public Class 体重管理
     End Sub
 
     Private Sub dgvUnitLeft_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles dgvUnitLeft.KeyDown
-        If (e.KeyCode = Keys.Right OrElse e.KeyCode = Keys.Tab) AndAlso dgvUnitLeft.Columns(selectedUnitLeftColumnIndex).Name = "Cmpr" Then
+        If (e.KeyCode = Keys.Right) AndAlso dgvUnitLeft.Columns(selectedUnitLeftColumnIndex).Name = "Cmpr" Then
             dgvUnitRight("Room", selectedRowIndex).Selected = True
             dgvUnitRight.Focus()
             e.Handled = True
@@ -745,12 +745,7 @@ Public Class 体重管理
         If e.KeyCode = Keys.Left AndAlso dgvUnitRight.Columns(selectedUnitRightColumnIndex).Name = "Room" Then
             dgvUnitLeft("Cmpr", selectedRowIndex).Selected = True
             dgvUnitLeft.Focus()
-        ElseIf e.KeyCode = Keys.Tab AndAlso dgvUnitRight.Columns(selectedUnitRightColumnIndex).Name = "Cmpr" Then
-            If selectedRowIndex < MAX_ROW_COUNT - 1 Then
-                dgvUnitLeft("Room", selectedRowIndex + 1).Selected = True
-                dgvUnitLeft.Focus()
-                e.Handled = True
-            End If
+            e.Handled = True
         End If
     End Sub
 
