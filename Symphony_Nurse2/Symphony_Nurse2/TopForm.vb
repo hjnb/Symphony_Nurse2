@@ -6,7 +6,7 @@ Public Class TopForm
     Public DB_Nurse2 As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.mdb"
 
     '後でちゃんと名前考える
-    Private selectUserForm As 利用者選択
+    Public selectUserForm As 利用者選択
     Private aForm As 温度板
     Private bForm As 内服病名
     Private cForm As 体重管理

@@ -663,6 +663,7 @@ line2:
         ProgressBar1.Visible = True
         ProgressBar1.Maximum = 10
         ProgressBar1.Minimum = 0
+        Label13.Visible = True
 
         Dim objExcel As Object
         Dim objWorkBooks As Object
@@ -1302,6 +1303,6 @@ line2:
 
         ProgressBar1.Value = 0
         ProgressBar1.Visible = False
-
+        Label13.Visible = False
     End Sub
 End Class

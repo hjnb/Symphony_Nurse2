@@ -130,12 +130,15 @@ Partial Class 内服病名
         Me.YmdBox1 = New ymdBox.ymdBox()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.DataGridView6 = New System.Windows.Forms.DataGridView()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.DataGridView7 = New System.Windows.Forms.DataGridView()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView7, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'DataGridView1
@@ -1017,7 +1020,7 @@ Partial Class 内服病名
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(713, 179)
+        Me.ProgressBar1.Location = New System.Drawing.Point(713, 188)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(138, 20)
         Me.ProgressBar1.TabIndex = 109
@@ -1026,17 +1029,39 @@ Partial Class 内服病名
         'DataGridView6
         '
         Me.DataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView6.Location = New System.Drawing.Point(935, 188)
+        Me.DataGridView6.Location = New System.Drawing.Point(798, 139)
         Me.DataGridView6.Name = "DataGridView6"
         Me.DataGridView6.RowTemplate.Height = 21
-        Me.DataGridView6.Size = New System.Drawing.Size(227, 193)
+        Me.DataGridView6.Size = New System.Drawing.Size(10, 10)
         Me.DataGridView6.TabIndex = 110
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(713, 170)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(137, 12)
+        Me.Label2.TabIndex = 111
+        Me.Label2.Text = "出力中です...お待ちください..."
+        Me.Label2.Visible = False
+        '
+        'DataGridView7
+        '
+        Me.DataGridView7.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView7.Location = New System.Drawing.Point(737, 121)
+        Me.DataGridView7.Name = "DataGridView7"
+        Me.DataGridView7.RowTemplate.Height = 21
+        Me.DataGridView7.Size = New System.Drawing.Size(10, 10)
+        Me.DataGridView7.TabIndex = 112
         '
         '内服病名
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1237, 643)
+        Me.ClientSize = New System.Drawing.Size(909, 643)
+        Me.Controls.Add(Me.btnInnsatu)
+        Me.Controls.Add(Me.DataGridView7)
+        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.DataGridView6)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.YmdBox1)
@@ -1051,7 +1076,6 @@ Partial Class 内服病名
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.DataGridView4)
         Me.Controls.Add(Me.DataGridView3)
-        Me.Controls.Add(Me.btnInnsatu)
         Me.Controls.Add(Me.DataGridView2)
         Me.Controls.Add(Me.rbnW)
         Me.Controls.Add(Me.rbnR)
@@ -1153,6 +1177,7 @@ Partial Class 内服病名
         CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView7, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1265,4 +1290,6 @@ Partial Class 内服病名
     Friend WithEvents YmdBox1 As ymdBox.ymdBox
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
     Friend WithEvents DataGridView6 As System.Windows.Forms.DataGridView
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents DataGridView7 As System.Windows.Forms.DataGridView
 End Class

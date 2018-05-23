@@ -77,6 +77,7 @@ Partial Class 健康診断
         Me.YmdBox1 = New ymdBox.ymdBox()
         Me.DataGridView6 = New System.Windows.Forms.DataGridView()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
+        Me.Label13 = New System.Windows.Forms.Label()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -419,7 +420,7 @@ Partial Class 健康診断
         '
         'btnTouroku
         '
-        Me.btnTouroku.Location = New System.Drawing.Point(543, 49)
+        Me.btnTouroku.Location = New System.Drawing.Point(543, 28)
         Me.btnTouroku.Name = "btnTouroku"
         Me.btnTouroku.Size = New System.Drawing.Size(88, 35)
         Me.btnTouroku.TabIndex = 85
@@ -428,7 +429,7 @@ Partial Class 健康診断
         '
         'btnInnsatu
         '
-        Me.btnInnsatu.Location = New System.Drawing.Point(648, 49)
+        Me.btnInnsatu.Location = New System.Drawing.Point(648, 28)
         Me.btnInnsatu.Name = "btnInnsatu"
         Me.btnInnsatu.Size = New System.Drawing.Size(88, 35)
         Me.btnInnsatu.TabIndex = 86
@@ -456,7 +457,7 @@ Partial Class 健康診断
         'DataGridView3
         '
         Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView3.Location = New System.Drawing.Point(701, 65)
+        Me.DataGridView3.Location = New System.Drawing.Point(701, 50)
         Me.DataGridView3.Name = "DataGridView3"
         Me.DataGridView3.Size = New System.Drawing.Size(10, 10)
         Me.DataGridView3.TabIndex = 89
@@ -472,7 +473,7 @@ Partial Class 健康診断
         '
         'btnKuria
         '
-        Me.btnKuria.Location = New System.Drawing.Point(701, 49)
+        Me.btnKuria.Location = New System.Drawing.Point(701, 34)
         Me.btnKuria.Name = "btnKuria"
         Me.btnKuria.Size = New System.Drawing.Size(10, 10)
         Me.btnKuria.TabIndex = 91
@@ -481,7 +482,7 @@ Partial Class 健康診断
         '
         'btnKousinn
         '
-        Me.btnKousinn.Location = New System.Drawing.Point(717, 49)
+        Me.btnKousinn.Location = New System.Drawing.Point(717, 34)
         Me.btnKousinn.Name = "btnKousinn"
         Me.btnKousinn.Size = New System.Drawing.Size(10, 10)
         Me.btnKousinn.TabIndex = 103
@@ -492,7 +493,7 @@ Partial Class 健康診断
         '
         Me.DataGridView4.AllowUserToAddRows = False
         Me.DataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView4.Location = New System.Drawing.Point(717, 65)
+        Me.DataGridView4.Location = New System.Drawing.Point(717, 50)
         Me.DataGridView4.Name = "DataGridView4"
         Me.DataGridView4.RowTemplate.Height = 21
         Me.DataGridView4.Size = New System.Drawing.Size(10, 10)
@@ -555,7 +556,7 @@ Partial Class 健康診断
         'DataGridView5
         '
         Me.DataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView5.Location = New System.Drawing.Point(652, 65)
+        Me.DataGridView5.Location = New System.Drawing.Point(652, 44)
         Me.DataGridView5.Name = "DataGridView5"
         Me.DataGridView5.RowTemplate.Height = 21
         Me.DataGridView5.Size = New System.Drawing.Size(10, 10)
@@ -577,24 +578,35 @@ Partial Class 健康診断
         'DataGridView6
         '
         Me.DataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView6.Location = New System.Drawing.Point(668, 49)
+        Me.DataGridView6.Location = New System.Drawing.Point(668, 28)
         Me.DataGridView6.Name = "DataGridView6"
         Me.DataGridView6.Size = New System.Drawing.Size(10, 10)
         Me.DataGridView6.TabIndex = 113
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(648, 92)
+        Me.ProgressBar1.Location = New System.Drawing.Point(640, 92)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(143, 21)
         Me.ProgressBar1.TabIndex = 114
         Me.ProgressBar1.Visible = False
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(641, 73)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(137, 12)
+        Me.Label13.TabIndex = 115
+        Me.Label13.Text = "出力中です...お待ちください..."
+        Me.Label13.Visible = False
         '
         '健康診断
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(855, 718)
+        Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.btnInnsatu)
         Me.Controls.Add(Me.DataGridView6)
@@ -717,4 +729,5 @@ Partial Class 健康診断
     Friend WithEvents YmdBox1 As ymdBox.ymdBox
     Friend WithEvents DataGridView6 As System.Windows.Forms.DataGridView
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
+    Friend WithEvents Label13 As System.Windows.Forms.Label
 End Class

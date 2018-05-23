@@ -286,7 +286,7 @@ line1:
             Dim SQLCm As OleDbCommand = Cn.CreateCommand
             Dim Adapter As New OleDbDataAdapter(SQLCm)
             Dim Table As New DataTable
-            SQLCm.CommandText = "select * from BSht WHERE Id = " & lblID.Text & " order by Gyo"
+            SQLCm.CommandText = "select * from BSht WHERE Id = " & lblID.Text & " AND Nam = '" & lblName.Text & "' order by Gyo"
             Adapter.Fill(Table)
             DataGridView4.DataSource = Table
 
@@ -504,6 +504,7 @@ line1:
         ProgressBar1.Visible = True
         ProgressBar1.Maximum = 10
         ProgressBar1.Minimum = 0
+        Label2.Visible = True
 
         Dim objExcel As Object
         Dim objWorkBooks As Object
@@ -516,13 +517,12 @@ line1:
         objWorkBooks = objExcel.Workbooks
         objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
         oSheets = objWorkBook.Worksheets
-        oSheet = objWorkBook.Worksheets("健康診断新")
+        oSheet = objWorkBook.Worksheets("内服病名新")
 
         Dim a As DateTime = Today
-        Dim M As String = Strings.Mid(a, 6, 2)
-        For i As Integer = 2 To 596 Step 66
-            oSheet.Range("E" & i).Value = "平成30年度　健康診断予定表＜特別養護老人ホーム＞"
-            oSheet.Range("Q" & i).Value = M & "月"
+
+        For i As Integer = 85 To 850 Step 85
+            oSheet.Range("N" & i).Value = a
         Next
 
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
@@ -530,13 +530,20 @@ line1:
         Dim Adapter As New OleDbDataAdapter(SQLCm)
         Dim id As Integer
         Dim DGV3rowcount As Integer = DataGridView3.Rows.Count
-        Dim c As Integer = 7
+        Dim c As Integer = 8
+
+        '利用者マスタのデータを表示
+        Dim SQLCm7 As OleDbCommand = Cn.CreateCommand
+        Dim Adapter7 As New OleDbDataAdapter(SQLCm7)
+        Dim Table7 As New DataTable
+        SQLCm7.CommandText = "select Id, Nam, Kana, Sex, Format(Birth, 'gee/mm/dd') as Birth, Int((Format(NOW(),'YYYYMMDD')-Format(Birth, 'YYYYMMDD'))/10000) as Age, Kaigo, Dsp from KihonM order by Kana"
+        Adapter7.Fill(Table7)
+        DataGridView7.DataSource = Table7
 
         For count As Integer = 0 To DGV3rowcount - 1    'ユニット居室のデータベース
-            For name As Integer = c To 61 Step 6
+            For name As Integer = c To 80 Step 8
                 '空の家
-                oSheet.Range("D" & name).Value = DataGridView3(2, count).Value
-                oSheet.Range("D" & name - 1).Value = DataGridView3(3, count).Value
+                oSheet.Range("C" & name).Value = DataGridView3(2, count).Value
 
                 If DataGridView3(2, count).Value = "" Then
                     id = 0
@@ -546,55 +553,106 @@ line1:
 
                 Dim TableSora As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(2, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from BSht WHERE Id = " & id & "AND Nam = '" & DataGridView3(2, count).Value & "' order by Gyo"
                 Adapter.Fill(TableSora)
                 DataGridView6.DataSource = TableSora
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
+                    If DataGridView6(4, r).Value = 1 Then
+                        oSheet.Range("G" & name - 3).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 2 Then
+                        oSheet.Range("G" & name - 1).Value = DataGridView6(5, r).Value
                         oSheet.Range("I" & name - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("J" & name - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 3 Then
+                        oSheet.Range("G" & name + 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 4 Then
+                        For i As Integer = 0 To DataGridView7.Rows.Count - 1
+                            If DataGridView3(2, count).Value = DataGridView7(1, i).Value Then
+                                oSheet.Range("G" & name + 3).Value = DataGridView7(4, i).Value & " (" & DataGridView7(5, i).Value & "歳) 要介護" & DataGridView7(6, i).Value
+                                Exit For
+                            End If
+                        Next
+                        oSheet.Range("I" & name).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 5 Then
+                        oSheet.Range("I" & name + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 6 Then
+                        oSheet.Range("I" & name + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 7 Then
+                        oSheet.Range("I" & name + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 8 Then
+                        oSheet.Range("I" & name + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + 4).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 9 Then
+                        oSheet.Range("N" & name - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 10 Then
+                        oSheet.Range("N" & name - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 11 Then
+                        oSheet.Range("N" & name - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 12 Then
+                        oSheet.Range("N" & name).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 13 Then
+                        oSheet.Range("N" & name + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 14 Then
+                        oSheet.Range("N" & name + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 15 Then
+                        oSheet.Range("N" & name + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 16 Then
+                        oSheet.Range("N" & name + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + 4).Value = DataGridView6(9, r).Value
                     End If
                 Next
 
                 '森の家
-                oSheet.Range("D" & name + (66 * 1)).Value = DataGridView3(5, count).Value
-                oSheet.Range("D" & name + (66 * 1 - 1)).Value = DataGridView3(6, count).Value
+                oSheet.Range("C" & name + (85 * 1)).Value = DataGridView3(5, count).Value
 
                 If DataGridView3(5, count).Value = "" Then
                     id = 0
@@ -604,55 +662,108 @@ line1:
 
                 Dim TableMori As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(5, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from BSht WHERE Id = " & id & "AND Nam = '" & DataGridView3(5, count).Value & "' order by Gyo"
                 Adapter.Fill(TableMori)
                 DataGridView6.DataSource = TableMori
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 1) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 1) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 1) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 1)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 1) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 1) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 1)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 1) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 1) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 1) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 1) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 1) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 1) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 1)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 1) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 1) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 1) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 1) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 1)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 1) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 1) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 1) + 3).Value = DataGridView6(7, r).Value
+                    If DataGridView6(4, r).Value = 1 Then
+                        oSheet.Range("G" & name + (85 * 1) - 3).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 1) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 1) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 1) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 1) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 2 Then
+                        oSheet.Range("G" & name + (85 * 1) - 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 1) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 1) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 1) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 1) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 3 Then
+                        oSheet.Range("G" & name + (85 * 1) + 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 1) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 1) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 1) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 1) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 4 Then
+                        For i As Integer = 0 To DataGridView7.Rows.Count - 1
+                            If DataGridView3(5, count).Value = DataGridView7(1, i).Value Then
+                                oSheet.Range("G" & name + (85 * 1) + 3).Value = DataGridView7(4, i).Value & " (" & DataGridView7(5, i).Value & "歳) 要介護" & DataGridView7(6, i).Value
+                                Exit For
+                            Else
+                                oSheet.Range("G" & name + (85 * 1) + 3).Value = DataGridView6(5, r).Value
+                            End If
+                        Next
+                        oSheet.Range("I" & name + (85 * 1)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 1)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 1)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 1)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 5 Then
+                        oSheet.Range("I" & name + (85 * 1) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 1) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 1) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 1) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 6 Then
+                        oSheet.Range("I" & name + (85 * 1) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 1) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 1) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 1) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 7 Then
+                        oSheet.Range("I" & name + (85 * 1) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 1) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 1) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 1) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 8 Then
+                        oSheet.Range("I" & name + (85 * 1) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 1) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 1) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 1) + 4).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 9 Then
+                        oSheet.Range("N" & name + (85 * 1) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 1) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 1) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 1) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 10 Then
+                        oSheet.Range("N" & name + (85 * 1) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 1) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 1) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 1) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 11 Then
+                        oSheet.Range("N" & name + (85 * 1) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 1) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 1) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 1) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 12 Then
+                        oSheet.Range("N" & name + (85 * 1)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 1)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 1)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 1)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 13 Then
+                        oSheet.Range("N" & name + (85 * 1) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 1) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 1) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 1) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 14 Then
+                        oSheet.Range("N" & name + (85 * 1) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 1) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 1) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 1) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 15 Then
+                        oSheet.Range("N" & name + (85 * 1) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 1) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 1) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 1) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 16 Then
+                        oSheet.Range("N" & name + (85 * 1) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 1) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 1) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 1) + 4).Value = DataGridView6(9, r).Value
                     End If
                 Next
 
                 '星の家
-                oSheet.Range("D" & name + (66 * 2)).Value = DataGridView3(8, count).Value
-                oSheet.Range("D" & name + (66 * 2 - 1)).Value = DataGridView3(9, count).Value
+                oSheet.Range("C" & name + (85 * 2)).Value = DataGridView3(8, count).Value
 
                 If DataGridView3(8, count).Value = "" Then
                     id = 0
@@ -662,55 +773,108 @@ line1:
 
                 Dim TableHosi As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(8, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from BSht WHERE Id = " & id & "AND Nam = '" & DataGridView3(8, count).Value & "' order by Gyo"
                 Adapter.Fill(TableHosi)
                 DataGridView6.DataSource = TableHosi
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 2) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 2) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 2) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 2)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 2) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 2) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 2)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 2) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 2) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 2) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 2) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 2) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 2) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 2)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 2) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 2) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 2) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 2) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 2)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 2) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 2) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 2) + 3).Value = DataGridView6(7, r).Value
+                    If DataGridView6(4, r).Value = 1 Then
+                        oSheet.Range("G" & name + (85 * 2) - 3).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 2) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 2) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 2) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 2) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 2 Then
+                        oSheet.Range("G" & name + (85 * 2) - 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 2) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 2) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 2) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 2) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 3 Then
+                        oSheet.Range("G" & name + (85 * 2) + 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 2) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 2) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 2) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 2) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 4 Then
+                        For i As Integer = 0 To DataGridView7.Rows.Count - 1
+                            If DataGridView3(8, count).Value = DataGridView7(1, i).Value Then
+                                oSheet.Range("G" & name + (85 * 2) + 3).Value = DataGridView7(4, i).Value & " (" & DataGridView7(5, i).Value & "歳) 要介護" & DataGridView7(6, i).Value
+                                Exit For
+                            Else
+                                oSheet.Range("G" & name + (85 * 2) + 3).Value = DataGridView6(5, r).Value
+                            End If
+                        Next
+                        oSheet.Range("I" & name + (85 * 2)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 2)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 2)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 2)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 5 Then
+                        oSheet.Range("I" & name + (85 * 2) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 2) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 2) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 2) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 6 Then
+                        oSheet.Range("I" & name + (85 * 2) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 2) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 2) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 2) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 7 Then
+                        oSheet.Range("I" & name + (85 * 2) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 2) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 2) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 2) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 8 Then
+                        oSheet.Range("I" & name + (85 * 2) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 2) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 2) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 2) + 4).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 9 Then
+                        oSheet.Range("N" & name + (85 * 2) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 2) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 2) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 2) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 10 Then
+                        oSheet.Range("N" & name + (85 * 2) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 2) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 2) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 2) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 11 Then
+                        oSheet.Range("N" & name + (85 * 2) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 2) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 2) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 2) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 12 Then
+                        oSheet.Range("N" & name + (85 * 2)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 2)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 2)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 2)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 13 Then
+                        oSheet.Range("N" & name + (85 * 2) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 2) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 2) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 2) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 14 Then
+                        oSheet.Range("N" & name + (85 * 2) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 2) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 2) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 2) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 15 Then
+                        oSheet.Range("N" & name + (85 * 2) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 2) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 2) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 2) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 16 Then
+                        oSheet.Range("N" & name + (85 * 2) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 2) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 2) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 2) + 4).Value = DataGridView6(9, r).Value
                     End If
                 Next
 
                 '月の家
-                oSheet.Range("D" & name + (66 * 3)).Value = DataGridView3(11, count).Value
-                oSheet.Range("D" & name + (66 * 3 - 1)).Value = DataGridView3(12, count).Value
+                oSheet.Range("C" & name + (85 * 3)).Value = DataGridView3(11, count).Value
 
                 If DataGridView3(11, count).Value = "" Then
                     id = 0
@@ -720,55 +884,108 @@ line1:
 
                 Dim Tabletuki As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(11, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from BSht WHERE Id = " & id & "AND Nam = '" & DataGridView3(11, count).Value & "' order by Gyo"
                 Adapter.Fill(Tabletuki)
                 DataGridView6.DataSource = Tabletuki
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 3) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 3) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 3) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 3)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 3) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 3) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 3)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 3) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 3) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 3) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 3) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 3) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 3) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 3)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 3) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 3) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 3) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 3) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 3)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 3) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 3) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 3) + 3).Value = DataGridView6(7, r).Value
+                    If DataGridView6(4, r).Value = 1 Then
+                        oSheet.Range("G" & name + (85 * 3) - 3).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 3) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 3) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 3) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 3) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 2 Then
+                        oSheet.Range("G" & name + (85 * 3) - 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 3) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 3) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 3) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 3) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 3 Then
+                        oSheet.Range("G" & name + (85 * 3) + 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 3) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 3) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 3) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 3) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 4 Then
+                        For i As Integer = 0 To DataGridView7.Rows.Count - 1
+                            If DataGridView3(11, count).Value = DataGridView7(1, i).Value Then
+                                oSheet.Range("G" & name + (85 * 3) + 3).Value = DataGridView7(4, i).Value & " (" & DataGridView7(5, i).Value & "歳) 要介護" & DataGridView7(6, i).Value
+                                Exit For
+                            Else
+                                oSheet.Range("G" & name + (85 * 3) + 3).Value = DataGridView6(5, r).Value
+                            End If
+                        Next
+                        oSheet.Range("I" & name + (85 * 3)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 3)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 3)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 3)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 5 Then
+                        oSheet.Range("I" & name + (85 * 3) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 3) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 3) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 3) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 6 Then
+                        oSheet.Range("I" & name + (85 * 3) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 3) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 3) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 3) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 7 Then
+                        oSheet.Range("I" & name + (85 * 3) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 3) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 3) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 3) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 8 Then
+                        oSheet.Range("I" & name + (85 * 3) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 3) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 3) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 3) + 4).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 9 Then
+                        oSheet.Range("N" & name + (85 * 3) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 3) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 3) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 3) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 10 Then
+                        oSheet.Range("N" & name + (85 * 3) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 3) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 3) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 3) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 11 Then
+                        oSheet.Range("N" & name + (85 * 3) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 3) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 3) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 3) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 12 Then
+                        oSheet.Range("N" & name + (85 * 3)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 3)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 3)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 3)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 13 Then
+                        oSheet.Range("N" & name + (85 * 3) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 3) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 3) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 3) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 14 Then
+                        oSheet.Range("N" & name + (85 * 3) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 3) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 3) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 3) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 15 Then
+                        oSheet.Range("N" & name + (85 * 3) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 3) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 3) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 3) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 16 Then
+                        oSheet.Range("N" & name + (85 * 3) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 3) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 3) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 3) + 4).Value = DataGridView6(9, r).Value
                     End If
                 Next
 
                 '花の家
-                oSheet.Range("D" & name + (66 * 4)).Value = DataGridView3(14, count).Value
-                oSheet.Range("D" & name + (66 * 4 - 1)).Value = DataGridView3(15, count).Value
+                oSheet.Range("C" & name + (85 * 4)).Value = DataGridView3(14, count).Value
 
                 If DataGridView3(14, count).Value = "" Then
                     id = 0
@@ -778,55 +995,108 @@ line1:
 
                 Dim TableHana As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(14, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from BSht WHERE Id = " & id & "AND Nam = '" & DataGridView3(14, count).Value & "' order by Gyo"
                 Adapter.Fill(TableHana)
                 DataGridView6.DataSource = TableHana
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 4) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 4) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 4) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 4)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 4) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 4) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 4)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 4) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 4) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 4) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 4) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 4) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 4) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 4)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 4) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 4) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 4) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 4) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 4)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 4) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 4) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 4) + 3).Value = DataGridView6(7, r).Value
+                    If DataGridView6(4, r).Value = 1 Then
+                        oSheet.Range("G" & name + (85 * 4) - 3).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 4) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 4) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 4) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 4) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 2 Then
+                        oSheet.Range("G" & name + (85 * 4) - 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 4) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 4) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 4) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 4) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 3 Then
+                        oSheet.Range("G" & name + (85 * 4) + 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 4) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 4) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 4) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 4) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 4 Then
+                        For i As Integer = 0 To DataGridView7.Rows.Count - 1
+                            If DataGridView3(14, count).Value = DataGridView7(1, i).Value Then
+                                oSheet.Range("G" & name + (85 * 4) + 3).Value = DataGridView7(4, i).Value & " (" & DataGridView7(5, i).Value & "歳) 要介護" & DataGridView7(6, i).Value
+                                Exit For
+                            Else
+                                oSheet.Range("G" & name + (85 * 4) + 3).Value = DataGridView6(5, r).Value
+                            End If
+                        Next
+                        oSheet.Range("I" & name + (85 * 4)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 4)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 4)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 4)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 5 Then
+                        oSheet.Range("I" & name + (85 * 4) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 4) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 4) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 4) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 6 Then
+                        oSheet.Range("I" & name + (85 * 4) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 4) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 4) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 4) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 7 Then
+                        oSheet.Range("I" & name + (85 * 4) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 4) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 4) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 4) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 8 Then
+                        oSheet.Range("I" & name + (85 * 4) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 4) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 4) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 4) + 4).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 9 Then
+                        oSheet.Range("N" & name + (85 * 4) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 4) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 4) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 4) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 10 Then
+                        oSheet.Range("N" & name + (85 * 4) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 4) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 4) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 4) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 11 Then
+                        oSheet.Range("N" & name + (85 * 4) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 4) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 4) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 4) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 12 Then
+                        oSheet.Range("N" & name + (85 * 4)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 4)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 4)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 4)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 13 Then
+                        oSheet.Range("N" & name + (85 * 4) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 4) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 4) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 4) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 14 Then
+                        oSheet.Range("N" & name + (85 * 4) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 4) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 4) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 4) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 15 Then
+                        oSheet.Range("N" & name + (85 * 4) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 4) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 4) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 4) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 16 Then
+                        oSheet.Range("N" & name + (85 * 4) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 4) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 4) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 4) + 4).Value = DataGridView6(9, r).Value
                     End If
                 Next
 
                 '丘の家
-                oSheet.Range("D" & name + (66 * 5)).Value = DataGridView3(17, count).Value
-                oSheet.Range("D" & name + (66 * 5 - 1)).Value = DataGridView3(18, count).Value
+                oSheet.Range("C" & name + (85 * 5)).Value = DataGridView3(17, count).Value
 
                 If DataGridView3(17, count).Value = "" Then
                     id = 0
@@ -836,55 +1106,108 @@ line1:
 
                 Dim TableOka As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(17, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from BSht WHERE Id = " & id & "AND Nam = '" & DataGridView3(17, count).Value & "' order by Gyo"
                 Adapter.Fill(TableOka)
                 DataGridView6.DataSource = TableOka
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 5) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 5) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 5) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 5)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 5) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 5) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 5)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 5) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 5) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 5) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 5) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 5) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 5) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 5)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 5) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 5) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 5) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 5) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 5)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 5) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 5) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 5) + 3).Value = DataGridView6(7, r).Value
+                    If DataGridView6(4, r).Value = 1 Then
+                        oSheet.Range("G" & name + (85 * 5) - 3).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 5) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 5) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 5) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 5) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 2 Then
+                        oSheet.Range("G" & name + (85 * 5) - 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 5) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 5) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 5) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 5) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 3 Then
+                        oSheet.Range("G" & name + (85 * 5) + 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 5) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 5) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 5) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 5) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 4 Then
+                        For i As Integer = 0 To DataGridView7.Rows.Count - 1
+                            If DataGridView3(17, count).Value = DataGridView7(1, i).Value Then
+                                oSheet.Range("G" & name + (85 * 5) + 3).Value = DataGridView7(4, i).Value & " (" & DataGridView7(5, i).Value & "歳) 要介護" & DataGridView7(6, i).Value
+                                Exit For
+                            Else
+                                oSheet.Range("G" & name + (85 * 5) + 3).Value = DataGridView6(5, r).Value
+                            End If
+                        Next
+                        oSheet.Range("I" & name + (85 * 5)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 5)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 5)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 5)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 5 Then
+                        oSheet.Range("I" & name + (85 * 5) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 5) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 5) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 5) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 6 Then
+                        oSheet.Range("I" & name + (85 * 5) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 5) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 5) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 5) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 7 Then
+                        oSheet.Range("I" & name + (85 * 5) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 5) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 5) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 5) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 8 Then
+                        oSheet.Range("I" & name + (85 * 5) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 5) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 5) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 5) + 4).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 9 Then
+                        oSheet.Range("N" & name + (85 * 5) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 5) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 5) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 5) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 10 Then
+                        oSheet.Range("N" & name + (85 * 5) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 5) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 5) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 5) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 11 Then
+                        oSheet.Range("N" & name + (85 * 5) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 5) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 5) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 5) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 12 Then
+                        oSheet.Range("N" & name + (85 * 5)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 5)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 5)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 5)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 13 Then
+                        oSheet.Range("N" & name + (85 * 5) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 5) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 5) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 5) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 14 Then
+                        oSheet.Range("N" & name + (85 * 5) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 5) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 5) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 5) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 15 Then
+                        oSheet.Range("N" & name + (85 * 5) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 5) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 5) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 5) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 16 Then
+                        oSheet.Range("N" & name + (85 * 5) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 5) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 5) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 5) + 4).Value = DataGridView6(9, r).Value
                     End If
                 Next
 
                 '虹の家
-                oSheet.Range("D" & name + (66 * 6)).Value = DataGridView3(20, count).Value
-                oSheet.Range("D" & name + (66 * 6 - 1)).Value = DataGridView3(21, count).Value
+                oSheet.Range("C" & name + (85 * 6)).Value = DataGridView3(20, count).Value
 
                 If DataGridView3(20, count).Value = "" Then
                     id = 0
@@ -894,55 +1217,108 @@ line1:
 
                 Dim TableNiji As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(20, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from BSht WHERE Id = " & id & "AND Nam = '" & DataGridView3(20, count).Value & "' order by Gyo"
                 Adapter.Fill(TableNiji)
                 DataGridView6.DataSource = TableNiji
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 6) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 6) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 6) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 6)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 6) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 6) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 6)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 6) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 6) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 6) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 6) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 6) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 6) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 6)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 6) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 6) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 6) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 6) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 6)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 6) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 6) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 6) + 3).Value = DataGridView6(7, r).Value
+                    If DataGridView6(4, r).Value = 1 Then
+                        oSheet.Range("G" & name + (85 * 6) - 3).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 6) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 6) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 6) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 6) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 2 Then
+                        oSheet.Range("G" & name + (85 * 6) - 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 6) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 6) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 6) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 6) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 3 Then
+                        oSheet.Range("G" & name + (85 * 6) + 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 6) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 6) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 6) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 6) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 4 Then
+                        For i As Integer = 0 To DataGridView7.Rows.Count - 1
+                            If DataGridView3(20, count).Value = DataGridView7(1, i).Value Then
+                                oSheet.Range("G" & name + (85 * 6) + 3).Value = DataGridView7(4, i).Value & " (" & DataGridView7(5, i).Value & "歳) 要介護" & DataGridView7(6, i).Value
+                                Exit For
+                            Else
+                                oSheet.Range("G" & name + (85 * 6) + 3).Value = DataGridView6(5, r).Value
+                            End If
+                        Next
+                        oSheet.Range("I" & name + (85 * 6)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 6)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 6)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 6)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 5 Then
+                        oSheet.Range("I" & name + (85 * 6) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 6) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 6) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 6) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 6 Then
+                        oSheet.Range("I" & name + (85 * 6) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 6) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 6) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 6) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 7 Then
+                        oSheet.Range("I" & name + (85 * 6) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 6) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 6) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 6) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 8 Then
+                        oSheet.Range("I" & name + (85 * 6) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 6) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 6) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 6) + 4).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 9 Then
+                        oSheet.Range("N" & name + (85 * 6) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 6) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 6) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 6) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 10 Then
+                        oSheet.Range("N" & name + (85 * 6) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 6) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 6) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 6) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 11 Then
+                        oSheet.Range("N" & name + (85 * 6) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 6) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 6) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 6) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 12 Then
+                        oSheet.Range("N" & name + (85 * 6)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 6)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 6)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 6)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 13 Then
+                        oSheet.Range("N" & name + (85 * 6) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 6) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 6) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 6) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 14 Then
+                        oSheet.Range("N" & name + (85 * 6) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 6) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 6) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 6) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 15 Then
+                        oSheet.Range("N" & name + (85 * 6) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 6) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 6) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 6) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 16 Then
+                        oSheet.Range("N" & name + (85 * 6) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 6) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 6) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 6) + 4).Value = DataGridView6(9, r).Value
                     End If
                 Next
 
                 '光の家
-                oSheet.Range("D" & name + (66 * 7)).Value = DataGridView3(23, count).Value
-                oSheet.Range("D" & name + (66 * 7 - 1)).Value = DataGridView3(24, count).Value
+                oSheet.Range("C" & name + (85 * 7)).Value = DataGridView3(23, count).Value
 
                 If DataGridView3(23, count).Value = "" Then
                     id = 0
@@ -952,55 +1328,108 @@ line1:
 
                 Dim TableHikari As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(23, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from BSht WHERE Id = " & id & "AND Nam = '" & DataGridView3(23, count).Value & "' order by Gyo"
                 Adapter.Fill(TableHikari)
                 DataGridView6.DataSource = TableHikari
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 7) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 7) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 7) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 7)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 7) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 7) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 7)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 7) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 7) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 7) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 7) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 7) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 7) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 7)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 7) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 7) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 7) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 7) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 7)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 7) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 7) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 7) + 3).Value = DataGridView6(7, r).Value
+                    If DataGridView6(4, r).Value = 1 Then
+                        oSheet.Range("G" & name + (85 * 7) - 3).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 7) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 7) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 7) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 7) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 2 Then
+                        oSheet.Range("G" & name + (85 * 7) - 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 7) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 7) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 7) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 7) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 3 Then
+                        oSheet.Range("G" & name + (85 * 7) + 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 7) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 7) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 7) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 7) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 4 Then
+                        For i As Integer = 0 To DataGridView7.Rows.Count - 1
+                            If DataGridView3(23, count).Value = DataGridView7(1, i).Value Then
+                                oSheet.Range("G" & name + (85 * 7) + 3).Value = DataGridView7(4, i).Value & " (" & DataGridView7(5, i).Value & "歳) 要介護" & DataGridView7(6, i).Value
+                                Exit For
+                            Else
+                                oSheet.Range("G" & name + (85 * 7) + 3).Value = DataGridView6(5, r).Value
+                            End If
+                        Next
+                        oSheet.Range("I" & name + (85 * 7)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 7)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 7)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 7)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 5 Then
+                        oSheet.Range("I" & name + (85 * 7) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 7) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 7) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 7) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 6 Then
+                        oSheet.Range("I" & name + (85 * 7) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 7) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 7) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 7) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 7 Then
+                        oSheet.Range("I" & name + (85 * 7) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 7) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 7) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 7) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 8 Then
+                        oSheet.Range("I" & name + (85 * 7) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 7) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 7) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 7) + 4).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 9 Then
+                        oSheet.Range("N" & name + (85 * 7) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 7) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 7) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 7) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 10 Then
+                        oSheet.Range("N" & name + (85 * 7) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 7) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 7) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 7) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 11 Then
+                        oSheet.Range("N" & name + (85 * 7) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 7) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 7) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 7) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 12 Then
+                        oSheet.Range("N" & name + (85 * 7)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 7)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 7)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 7)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 13 Then
+                        oSheet.Range("N" & name + (85 * 7) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 7) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 7) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 7) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 14 Then
+                        oSheet.Range("N" & name + (85 * 7) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 7) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 7) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 7) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 15 Then
+                        oSheet.Range("N" & name + (85 * 7) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 7) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 7) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 7) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 16 Then
+                        oSheet.Range("N" & name + (85 * 7) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 7) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 7) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 7) + 4).Value = DataGridView6(9, r).Value
                     End If
                 Next
 
                 '雪の家
-                oSheet.Range("D" & name + (66 * 8)).Value = DataGridView3(26, count).Value
-                oSheet.Range("D" & name + (66 * 8 - 1)).Value = DataGridView3(27, count).Value
+                oSheet.Range("C" & name + (85 * 8)).Value = DataGridView3(26, count).Value
 
                 If DataGridView3(26, count).Value = "" Then
                     id = 0
@@ -1010,55 +1439,108 @@ line1:
 
                 Dim TableYuki As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(26, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from BSht WHERE Id = " & id & "AND Nam = '" & DataGridView3(26, count).Value & "' order by Gyo"
                 Adapter.Fill(TableYuki)
                 DataGridView6.DataSource = TableYuki
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 8) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 8) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 8) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 8)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 8) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 8) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 8)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 8) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 8) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 8) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 8) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 8) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 8) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 8)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 8) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 8) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 8) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 8) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 8)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 8) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 8) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 8) + 3).Value = DataGridView6(7, r).Value
+                    If DataGridView6(4, r).Value = 1 Then
+                        oSheet.Range("G" & name + (85 * 8) - 3).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 8) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 8) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 8) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 8) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 2 Then
+                        oSheet.Range("G" & name + (85 * 8) - 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 8) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 8) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 8) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 8) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 3 Then
+                        oSheet.Range("G" & name + (85 * 8) + 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 8) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 8) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 8) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 8) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 4 Then
+                        For i As Integer = 0 To DataGridView7.Rows.Count - 1
+                            If DataGridView3(26, count).Value = DataGridView7(1, i).Value Then
+                                oSheet.Range("G" & name + (85 * 8) + 3).Value = DataGridView7(4, i).Value & " (" & DataGridView7(5, i).Value & "歳) 要介護" & DataGridView7(6, i).Value
+                                Exit For
+                            Else
+                                oSheet.Range("G" & name + (85 * 8) + 3).Value = DataGridView6(5, r).Value
+                            End If
+                        Next
+                        oSheet.Range("I" & name + (85 * 8)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 8)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 8)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 8)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 5 Then
+                        oSheet.Range("I" & name + (85 * 8) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 8) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 8) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 8) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 6 Then
+                        oSheet.Range("I" & name + (85 * 8) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 8) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 8) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 8) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 7 Then
+                        oSheet.Range("I" & name + (85 * 8) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 8) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 8) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 8) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 8 Then
+                        oSheet.Range("I" & name + (85 * 8) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 8) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 8) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 8) + 4).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 9 Then
+                        oSheet.Range("N" & name + (85 * 8) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 8) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 8) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 8) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 10 Then
+                        oSheet.Range("N" & name + (85 * 8) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 8) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 8) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 8) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 11 Then
+                        oSheet.Range("N" & name + (85 * 8) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 8) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 8) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 8) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 12 Then
+                        oSheet.Range("N" & name + (85 * 8)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 8)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 8)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 8)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 13 Then
+                        oSheet.Range("N" & name + (85 * 8) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 8) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 8) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 8) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 14 Then
+                        oSheet.Range("N" & name + (85 * 8) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 8) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 8) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 8) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 15 Then
+                        oSheet.Range("N" & name + (85 * 8) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 8) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 8) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 8) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 16 Then
+                        oSheet.Range("N" & name + (85 * 8) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 8) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 8) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 8) + 4).Value = DataGridView6(9, r).Value
                     End If
                 Next
 
                 '風の家
-                oSheet.Range("D" & name + (66 * 9)).Value = DataGridView3(29, count).Value
-                oSheet.Range("D" & name + (66 * 9 - 1)).Value = DataGridView3(30, count).Value
+                oSheet.Range("C" & name + (85 * 9)).Value = DataGridView3(29, count).Value
 
                 If DataGridView3(29, count).Value = "" Then
                     id = 0
@@ -1068,53 +1550,107 @@ line1:
 
                 Dim TableKaze As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(29, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from BSht WHERE Id = " & id & "AND Nam = '" & DataGridView3(29, count).Value & "' order by Gyo"
                 Adapter.Fill(TableKaze)
                 DataGridView6.DataSource = TableKaze
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 9) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 9) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 9) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 9)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 9) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 9) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 9)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 9) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 9) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 9) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 9) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 9) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 9) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 9)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 9) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 9) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 9) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 9) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 9)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 9) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 9) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 9) + 3).Value = DataGridView6(7, r).Value
+                    If DataGridView6(4, r).Value = 1 Then
+                        oSheet.Range("G" & name + (85 * 9) - 3).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 9) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 9) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 9) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 9) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 2 Then
+                        oSheet.Range("G" & name + (85 * 9) - 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 9) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 9) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 9) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 9) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 3 Then
+                        oSheet.Range("G" & name + (85 * 9) + 1).Value = DataGridView6(5, r).Value
+                        oSheet.Range("I" & name + (85 * 9) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 9) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 9) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 9) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 4 Then
+                        For i As Integer = 0 To DataGridView7.Rows.Count - 1
+                            If DataGridView3(29, count).Value = DataGridView7(1, i).Value Then
+                                oSheet.Range("G" & name + (85 * 9) + 3).Value = DataGridView7(4, i).Value & " (" & DataGridView7(5, i).Value & "歳) 要介護" & DataGridView7(6, i).Value
+                                Exit For
+                            Else
+                                oSheet.Range("G" & name + (85 * 9) + 3).Value = DataGridView6(5, r).Value
+                            End If
+                        Next
+                        oSheet.Range("I" & name + (85 * 9)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 9)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 9)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 9)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 5 Then
+                        oSheet.Range("I" & name + (85 * 9) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 9) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 9) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 9) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 6 Then
+                        oSheet.Range("I" & name + (85 * 9) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 9) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 9) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 9) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 7 Then
+                        oSheet.Range("I" & name + (85 * 9) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 9) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 9) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 9) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 8 Then
+                        oSheet.Range("I" & name + (85 * 9) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("J" & name + (85 * 9) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("K" & name + (85 * 9) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("L" & name + (85 * 9) + 4).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 9 Then
+                        oSheet.Range("N" & name + (85 * 9) - 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 9) - 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 9) - 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 9) - 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 10 Then
+                        oSheet.Range("N" & name + (85 * 9) - 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 9) - 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 9) - 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 9) - 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 11 Then
+                        oSheet.Range("N" & name + (85 * 9) - 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 9) - 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 9) - 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 9) - 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 12 Then
+                        oSheet.Range("N" & name + (85 * 9)).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 9)).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 9)).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 9)).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 13 Then
+                        oSheet.Range("N" & name + (85 * 9) + 1).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 9) + 1).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 9) + 1).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 9) + 1).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 14 Then
+                        oSheet.Range("N" & name + (85 * 9) + 2).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 9) + 2).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 9) + 2).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 9) + 2).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 15 Then
+                        oSheet.Range("N" & name + (85 * 9) + 3).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 9) + 3).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 9) + 3).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 9) + 3).Value = DataGridView6(9, r).Value
+                    ElseIf DataGridView6(4, r).Value = 16 Then
+                        oSheet.Range("N" & name + (85 * 9) + 4).Value = DataGridView6(6, r).Value
+                        oSheet.Range("O" & name + (85 * 9) + 4).Value = DataGridView6(7, r).Value
+                        oSheet.Range("P" & name + (85 * 9) + 4).Value = DataGridView6(8, r).Value
+                        oSheet.Range("Q" & name + (85 * 9) + 4).Value = DataGridView6(9, r).Value
                     End If
                 Next
 
-                c = name + 6
+                c = name + 8
                 Exit For
             Next
             ProgressBar1.Value = count
@@ -1142,6 +1678,7 @@ line1:
 
         ProgressBar1.Value = 0
         ProgressBar1.Visible = False
+        Label2.Visible = False
     End Sub
 
     Private Sub btnKousinn_Click(sender As System.Object, e As System.EventArgs) Handles btnKousinn.Click
