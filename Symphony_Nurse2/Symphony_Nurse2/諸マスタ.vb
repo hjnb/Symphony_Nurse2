@@ -112,10 +112,10 @@ Public Class 諸マスタ
     End Sub
 
     Private Sub settingInputTextBox()
-        '後で色の設定処理をなんとかする
         '項目
         settingItemBox()
         cmbItem.DropDownStyle = ComboBoxStyle.DropDownList
+        cmbItem.FlatStyle = FlatStyle.Flat
 
         cmbItem.ImeMode = Windows.Forms.ImeMode.Hiragana
 
