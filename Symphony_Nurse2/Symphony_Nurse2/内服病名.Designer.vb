@@ -1011,7 +1011,7 @@ Partial Class 内服病名
         Me.YmdBox1.DateText = ""
         Me.YmdBox1.EraLabelText = "H30"
         Me.YmdBox1.EraText = ""
-        Me.YmdBox1.Location = New System.Drawing.Point(283, 491)
+        Me.YmdBox1.Location = New System.Drawing.Point(308, 491)
         Me.YmdBox1.MonthLabelText = "05"
         Me.YmdBox1.MonthText = ""
         Me.YmdBox1.Name = "YmdBox1"

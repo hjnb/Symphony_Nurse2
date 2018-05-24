@@ -57,9 +57,11 @@ Partial Class 温度板
         Me.btnKuria = New System.Windows.Forms.Button()
         Me.DataGridView3 = New System.Windows.Forms.DataGridView()
         Me.AdBox1 = New ADBox.adBox()
+        Me.DataGridView4 = New System.Windows.Forms.DataGridView()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -363,7 +365,7 @@ Partial Class 温度板
         '
         'AdBox1
         '
-        Me.AdBox1.dateText = "21"
+        Me.AdBox1.dateText = "24"
         Me.AdBox1.Location = New System.Drawing.Point(71, 15)
         Me.AdBox1.monthText = "05"
         Me.AdBox1.Name = "AdBox1"
@@ -371,11 +373,23 @@ Partial Class 温度板
         Me.AdBox1.TabIndex = 92
         Me.AdBox1.yearText = "2018"
         '
+        'DataGridView4
+        '
+        Me.DataGridView4.AllowUserToAddRows = False
+        Me.DataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridView4.Location = New System.Drawing.Point(690, 219)
+        Me.DataGridView4.Name = "DataGridView4"
+        Me.DataGridView4.RowTemplate.Height = 21
+        Me.DataGridView4.Size = New System.Drawing.Size(10, 10)
+        Me.DataGridView4.TabIndex = 93
+        '
         '温度板
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(850, 699)
+        Me.ClientSize = New System.Drawing.Size(838, 699)
+        Me.Controls.Add(Me.btnInnsatu)
+        Me.Controls.Add(Me.DataGridView4)
         Me.Controls.Add(Me.AdBox1)
         Me.Controls.Add(Me.btnTouroku)
         Me.Controls.Add(Me.DataGridView3)
@@ -383,7 +397,6 @@ Partial Class 温度板
         Me.Controls.Add(Me.btnKousinn)
         Me.Controls.Add(Me.DataGridView2)
         Me.Controls.Add(Me.lstSyoti)
-        Me.Controls.Add(Me.btnInnsatu)
         Me.Controls.Add(Me.btnSakujo)
         Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.txtSyoti2)
@@ -416,6 +429,7 @@ Partial Class 温度板
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -455,4 +469,5 @@ Partial Class 温度板
     Friend WithEvents btnKuria As System.Windows.Forms.Button
     Friend WithEvents DataGridView3 As System.Windows.Forms.DataGridView
     Friend WithEvents AdBox1 As ADBox.adBox
+    Friend WithEvents DataGridView4 As System.Windows.Forms.DataGridView
 End Class

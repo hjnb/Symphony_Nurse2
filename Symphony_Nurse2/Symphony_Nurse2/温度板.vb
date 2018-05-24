@@ -137,7 +137,7 @@ Public Class 温度板
             .BackgroundColor = Color.FromKnownColor(KnownColor.Control)
         End With
 
-        SQLCm.CommandText = "SELECT autono, Id, Ymd AS 日付, Hm AS 時刻, Tanto As 記載者, Ondo AS 体温, Myaku As 脈, AtuU As 血圧（上）, AtuL As 血圧（下）, Ketu As 血糖値, Weight As 体重, Height As 身長, Syoti As 処置, Val As 補記 FROM OndoD WHERE Id = " & 0 & " ORDER BY Ymd, Hm"
+        SQLCm.CommandText = "SELECT autono, Id, Ymd AS 日付, Hm AS 時刻, Tanto As 記載者, Ondo AS 体温, Myaku As 脈, AtuU As 血圧（上）, AtuL As 血圧（下）, Ketu As 血糖値, Weight As 体重, Height As 身長, Syoti As 処置, Val As 補記 FROM OndoD WHERE Id = " & lblID.Text & " ORDER BY Ymd, Hm"
         Adapter.Fill(Table)
         DataGridView1.DataSource = Table
 
@@ -203,25 +203,35 @@ Public Class 温度板
 
     End Sub
 
+    Private Sub DataGridView1_CellFormatting(sender As Object, e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles DataGridView1.CellFormatting
+        If DataGridView1.Columns(e.ColumnIndex).Name = "日付" Then
+            If e.RowIndex > 0 AndAlso DataGridView1(e.ColumnIndex, e.RowIndex - 1).Value = e.Value Then
+                e.Value = ""
+                e.FormattingApplied = True
+            End If
+        End If
+    End Sub
+
+    Private Function NullCheck(cellvalue As Object) As String
+        Return If(IsDBNull(cellvalue), "", cellvalue)
+    End Function
+
     Private Sub DataGridView1_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles DataGridView1.CellMouseClick
         Dim r As Integer = DataGridView1.CurrentRow.Index
-        AdBox1.setADStr(DataGridView1(2, r).Value)
-        TimeBox1.HourText = Strings.Left(DataGridView1(3, r).Value, 2)
-        TimeBox1.MinuteText = Strings.Right(DataGridView1(3, r).Value, 2)
-        cmbKisaisya.Text = DataGridView1(4, r).Value
-        txtTaionn.Text = DataGridView1(5, r).Value
-        txtMyaku.Text = DataGridView1(6, r).Value
-        txtKetuatuUe.Text = DataGridView1(7, r).Value
-        txtKetuatuSita.Text = DataGridView1(8, r).Value
-        txtKettouti.Text = DataGridView1(9, r).Value
-        If IsDBNull(DataGridView1(10, r).Value) = True Then
 
-        Else
-            txtSinntyou.Text = DataGridView1(10, r).Value
-        End If
-        txtTaijuu.Text = DataGridView1(11, r).Value
-        txtSyoti1.Text = DataGridView1(12, r).Value
-        txtSyoti2.Text = DataGridView1(13, r).Value
+        AdBox1.setADStr(NullCheck(DataGridView1(2, r).Value))
+        TimeBox1.HourText = Strings.Left(NullCheck(DataGridView1(3, r).Value), 2)
+        TimeBox1.MinuteText = Strings.Right(NullCheck(DataGridView1(3, r).Value), 2)
+        cmbKisaisya.Text = NullCheck(DataGridView1(4, r).Value)
+        txtTaionn.Text = NullCheck(DataGridView1(5, r).Value)
+        txtMyaku.Text = NullCheck(DataGridView1(6, r).Value)
+        txtKetuatuUe.Text = NullCheck(DataGridView1(7, r).Value)
+        txtKetuatuSita.Text = NullCheck(DataGridView1(8, r).Value)
+        txtKettouti.Text = NullCheck(DataGridView1(9, r).Value)
+        txtSinntyou.Text = NullCheck(DataGridView1(10, r).Value)
+        txtTaijuu.Text = NullCheck(DataGridView1(11, r).Value)
+        txtSyoti1.Text = NullCheck(DataGridView1(12, r).Value)
+        txtSyoti2.Text = NullCheck(DataGridView1(13, r).Value)
     End Sub
 
     Private Sub cmbSyoti_TextChanged(sender As Object, e As System.EventArgs) Handles cmbSyoti.TextChanged
@@ -374,6 +384,1638 @@ Public Class 温度板
 
     Private Sub btnInnsatu_Click(sender As System.Object, e As System.EventArgs) Handles btnInnsatu.Click
 
+        'Page(countrowDGV1 \ 48 + 1)
+        'MsgBox(countrowDGV1)
+
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        Dim Adapter As New OleDbDataAdapter(SQLCm)
+        Dim Table As New DataTable
+
+        Dim year As String = Strings.Left(Today, 4)
+        Dim twoyearago As Integer = Val(year) - 2
+        Dim oneyearago As Integer = Val(year) - 1
+        SQLCm.CommandText = "SELECT autono, Id, Ymd AS 日付, Hm AS 時刻, Tanto As 記載者, Ondo AS 体温, Myaku As 脈, AtuU As 血圧（上）, AtuL As 血圧（下）, Ketu As 血糖値, Weight As 体重, Height As 身長, Syoti As 処置, Val As 補記 FROM OndoD WHERE Id = " & Val(lblID.Text) & " AND (Ymd LIKE '%" & twoyearago & "%' OR Ymd LIKE '%" & oneyearago & "%' OR Ymd LIKE '%" & year & "%') ORDER BY Ymd, Hm"
+        Adapter.Fill(Table)
+        DataGridView4.DataSource = Table
+        
+        Dim countrowDGV4 As Integer = DataGridView4.Rows.Count
+        If countrowDGV4 < 48 Then
+            Page1()
+        ElseIf countrowDGV4 < 96 Then
+            Page2()
+        ElseIf countrowDGV4 < 144 Then
+            Page3()
+        ElseIf countrowDGV4 < 192 Then
+            Page4()
+        ElseIf countrowDGV4 < 240 Then
+            Page5()
+        ElseIf countrowDGV4 < 288 Then
+            Page6()
+        ElseIf countrowDGV4 < 336 Then
+            Page7()
+        ElseIf countrowDGV4 < 384 Then
+            Page8()
+        ElseIf countrowDGV4 < 432 Then
+            Page9()
+        ElseIf countrowDGV4 < 480 Then
+            Page10()
+        End If
+
+        Dim Graf As Integer = MsgBox("グラフを印刷しますか？", vbYesNo + MsgBoxStyle.DefaultButton2, "印刷")
+        If Graf = 6 Then
+            PrintGraf()
+        End If
+
+    End Sub
+    Private Sub Page(c As Integer)
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheets As Object
+        Dim oSheet As Object
+
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        oSheets = objWorkBook.Worksheets
+        oSheet = objWorkBook.Worksheets("温度板 (" & c & ")")
+
+        For i As Integer = 2 To 55 * c + 2 Step 55
+            oSheet.Range("C" & i).Value = lblID.Text
+            oSheet.Range("E" & i).Value = lblName.Text
+        Next
+
+        Dim countrowDGV1 As Integer = DataGridView1.Rows.Count
+        Dim lastcount As Integer = 0
+        If c = 1 Then
+            lastcount = countrowDGV1
+        ElseIf c = 2 Then
+
+        ElseIf c = 3 Then
+
+        End If
+
+
+        '1枚目 c=1
+        For i As Integer = 0 To 47
+            oSheet.Range("B" & i + 5 + (c - 1) * 7).Value = Strings.Right(DataGridView1(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(3, i).Value)
+            oSheet.Range("D" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(4, i).Value)
+            oSheet.Range("E" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(5, i).Value)
+            oSheet.Range("F" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(6, i).Value)
+            oSheet.Range("G" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(7, i).Value)
+            oSheet.Range("H" & i + 5 + (c - 1) * 7).Value = "/"
+            oSheet.Range("I" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(8, i).Value)
+            oSheet.Range("J" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(9, i).Value)
+            oSheet.Range("K" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(10, i).Value)
+            oSheet.Range("L" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(11, i).Value)
+            oSheet.Range("M" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(12, i).Value)
+            oSheet.Range("O" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(13, i).Value)
+        Next
+        '2枚目
+        For i As Integer = 48 To 95
+            oSheet.Range("B" & i + 5 + (c - 1) * 7).Value = Strings.Right(DataGridView1(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(3, i).Value)
+            oSheet.Range("D" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(4, i).Value)
+            oSheet.Range("E" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(5, i).Value)
+            oSheet.Range("F" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(6, i).Value)
+            oSheet.Range("G" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(7, i).Value)
+            oSheet.Range("H" & i + 5 + (c - 1) * 7).Value = "/"
+            oSheet.Range("I" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(8, i).Value)
+            oSheet.Range("J" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(9, i).Value)
+            oSheet.Range("K" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(10, i).Value)
+            oSheet.Range("L" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(11, i).Value)
+            oSheet.Range("M" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(12, i).Value)
+            oSheet.Range("O" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(13, i).Value)
+        Next
+        '3枚目
+        For i As Integer = 96 To countrowDGV1 - 1
+            oSheet.Range("B" & i + 5 + (c - 1) * 7).Value = Strings.Right(DataGridView1(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(3, i).Value)
+            oSheet.Range("D" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(4, i).Value)
+            oSheet.Range("E" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(5, i).Value)
+            oSheet.Range("F" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(6, i).Value)
+            oSheet.Range("G" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(7, i).Value)
+            oSheet.Range("H" & i + 5 + (c - 1) * 7).Value = "/"
+            oSheet.Range("I" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(8, i).Value)
+            oSheet.Range("J" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(9, i).Value)
+            oSheet.Range("K" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(10, i).Value)
+            oSheet.Range("L" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(11, i).Value)
+            oSheet.Range("M" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(12, i).Value)
+            oSheet.Range("O" & i + 5 + (c - 1) * 7).Value = NullCheck(DataGridView1(13, i).Value)
+        Next
+
+        '保存
+        objExcel.DisplayAlerts = False
+
+        ' エクセル表示
+        objExcel.Visible = True
+
+        '印刷
+        oSheet.PrintPreview(1)
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
+    End Sub
+    Private Sub Page1()
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheets As Object
+        Dim oSheet As Object
+        Dim day As DateTime = DateTime.Today
+
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        oSheets = objWorkBook.Worksheets
+        oSheet = objWorkBook.Worksheets("温度板")
+
+        oSheet.Range("C2").Value = lblID.Text
+        oSheet.Range("E2").Value = lblName.Text
+
+        Dim countrowDGV1 As Integer = DataGridView4.Rows.Count
+        '1枚目
+        For i As Integer = 0 To countrowDGV1 - 1
+            oSheet.Range("B" & i + 5).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 5).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 5).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 5).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 5).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 5).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 5).Value = "/"
+            oSheet.Range("I" & i + 5).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 5).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 5).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 5).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 5).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 5).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+
+        '保存
+        objExcel.DisplayAlerts = False
+
+        ' エクセル表示
+        objExcel.Visible = True
+
+        '印刷
+        oSheet.PrintPreview(1)
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
+    End Sub
+    Private Sub Page2()
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheets As Object
+        Dim oSheet As Object
+        Dim day As DateTime = DateTime.Today
+
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        oSheets = objWorkBook.Worksheets
+        oSheet = objWorkBook.Worksheets("温度板 (2)")
+
+        For i As Integer = 2 To 57 Step 55
+            oSheet.Range("C" & i).Value = lblID.Text
+            oSheet.Range("E" & i).Value = lblName.Text
+        Next
+
+
+        Dim countrowDGV1 As Integer = DataGridView4.Rows.Count
+        '1枚目
+        For i As Integer = 0 To 47
+            oSheet.Range("B" & i + 5).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 5).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 5).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 5).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 5).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 5).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 5).Value = "/"
+            oSheet.Range("I" & i + 5).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 5).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 5).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 5).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 5).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 5).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '2枚目
+        For i As Integer = 48 To countrowDGV1 - 1
+            oSheet.Range("B" & i + 12).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 12).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 12).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 12).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 12).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 12).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 12).Value = "/"
+            oSheet.Range("I" & i + 12).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 12).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 12).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 12).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 12).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 12).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+
+        '保存
+        objExcel.DisplayAlerts = False
+
+        ' エクセル表示
+        objExcel.Visible = True
+
+        '印刷
+        oSheet.PrintPreview(1)
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
+    End Sub
+    Private Sub Page3()
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheets As Object
+        Dim oSheet As Object
+        Dim day As DateTime = DateTime.Today
+
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        oSheets = objWorkBook.Worksheets
+        oSheet = objWorkBook.Worksheets("温度板 (3)")
+
+        For i As Integer = 2 To 112 Step 55
+            oSheet.Range("C" & i).Value = lblID.Text
+            oSheet.Range("E" & i).Value = lblName.Text
+        Next
+
+
+        Dim countrowDGV1 As Integer = DataGridView4.Rows.Count
+        '1枚目
+        For i As Integer = 0 To 47
+            oSheet.Range("B" & i + 5).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 5).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 5).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 5).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 5).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 5).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 5).Value = "/"
+            oSheet.Range("I" & i + 5).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 5).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 5).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 5).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 5).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 5).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '2枚目
+        For i As Integer = 48 To 95
+            oSheet.Range("B" & i + 12).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 12).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 12).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 12).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 12).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 12).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 12).Value = "/"
+            oSheet.Range("I" & i + 12).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 12).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 12).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 12).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 12).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 12).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '3枚目
+        For i As Integer = 96 To countrowDGV1 - 1
+            oSheet.Range("B" & i + 19).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 19).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 19).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 19).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 19).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 19).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 19).Value = "/"
+            oSheet.Range("I" & i + 19).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 19).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 19).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 19).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 19).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 19).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+
+        '保存
+        objExcel.DisplayAlerts = False
+
+        ' エクセル表示
+        objExcel.Visible = True
+
+        '印刷
+        oSheet.PrintPreview(1)
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
+    End Sub
+    Private Sub Page4()
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheets As Object
+        Dim oSheet As Object
+        Dim day As DateTime = DateTime.Today
+
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        oSheets = objWorkBook.Worksheets
+        oSheet = objWorkBook.Worksheets("温度板 (4)")
+
+        For i As Integer = 2 To 167 Step 55
+            oSheet.Range("C" & i).Value = lblID.Text
+            oSheet.Range("E" & i).Value = lblName.Text
+        Next
+
+
+        Dim countrowDGV1 As Integer = DataGridView4.Rows.Count
+        '1枚目
+        For i As Integer = 0 To 47
+            oSheet.Range("B" & i + 5).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 5).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 5).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 5).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 5).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 5).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 5).Value = "/"
+            oSheet.Range("I" & i + 5).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 5).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 5).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 5).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 5).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 5).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '2枚目
+        For i As Integer = 48 To 95
+            oSheet.Range("B" & i + 12).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 12).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 12).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 12).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 12).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 12).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 12).Value = "/"
+            oSheet.Range("I" & i + 12).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 12).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 12).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 12).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 12).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 12).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '3枚目
+        For i As Integer = 96 To 143
+            oSheet.Range("B" & i + 19).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 19).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 19).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 19).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 19).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 19).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 19).Value = "/"
+            oSheet.Range("I" & i + 19).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 19).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 19).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 19).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 19).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 19).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '4枚目
+        For i As Integer = 144 To countrowDGV1 - 1
+            oSheet.Range("B" & i + 26).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 26).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 26).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 26).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 26).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 26).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 26).Value = "/"
+            oSheet.Range("I" & i + 26).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 26).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 26).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 26).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 26).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 26).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+
+        '保存
+        objExcel.DisplayAlerts = False
+
+        ' エクセル表示
+        objExcel.Visible = True
+
+        '印刷
+        oSheet.PrintPreview(1)
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
+    End Sub
+    Private Sub Page5()
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheets As Object
+        Dim oSheet As Object
+        Dim day As DateTime = DateTime.Today
+
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        oSheets = objWorkBook.Worksheets
+        oSheet = objWorkBook.Worksheets("温度板 (5)")
+
+        For i As Integer = 2 To 222 Step 55
+            oSheet.Range("C" & i).Value = lblID.Text
+            oSheet.Range("E" & i).Value = lblName.Text
+        Next
+
+
+        Dim countrowDGV1 As Integer = DataGridView4.Rows.Count
+        '1枚目
+        For i As Integer = 0 To 47
+            oSheet.Range("B" & i + 5).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 5).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 5).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 5).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 5).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 5).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 5).Value = "/"
+            oSheet.Range("I" & i + 5).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 5).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 5).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 5).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 5).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 5).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '2枚目
+        For i As Integer = 48 To 95
+            oSheet.Range("B" & i + 12).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 12).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 12).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 12).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 12).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 12).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 12).Value = "/"
+            oSheet.Range("I" & i + 12).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 12).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 12).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 12).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 12).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 12).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '3枚目
+        For i As Integer = 96 To 143
+            oSheet.Range("B" & i + 19).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 19).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 19).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 19).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 19).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 19).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 19).Value = "/"
+            oSheet.Range("I" & i + 19).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 19).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 19).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 19).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 19).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 19).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '4枚目
+        For i As Integer = 144 To 191
+            oSheet.Range("B" & i + 26).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 26).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 26).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 26).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 26).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 26).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 26).Value = "/"
+            oSheet.Range("I" & i + 26).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 26).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 26).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 26).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 26).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 26).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '5枚目
+        For i As Integer = 192 To countrowDGV1 - 1
+            oSheet.Range("B" & i + 33).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 33).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 33).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 33).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 33).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 33).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 33).Value = "/"
+            oSheet.Range("I" & i + 33).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 33).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 33).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 33).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 33).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 33).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+
+        '保存
+        objExcel.DisplayAlerts = False
+
+        ' エクセル表示
+        objExcel.Visible = True
+
+        '印刷
+        oSheet.PrintPreview(1)
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
+    End Sub
+    Private Sub Page6()
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheets As Object
+        Dim oSheet As Object
+        Dim day As DateTime = DateTime.Today
+
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        oSheets = objWorkBook.Worksheets
+        oSheet = objWorkBook.Worksheets("温度板 (6)")
+
+        For i As Integer = 2 To 277 Step 55
+            oSheet.Range("C" & i).Value = lblID.Text
+            oSheet.Range("E" & i).Value = lblName.Text
+        Next
+
+
+        Dim countrowDGV1 As Integer = DataGridView4.Rows.Count
+        '1枚目
+        For i As Integer = 0 To 47
+            oSheet.Range("B" & i + 5).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 5).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 5).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 5).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 5).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 5).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 5).Value = "/"
+            oSheet.Range("I" & i + 5).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 5).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 5).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 5).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 5).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 5).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '2枚目
+        For i As Integer = 48 To 95
+            oSheet.Range("B" & i + 12).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 12).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 12).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 12).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 12).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 12).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 12).Value = "/"
+            oSheet.Range("I" & i + 12).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 12).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 12).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 12).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 12).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 12).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '3枚目
+        For i As Integer = 96 To 143
+            oSheet.Range("B" & i + 19).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 19).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 19).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 19).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 19).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 19).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 19).Value = "/"
+            oSheet.Range("I" & i + 19).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 19).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 19).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 19).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 19).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 19).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '4枚目
+        For i As Integer = 144 To 191
+            oSheet.Range("B" & i + 26).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 26).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 26).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 26).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 26).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 26).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 26).Value = "/"
+            oSheet.Range("I" & i + 26).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 26).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 26).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 26).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 26).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 26).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '5枚目
+        For i As Integer = 192 To 239
+            oSheet.Range("B" & i + 33).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 33).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 33).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 33).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 33).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 33).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 33).Value = "/"
+            oSheet.Range("I" & i + 33).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 33).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 33).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 33).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 33).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 33).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '6枚目
+        For i As Integer = 240 To countrowDGV1 - 1
+            oSheet.Range("B" & i + 40).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 40).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 40).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 40).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 40).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 40).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 40).Value = "/"
+            oSheet.Range("I" & i + 40).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 40).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 40).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 40).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 40).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 40).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+
+        '保存
+        objExcel.DisplayAlerts = False
+
+        ' エクセル表示
+        objExcel.Visible = True
+
+        '印刷
+        oSheet.PrintPreview(1)
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
+    End Sub
+    Private Sub Page7()
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheets As Object
+        Dim oSheet As Object
+        Dim day As DateTime = DateTime.Today
+
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        oSheets = objWorkBook.Worksheets
+        oSheet = objWorkBook.Worksheets("温度板 (7)")
+
+        For i As Integer = 2 To 332 Step 55
+            oSheet.Range("C" & i).Value = lblID.Text
+            oSheet.Range("E" & i).Value = lblName.Text
+        Next
+
+
+        Dim countrowDGV1 As Integer = DataGridView4.Rows.Count
+        '1枚目
+        For i As Integer = 0 To 47
+            oSheet.Range("B" & i + 5).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 5).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 5).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 5).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 5).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 5).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 5).Value = "/"
+            oSheet.Range("I" & i + 5).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 5).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 5).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 5).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 5).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 5).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '2枚目
+        For i As Integer = 48 To 95
+            oSheet.Range("B" & i + 12).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 12).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 12).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 12).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 12).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 12).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 12).Value = "/"
+            oSheet.Range("I" & i + 12).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 12).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 12).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 12).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 12).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 12).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '3枚目
+        For i As Integer = 96 To 143
+            oSheet.Range("B" & i + 19).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 19).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 19).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 19).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 19).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 19).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 19).Value = "/"
+            oSheet.Range("I" & i + 19).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 19).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 19).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 19).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 19).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 19).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '4枚目
+        For i As Integer = 144 To 191
+            oSheet.Range("B" & i + 26).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 26).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 26).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 26).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 26).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 26).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 26).Value = "/"
+            oSheet.Range("I" & i + 26).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 26).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 26).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 26).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 26).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 26).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '5枚目
+        For i As Integer = 192 To 239
+            oSheet.Range("B" & i + 33).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 33).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 33).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 33).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 33).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 33).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 33).Value = "/"
+            oSheet.Range("I" & i + 33).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 33).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 33).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 33).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 33).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 33).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '6枚目
+        For i As Integer = 240 To 287
+            oSheet.Range("B" & i + 40).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 40).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 40).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 40).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 40).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 40).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 40).Value = "/"
+            oSheet.Range("I" & i + 40).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 40).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 40).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 40).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 40).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 40).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '7枚目
+        For i As Integer = 288 To countrowDGV1 - 1
+            oSheet.Range("B" & i + 47).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 47).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 47).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 47).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 47).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 47).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 47).Value = "/"
+            oSheet.Range("I" & i + 47).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 47).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 47).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 47).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 47).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 47).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+
+        '保存
+        objExcel.DisplayAlerts = False
+
+        ' エクセル表示
+        objExcel.Visible = True
+
+        '印刷
+        oSheet.PrintPreview(1)
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
+    End Sub
+    Private Sub Page8()
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheets As Object
+        Dim oSheet As Object
+        Dim day As DateTime = DateTime.Today
+
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        oSheets = objWorkBook.Worksheets
+        oSheet = objWorkBook.Worksheets("温度板 (8)")
+
+        For i As Integer = 2 To 387 Step 55
+            oSheet.Range("C" & i).Value = lblID.Text
+            oSheet.Range("E" & i).Value = lblName.Text
+        Next
+
+
+        Dim countrowDGV1 As Integer = DataGridView4.Rows.Count
+        '1枚目
+        For i As Integer = 0 To 47
+            oSheet.Range("B" & i + 5).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 5).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 5).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 5).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 5).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 5).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 5).Value = "/"
+            oSheet.Range("I" & i + 5).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 5).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 5).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 5).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 5).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 5).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '2枚目
+        For i As Integer = 48 To 95
+            oSheet.Range("B" & i + 12).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 12).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 12).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 12).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 12).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 12).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 12).Value = "/"
+            oSheet.Range("I" & i + 12).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 12).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 12).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 12).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 12).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 12).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '3枚目
+        For i As Integer = 96 To 143
+            oSheet.Range("B" & i + 19).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 19).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 19).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 19).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 19).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 19).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 19).Value = "/"
+            oSheet.Range("I" & i + 19).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 19).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 19).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 19).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 19).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 19).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '4枚目
+        For i As Integer = 144 To 191
+            oSheet.Range("B" & i + 26).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 26).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 26).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 26).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 26).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 26).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 26).Value = "/"
+            oSheet.Range("I" & i + 26).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 26).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 26).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 26).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 26).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 26).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '5枚目
+        For i As Integer = 192 To 239
+            oSheet.Range("B" & i + 33).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 33).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 33).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 33).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 33).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 33).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 33).Value = "/"
+            oSheet.Range("I" & i + 33).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 33).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 33).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 33).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 33).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 33).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '6枚目
+        For i As Integer = 240 To 287
+            oSheet.Range("B" & i + 40).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 40).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 40).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 40).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 40).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 40).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 40).Value = "/"
+            oSheet.Range("I" & i + 40).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 40).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 40).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 40).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 40).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 40).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '7枚目
+        For i As Integer = 288 To 335
+            oSheet.Range("B" & i + 47).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 47).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 47).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 47).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 47).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 47).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 47).Value = "/"
+            oSheet.Range("I" & i + 47).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 47).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 47).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 47).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 47).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 47).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '8枚目
+        For i As Integer = 336 To countrowDGV1 - 1
+            oSheet.Range("B" & i + 54).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 54).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 54).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 54).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 54).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 54).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 54).Value = "/"
+            oSheet.Range("I" & i + 54).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 54).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 54).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 54).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 54).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 54).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+
+        '保存
+        objExcel.DisplayAlerts = False
+
+        ' エクセル表示
+        objExcel.Visible = True
+
+        '印刷
+        oSheet.PrintPreview(1)
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
+    End Sub
+    Private Sub Page9()
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheets As Object
+        Dim oSheet As Object
+
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        oSheets = objWorkBook.Worksheets
+        oSheet = objWorkBook.Worksheets("温度板 (9)")
+
+        For i As Integer = 2 To 442 Step 55
+            oSheet.Range("C" & i).Value = lblID.Text
+            oSheet.Range("E" & i).Value = lblName.Text
+        Next
+
+
+        Dim countrowDGV1 As Integer = DataGridView4.Rows.Count
+        '1枚目
+        For i As Integer = 0 To 47
+            oSheet.Range("B" & i + 5).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 5).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 5).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 5).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 5).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 5).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 5).Value = "/"
+            oSheet.Range("I" & i + 5).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 5).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 5).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 5).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 5).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 5).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '2枚目
+        For i As Integer = 48 To 95
+            oSheet.Range("B" & i + 12).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 12).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 12).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 12).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 12).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 12).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 12).Value = "/"
+            oSheet.Range("I" & i + 12).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 12).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 12).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 12).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 12).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 12).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '3枚目
+        For i As Integer = 96 To 143
+            oSheet.Range("B" & i + 19).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 19).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 19).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 19).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 19).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 19).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 19).Value = "/"
+            oSheet.Range("I" & i + 19).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 19).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 19).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 19).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 19).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 19).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '4枚目
+        For i As Integer = 144 To 191
+            oSheet.Range("B" & i + 26).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 26).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 26).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 26).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 26).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 26).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 26).Value = "/"
+            oSheet.Range("I" & i + 26).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 26).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 26).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 26).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 26).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 26).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '5枚目
+        For i As Integer = 192 To 239
+            oSheet.Range("B" & i + 33).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 33).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 33).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 33).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 33).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 33).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 33).Value = "/"
+            oSheet.Range("I" & i + 33).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 33).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 33).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 33).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 33).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 33).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '6枚目
+        For i As Integer = 240 To 287
+            oSheet.Range("B" & i + 40).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 40).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 40).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 40).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 40).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 40).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 40).Value = "/"
+            oSheet.Range("I" & i + 40).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 40).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 40).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 40).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 40).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 40).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '7枚目
+        For i As Integer = 288 To 335
+            oSheet.Range("B" & i + 47).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 47).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 47).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 47).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 47).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 47).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 47).Value = "/"
+            oSheet.Range("I" & i + 47).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 47).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 47).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 47).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 47).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 47).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '8枚目
+        For i As Integer = 336 To 383
+            oSheet.Range("B" & i + 54).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 54).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 54).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 54).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 54).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 54).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 54).Value = "/"
+            oSheet.Range("I" & i + 54).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 54).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 54).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 54).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 54).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 54).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '9枚目
+        For i As Integer = 384 To countrowDGV1 - 1
+            oSheet.Range("B" & i + 61).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 61).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 61).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 61).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 61).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 61).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 61).Value = "/"
+            oSheet.Range("I" & i + 61).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 61).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 61).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 61).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 61).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 61).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+
+        '保存
+        objExcel.DisplayAlerts = False
+
+        ' エクセル表示
+        objExcel.Visible = True
+
+        '印刷
+        oSheet.PrintPreview(1)
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
+    End Sub
+    Private Sub Page10()
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheets As Object
+        Dim oSheet As Object
+
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        oSheets = objWorkBook.Worksheets
+        oSheet = objWorkBook.Worksheets("温度板 (10)")
+
+        For i As Integer = 2 To 497 Step 55
+            oSheet.Range("C" & i).Value = lblID.Text
+            oSheet.Range("E" & i).Value = lblName.Text
+        Next
+
+
+        Dim countrowDGV1 As Integer = DataGridView4.Rows.Count
+        '1枚目
+        For i As Integer = 0 To 47
+            oSheet.Range("B" & i + 5).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 5).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 5).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 5).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 5).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 5).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 5).Value = "/"
+            oSheet.Range("I" & i + 5).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 5).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 5).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 5).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 5).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 5).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '2枚目
+        For i As Integer = 48 To 95
+            oSheet.Range("B" & i + 12).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 12).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 12).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 12).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 12).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 12).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 12).Value = "/"
+            oSheet.Range("I" & i + 12).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 12).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 12).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 12).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 12).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 12).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '3枚目
+        For i As Integer = 96 To 143
+            oSheet.Range("B" & i + 19).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 19).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 19).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 19).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 19).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 19).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 19).Value = "/"
+            oSheet.Range("I" & i + 19).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 19).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 19).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 19).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 19).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 19).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '4枚目
+        For i As Integer = 144 To 191
+            oSheet.Range("B" & i + 26).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 26).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 26).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 26).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 26).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 26).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 26).Value = "/"
+            oSheet.Range("I" & i + 26).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 26).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 26).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 26).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 26).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 26).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '5枚目
+        For i As Integer = 192 To 239
+            oSheet.Range("B" & i + 33).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 33).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 33).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 33).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 33).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 33).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 33).Value = "/"
+            oSheet.Range("I" & i + 33).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 33).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 33).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 33).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 33).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 33).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '6枚目
+        For i As Integer = 240 To 287
+            oSheet.Range("B" & i + 40).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 40).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 40).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 40).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 40).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 40).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 40).Value = "/"
+            oSheet.Range("I" & i + 40).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 40).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 40).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 40).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 40).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 40).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '7枚目
+        For i As Integer = 288 To 335
+            oSheet.Range("B" & i + 47).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 47).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 47).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 47).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 47).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 47).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 47).Value = "/"
+            oSheet.Range("I" & i + 47).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 47).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 47).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 47).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 47).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 47).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '8枚目
+        For i As Integer = 336 To 383
+            oSheet.Range("B" & i + 54).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 54).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 54).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 54).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 54).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 54).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 54).Value = "/"
+            oSheet.Range("I" & i + 54).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 54).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 54).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 54).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 54).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 54).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '9枚目
+        For i As Integer = 384 To 431
+            oSheet.Range("B" & i + 61).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 61).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 61).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 61).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 61).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 61).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 61).Value = "/"
+            oSheet.Range("I" & i + 61).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 61).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 61).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 61).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 61).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 61).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+        '10枚目
+        For i As Integer = 432 To countrowDGV1 - 1
+            oSheet.Range("B" & i + 68).Value = Strings.Right(DataGridView4(2, i).FormattedValue, 5)
+            oSheet.Range("C" & i + 68).Value = NullCheck(DataGridView4(3, i).Value)
+            oSheet.Range("D" & i + 68).Value = NullCheck(DataGridView4(4, i).Value)
+            oSheet.Range("E" & i + 68).Value = NullCheck(DataGridView4(5, i).Value)
+            oSheet.Range("F" & i + 68).Value = NullCheck(DataGridView4(6, i).Value)
+            oSheet.Range("G" & i + 68).Value = NullCheck(DataGridView4(7, i).Value)
+            oSheet.Range("H" & i + 68).Value = "/"
+            oSheet.Range("I" & i + 68).Value = NullCheck(DataGridView4(8, i).Value)
+            oSheet.Range("J" & i + 68).Value = NullCheck(DataGridView4(9, i).Value)
+            oSheet.Range("K" & i + 68).Value = NullCheck(DataGridView4(10, i).Value)
+            oSheet.Range("L" & i + 68).Value = NullCheck(DataGridView4(11, i).Value)
+            oSheet.Range("M" & i + 68).Value = NullCheck(DataGridView4(12, i).Value)
+            oSheet.Range("O" & i + 68).Value = NullCheck(DataGridView4(13, i).Value)
+        Next
+
+        '保存
+        objExcel.DisplayAlerts = False
+
+        ' エクセル表示
+        objExcel.Visible = True
+
+        '印刷
+        oSheet.PrintPreview(1)
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
+    End Sub
+    Private Sub PrintGraf()
+
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        Dim Adapter As New OleDbDataAdapter(SQLCm)
+        Dim Table As New DataTable
+
+        Dim yearmonth As String = Strings.Left(Today, 7)
+        
+        SQLCm.CommandText = "SELECT autono, Id, Ymd AS 日付, Hm AS 時刻, Tanto As 記載者, Ondo AS 体温, Myaku As 脈, AtuU As 血圧（上）, AtuL As 血圧（下）, Ketu As 血糖値, Weight As 体重, Height As 身長, Syoti As 処置, Val As 補記 FROM OndoD WHERE Id = " & Val(lblID.Text) & " AND Ymd LIKE '%" & yearmonth & "%' ORDER BY Ymd, Hm"
+        Adapter.Fill(Table)
+        DataGridView4.DataSource = Table
+
+        If DataGridView4.Rows.Count = 0 Then
+            MsgBox("今月のデータがありません")
+            Return
+        End If
+
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheets As Object
+        Dim oSheet As Object
+        Dim oSheet2 As Object
+        Dim day As DateTime = DateTime.Today
+
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        oSheets = objWorkBook.Worksheets
+        oSheet = objWorkBook.Worksheets("グラフ新")
+        oSheet2 = objWorkBook.Worksheets("グラフ新 (2)")
+
+        oSheet2.Range("K2").Value = lblID.Text
+        oSheet2.Range("S2").Value = lblName.Text
+        oSheet2.Range("AQ2").Value = yearmonth
+        oSheet2.Range("CD2").Value = "1"
+
+        Dim countrowDGV1 As Integer = DataGridView4.Rows.Count
+        '1枚目
+        For i As Integer = 0 To countrowDGV1 - 1
+            If Strings.Right(DataGridView4(2, i).Value, 2) = "01" Then
+                oSheet.Range("CV5").Value = DataGridView4(7, i).Value
+                oSheet.Range("CV6").Value = DataGridView4(8, i).Value
+                oSheet.Range("CV7").Value = DataGridView4(6, i).Value
+                oSheet.Range("CV8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "02" Then
+                oSheet.Range("CY5").Value = DataGridView4(7, i).Value
+                oSheet.Range("CY6").Value = DataGridView4(8, i).Value
+                oSheet.Range("CY7").Value = DataGridView4(6, i).Value
+                oSheet.Range("CY8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "03" Then
+                oSheet.Range("DB5").Value = DataGridView4(7, i).Value
+                oSheet.Range("DB6").Value = DataGridView4(8, i).Value
+                oSheet.Range("DB7").Value = DataGridView4(6, i).Value
+                oSheet.Range("DB8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "04" Then
+                oSheet.Range("DE5").Value = DataGridView4(7, i).Value
+                oSheet.Range("DE6").Value = DataGridView4(8, i).Value
+                oSheet.Range("DE7").Value = DataGridView4(6, i).Value
+                oSheet.Range("DE8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "05" Then
+                oSheet.Range("DH5").Value = DataGridView4(7, i).Value
+                oSheet.Range("DH6").Value = DataGridView4(8, i).Value
+                oSheet.Range("DH7").Value = DataGridView4(6, i).Value
+                oSheet.Range("DH8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "06" Then
+                oSheet.Range("DK5").Value = DataGridView4(7, i).Value
+                oSheet.Range("DK6").Value = DataGridView4(8, i).Value
+                oSheet.Range("DK7").Value = DataGridView4(6, i).Value
+                oSheet.Range("DK8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "07" Then
+                oSheet.Range("DN5").Value = DataGridView4(7, i).Value
+                oSheet.Range("DN6").Value = DataGridView4(8, i).Value
+                oSheet.Range("DN7").Value = DataGridView4(6, i).Value
+                oSheet.Range("DN8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "08" Then
+                oSheet.Range("DQ5").Value = DataGridView4(7, i).Value
+                oSheet.Range("DQ6").Value = DataGridView4(8, i).Value
+                oSheet.Range("DQ7").Value = DataGridView4(6, i).Value
+                oSheet.Range("DQ8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "09" Then
+                oSheet.Range("DT5").Value = DataGridView4(7, i).Value
+                oSheet.Range("DT6").Value = DataGridView4(8, i).Value
+                oSheet.Range("DT7").Value = DataGridView4(6, i).Value
+                oSheet.Range("DT8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "10" Then
+                oSheet.Range("DW5").Value = DataGridView4(7, i).Value
+                oSheet.Range("DW6").Value = DataGridView4(8, i).Value
+                oSheet.Range("DW7").Value = DataGridView4(6, i).Value
+                oSheet.Range("DW8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "11" Then
+                oSheet.Range("DZ5").Value = DataGridView4(7, i).Value
+                oSheet.Range("DZ6").Value = DataGridView4(8, i).Value
+                oSheet.Range("DZ7").Value = DataGridView4(6, i).Value
+                oSheet.Range("DZ8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "12" Then
+                oSheet.Range("EC5").Value = DataGridView4(7, i).Value
+                oSheet.Range("EC6").Value = DataGridView4(8, i).Value
+                oSheet.Range("EC7").Value = DataGridView4(6, i).Value
+                oSheet.Range("EC8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "13" Then
+                oSheet.Range("EF5").Value = DataGridView4(7, i).Value
+                oSheet.Range("EF6").Value = DataGridView4(8, i).Value
+                oSheet.Range("EF7").Value = DataGridView4(6, i).Value
+                oSheet.Range("EF8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "14" Then
+                oSheet.Range("EI5").Value = DataGridView4(7, i).Value
+                oSheet.Range("EI6").Value = DataGridView4(8, i).Value
+                oSheet.Range("EI7").Value = DataGridView4(6, i).Value
+                oSheet.Range("EI8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "15" Then
+                oSheet.Range("EL5").Value = DataGridView4(7, i).Value
+                oSheet.Range("EL6").Value = DataGridView4(8, i).Value
+                oSheet.Range("EL7").Value = DataGridView4(6, i).Value
+                oSheet.Range("EL8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "16" Then
+                oSheet.Range("EO5").Value = DataGridView4(7, i).Value
+                oSheet.Range("EO6").Value = DataGridView4(8, i).Value
+                oSheet.Range("EO7").Value = DataGridView4(6, i).Value
+                oSheet.Range("EO8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "17" Then
+                oSheet.Range("ER5").Value = DataGridView4(7, i).Value
+                oSheet.Range("ER6").Value = DataGridView4(8, i).Value
+                oSheet.Range("ER7").Value = DataGridView4(6, i).Value
+                oSheet.Range("ER8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "18" Then
+                oSheet.Range("EU5").Value = DataGridView4(7, i).Value
+                oSheet.Range("EU6").Value = DataGridView4(8, i).Value
+                oSheet.Range("EU7").Value = DataGridView4(6, i).Value
+                oSheet.Range("EU8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "19" Then
+                oSheet.Range("EX5").Value = DataGridView4(7, i).Value
+                oSheet.Range("EX6").Value = DataGridView4(8, i).Value
+                oSheet.Range("EX7").Value = DataGridView4(6, i).Value
+                oSheet.Range("EX8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "20" Then
+                oSheet.Range("FA5").Value = DataGridView4(7, i).Value
+                oSheet.Range("FA6").Value = DataGridView4(8, i).Value
+                oSheet.Range("FA7").Value = DataGridView4(6, i).Value
+                oSheet.Range("FA8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "21" Then
+                oSheet.Range("FD5").Value = DataGridView4(7, i).Value
+                oSheet.Range("FD6").Value = DataGridView4(8, i).Value
+                oSheet.Range("FD7").Value = DataGridView4(6, i).Value
+                oSheet.Range("FD8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "22" Then
+                oSheet.Range("FG5").Value = DataGridView4(7, i).Value
+                oSheet.Range("FG6").Value = DataGridView4(8, i).Value
+                oSheet.Range("FG7").Value = DataGridView4(6, i).Value
+                oSheet.Range("FG8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "23" Then
+                oSheet.Range("FJ5").Value = DataGridView4(7, i).Value
+                oSheet.Range("FJ6").Value = DataGridView4(8, i).Value
+                oSheet.Range("FJ7").Value = DataGridView4(6, i).Value
+                oSheet.Range("FJ8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "24" Then
+                oSheet.Range("FM5").Value = DataGridView4(7, i).Value
+                oSheet.Range("FM6").Value = DataGridView4(8, i).Value
+                oSheet.Range("FM7").Value = DataGridView4(6, i).Value
+                oSheet.Range("FM8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "25" Then
+                oSheet.Range("FP5").Value = DataGridView4(7, i).Value
+                oSheet.Range("FP6").Value = DataGridView4(8, i).Value
+                oSheet.Range("FP7").Value = DataGridView4(6, i).Value
+                oSheet.Range("FP8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "26" Then
+                oSheet.Range("FP5").Value = DataGridView4(7, i).Value
+                oSheet.Range("FP6").Value = DataGridView4(8, i).Value
+                oSheet.Range("FP7").Value = DataGridView4(6, i).Value
+                oSheet.Range("FP8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "27" Then
+                oSheet.Range("FS5").Value = DataGridView4(7, i).Value
+                oSheet.Range("FS6").Value = DataGridView4(8, i).Value
+                oSheet.Range("FS7").Value = DataGridView4(6, i).Value
+                oSheet.Range("FS8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "28" Then
+                oSheet.Range("FV5").Value = DataGridView4(7, i).Value
+                oSheet.Range("FV6").Value = DataGridView4(8, i).Value
+                oSheet.Range("FV7").Value = DataGridView4(6, i).Value
+                oSheet.Range("FV8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "29" Then
+                oSheet.Range("FY5").Value = DataGridView4(7, i).Value
+                oSheet.Range("FY6").Value = DataGridView4(8, i).Value
+                oSheet.Range("FY7").Value = DataGridView4(6, i).Value
+                oSheet.Range("FY8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "30" Then
+                oSheet.Range("CY5").Value = DataGridView4(7, i).Value
+                oSheet.Range("CY6").Value = DataGridView4(8, i).Value
+                oSheet.Range("CY7").Value = DataGridView4(6, i).Value
+                oSheet.Range("CY8").Value = DataGridView4(5, i).Value
+            ElseIf Strings.Right(DataGridView4(2, i).Value, 2) = "31" Then
+                oSheet.Range("GB5").Value = DataGridView4(7, i).Value
+                oSheet.Range("GB6").Value = DataGridView4(8, i).Value
+                oSheet.Range("GB7").Value = DataGridView4(6, i).Value
+                oSheet.Range("GB8").Value = DataGridView4(5, i).Value
+            End If
+        Next
+
+        '保存
+        objExcel.DisplayAlerts = False
+
+        ' エクセル表示
+        objExcel.Visible = True
+
+        '印刷
+        oSheet2.printpreview(1)
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(oSheet2)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
     End Sub
 
     Private Sub btnKousinn_Click(sender As System.Object, e As System.EventArgs) Handles btnKousinn.Click

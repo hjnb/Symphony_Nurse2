@@ -186,90 +186,94 @@ line1:
         DataGridView5.DataSource = Table5
     End Sub
 
+    Private Function NullCheck(cellvalue As Object) As String
+        Return If(IsDBNull(cellvalue), "", cellvalue)
+    End Function
+
     Private Sub DataGridView1_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles DataGridView1.CellMouseClick
         btnKuria.PerformClick()
         DataGridView4.Columns.Clear()
         Dim s As Integer = DataGridView1.CurrentRow.Index
-        lblName.Text = DataGridView1(1, s).Value
+        lblName.Text = NullCheck(DataGridView1(1, s).Value)
         Dim DGV3rowcount As Integer = DataGridView3.Rows.Count
         If DataGridView1(0, s).Value <> "" Then         '部屋番号がある行を選択したとき
             If s < 11 Then
-                lblHeya.Text = "空　" & DataGridView1(0, s).Value
+                lblHeya.Text = "空　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(2, i).Value Then
-                        lblID.Text = DataGridView3(1, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(2, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(1, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 22 Then
-                lblHeya.Text = "森　" & DataGridView1(0, s).Value
+                lblHeya.Text = "森　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(5, i).Value Then
-                        lblID.Text = DataGridView3(4, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(5, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(4, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 33 Then
-                lblHeya.Text = "星　" & DataGridView1(0, s).Value
+                lblHeya.Text = "星　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(8, i).Value Then
-                        lblID.Text = DataGridView3(7, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(8, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(7, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 44 Then
-                lblHeya.Text = "月　" & DataGridView1(0, s).Value
+                lblHeya.Text = "月　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(11, i).Value Then
-                        lblID.Text = DataGridView3(10, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(11, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(10, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 55 Then
-                lblHeya.Text = "花　" & DataGridView1(0, s).Value
+                lblHeya.Text = "花　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(14, i).Value Then
-                        lblID.Text = DataGridView3(13, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(14, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(13, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 66 Then
-                lblHeya.Text = "丘　" & DataGridView1(0, s).Value
+                lblHeya.Text = "丘　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(17, i).Value Then
-                        lblID.Text = DataGridView3(16, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(17, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(16, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 77 Then
-                lblHeya.Text = "虹　" & DataGridView1(0, s).Value
+                lblHeya.Text = "虹　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(20, i).Value Then
-                        lblID.Text = DataGridView3(19, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(20, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(19, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 88 Then
-                lblHeya.Text = "光　" & DataGridView1(0, s).Value
+                lblHeya.Text = "光　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(23, i).Value Then
-                        lblID.Text = DataGridView3(22, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(23, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(22, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 99 Then
-                lblHeya.Text = "雪　" & DataGridView1(0, s).Value
+                lblHeya.Text = "雪　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(26, i).Value Then
-                        lblID.Text = DataGridView3(25, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(26, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(25, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 110 Then
-                lblHeya.Text = "風　" & DataGridView1(0, s).Value
+                lblHeya.Text = "風　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(29, i).Value Then
-                        lblID.Text = DataGridView3(28, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(29, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(28, i).Value)
                         Exit For
                     End If
                 Next
@@ -294,19 +298,19 @@ line1:
             If DataGridView4.Rows.Count > 15 Then
                 For Gyo As Integer = 1 To 16
                     If Gyo < 5 Then
-                        If IsDBNull(DataGridView4(5, Gyo - 1).Value) = False Then
-                            Controls("txtByoumei" & Gyo).Text = DataGridView4(5, Gyo - 1).Value
+                        If IsDBNull(NullCheck(DataGridView4(5, Gyo - 1).Value)) = False Then
+                            Controls("txtByoumei" & Gyo).Text = NullCheck(DataGridView4(5, Gyo - 1).Value)
                         End If
-                        If IsDBNull(DataGridView4(10, Gyo - 1).Value) = False Then
-                            Controls("txtTokki" & Gyo).Text = DataGridView4(10, Gyo - 1).Value
+                        If IsDBNull(NullCheck(DataGridView4(10, Gyo - 1).Value)) = False Then
+                            Controls("txtTokki" & Gyo).Text = NullCheck(DataGridView4(10, Gyo - 1).Value)
                         End If
                     End If
-                    Controls("txtNaihuku" & Gyo).Text = DataGridView4(6, Gyo - 1).Value
-                    Controls("txtRyou" & Gyo).Text = DataGridView4(7, Gyo - 1).Value
-                    Controls("txtKatati" & Gyo).Text = DataGridView4(8, Gyo - 1).Value
-                    Controls("txtJikann" & Gyo).Text = DataGridView4(9, Gyo - 1).Value
+                    Controls("txtNaihuku" & Gyo).Text = NullCheck(DataGridView4(6, Gyo - 1).Value)
+                    Controls("txtRyou" & Gyo).Text = NullCheck(DataGridView4(7, Gyo - 1).Value)
+                    Controls("txtKatati" & Gyo).Text = NullCheck(DataGridView4(8, Gyo - 1).Value)
+                    Controls("txtJikann" & Gyo).Text = NullCheck(DataGridView4(9, Gyo - 1).Value)
                 Next
-                YmdBox1.setADStr(DataGridView4(11, 0).Value)
+                YmdBox1.setADStr(NullCheck(DataGridView4(11, 0).Value))
             End If
         End If
 
@@ -316,11 +320,11 @@ line1:
         Xclear()
         Dim x As Integer = DataGridView2.CurrentRow.Index
         If rbnKigou.Checked = True Then
-            txtKatatiX.Text = DataGridView2(1, x).Value
+            txtKatatiX.Text = NullCheck(DataGridView2(1, x).Value)
         ElseIf rbnKigou.Checked = False Then
-            txtNaihukuX.Text = DataGridView2(0, x).Value
-            txtRyouX.Text = DataGridView2(1, x).Value
-            txtJikannX.Text = DataGridView2(2, x).Value
+            txtNaihukuX.Text = NullCheck(DataGridView2(0, x).Value)
+            txtRyouX.Text = NullCheck(DataGridView2(1, x).Value)
+            txtJikannX.Text = NullCheck(DataGridView2(2, x).Value)
         End If
     End Sub
 
@@ -500,6 +504,36 @@ line1:
         Cn.Dispose()
 
     End Sub
+
+    Private Function getNowWarekiTime() As String
+        Dim NEXT_ERA_CHAR As String = "X"
+        Dim eraText As String = ""
+        Dim monthText As String = ""
+        Dim dateText As String = ""
+        Dim now As DateTime = DateTime.Now
+        Dim year As Integer = now.Year
+        Dim month As Integer = now.Month
+        Dim day As Integer = now.Day
+        'Dim time As String = now.ToString("HH:mm")
+
+        If year = 2018 Then
+            eraText = "H30"
+        ElseIf year = 2019 Then
+            If month >= 5 Then
+                eraText = NEXT_ERA_CHAR & "01"
+            Else
+                eraText = "H31"
+            End If
+        ElseIf year >= 2020 Then
+            eraText = NEXT_ERA_CHAR & If(year - 2018 < 10, "0" & (year - 2018), year - 2018)
+        End If
+
+        monthText = If(month < 10, "0" & month, month)
+        dateText = If(day < 10, "0" & day, day)
+
+        Return eraText & "/" & monthText & "/" & dateText
+    End Function
+
     Private Sub btnInnsatu_Click(sender As System.Object, e As System.EventArgs) Handles btnInnsatu.Click
         ProgressBar1.Visible = True
         ProgressBar1.Maximum = 10
@@ -519,10 +553,8 @@ line1:
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("内服病名新")
 
-        Dim a As DateTime = Today
-
         For i As Integer = 85 To 850 Step 85
-            oSheet.Range("N" & i).Value = a
+            oSheet.Range("N" & i).Value = getNowWarekiTime()
         Next
 
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)

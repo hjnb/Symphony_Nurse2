@@ -198,101 +198,105 @@ line1:
         Next
     End Sub
 
+    Private Function NullCheck(cellvalue As Object) As String
+        Return If(IsDBNull(cellvalue), "", cellvalue)
+    End Function
+
     Private Sub DataGridView1_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles DataGridView1.CellMouseClick
         btnKuria.PerformClick()
         DataGridView4.Columns.Clear()
 
         Dim s As Integer = DataGridView1.CurrentRow.Index
-        lblName.Text = DataGridView1(1, s).Value
+        lblName.Text = nullcheck(DataGridView1(1, s).Value)
         Dim DGV3rowcount As Integer = DataGridView3.Rows.Count
-        If DataGridView1(0, s).Value <> "" Then         '部屋番号がある行を選択したとき
+        If NullCheck(DataGridView1(0, s).Value) <> "" Then         '部屋番号がある行を選択したとき
             If s < 11 Then
-                lblHeya.Text = "空　" & DataGridView1(0, s).Value
+                lblHeya.Text = "空　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(2, i).Value Then
-                        lblID.Text = DataGridView3(1, i).Value
-                        lblHurigana.Text = DataGridView3(3, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(2, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(1, i).Value)
+                        lblHurigana.Text = NullCheck(DataGridView3(3, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 22 Then
-                lblHeya.Text = "森　" & DataGridView1(0, s).Value
+                lblHeya.Text = "森　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(5, i).Value Then
-                        lblID.Text = DataGridView3(4, i).Value
-                        lblHurigana.Text = DataGridView3(6, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(5, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(4, i).Value)
+                        lblHurigana.Text = NullCheck(DataGridView3(6, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 33 Then
-                lblHeya.Text = "星　" & DataGridView1(0, s).Value
+                lblHeya.Text = "星　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(8, i).Value Then
-                        lblID.Text = DataGridView3(7, i).Value
-                        lblHurigana.Text = DataGridView3(9, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(8, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(7, i).Value)
+                        lblHurigana.Text = NullCheck(DataGridView3(9, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 44 Then
-                lblHeya.Text = "月　" & DataGridView1(0, s).Value
+                lblHeya.Text = "月　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(11, i).Value Then
-                        lblID.Text = DataGridView3(10, i).Value
-                        lblHurigana.Text = DataGridView3(12, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(11, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(10, i).Value)
+                        lblHurigana.Text = NullCheck(DataGridView3(12, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 55 Then
-                lblHeya.Text = "花　" & DataGridView1(0, s).Value
+                lblHeya.Text = "花　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(14, i).Value Then
-                        lblID.Text = DataGridView3(13, i).Value
-                        lblHurigana.Text = DataGridView3(15, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(14, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(13, i).Value)
+                        lblHurigana.Text = NullCheck(DataGridView3(15, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 66 Then
-                lblHeya.Text = "丘　" & DataGridView1(0, s).Value
+                lblHeya.Text = "丘　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(17, i).Value Then
-                        lblID.Text = DataGridView3(16, i).Value
-                        lblHurigana.Text = DataGridView3(18, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(17, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(16, i).Value)
+                        lblHurigana.Text = NullCheck(DataGridView3(18, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 77 Then
-                lblHeya.Text = "虹　" & DataGridView1(0, s).Value
+                lblHeya.Text = "虹　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(20, i).Value Then
-                        lblID.Text = DataGridView3(19, i).Value
-                        lblHurigana.Text = DataGridView3(21, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(20, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(19, i).Value)
+                        lblHurigana.Text = NullCheck(DataGridView3(21, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 88 Then
-                lblHeya.Text = "光　" & DataGridView1(0, s).Value
+                lblHeya.Text = "光　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(23, i).Value Then
-                        lblID.Text = DataGridView3(22, i).Value
-                        lblHurigana.Text = DataGridView3(24, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(23, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(22, i).Value)
+                        lblHurigana.Text = NullCheck(DataGridView3(24, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 99 Then
-                lblHeya.Text = "雪　" & DataGridView1(0, s).Value
+                lblHeya.Text = "雪　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(26, i).Value Then
-                        lblID.Text = DataGridView3(25, i).Value
-                        lblHurigana.Text = DataGridView3(27, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(26, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(25, i).Value)
+                        lblHurigana.Text = NullCheck(DataGridView3(27, i).Value)
                         Exit For
                     End If
                 Next
             ElseIf s < 110 Then
-                lblHeya.Text = "風　" & DataGridView1(0, s).Value
+                lblHeya.Text = "風　" & NullCheck(DataGridView1(0, s).Value)
                 For i As Integer = 0 To DGV3rowcount - 1
-                    If lblName.Text = DataGridView3(29, i).Value Then
-                        lblID.Text = DataGridView3(28, i).Value
-                        lblHurigana.Text = DataGridView3(30, i).Value
+                    If lblName.Text = NullCheck(DataGridView3(29, i).Value) Then
+                        lblID.Text = NullCheck(DataGridView3(28, i).Value)
+                        lblHurigana.Text = NullCheck(DataGridView3(30, i).Value)
                         Exit For
                     End If
                 Next
@@ -310,7 +314,6 @@ line1:
         Dim Adapter As New OleDbDataAdapter(SQLCm)
         If lblID.Text <> "" Then
             Dim Table As New DataTable
-            'SQLCm.CommandText = "select * from Kensin WHERE Id = " & lblID.Text & " order by Gyo"
             SQLCm.CommandText = "select * from Kensin WHERE Id = " & lblID.Text & "AND Nam = '" & lblName.Text & "' order by Gyo"
             Adapter.Fill(Table)
             DataGridView4.DataSource = Table
@@ -318,20 +321,20 @@ line1:
             'データがあったら表示
             If DataGridView4.Rows.Count > 14 Then
                 For Gyo As Integer = 1 To 15
-                    Controls("cmbSaiketu" & Gyo).Text = DataGridView4(7, Gyo - 1).Value
+                    Controls("cmbSaiketu" & Gyo).Text = NullCheck(DataGridView4(7, Gyo - 1).Value)
                     If Gyo < 7 Then
-                        If IsDBNull(DataGridView4(8, Gyo - 1).Value) = False Then
-                            Controls("cmbKennsa" & Gyo).Text = DataGridView4(8, Gyo - 1).Value
+                        If IsDBNull(NullCheck(DataGridView4(8, Gyo - 1).Value)) = False Then
+                            Controls("cmbKennsa" & Gyo).Text = NullCheck(DataGridView4(8, Gyo - 1).Value)
                         End If
                     End If
                     If Gyo < 5 Then
-                        If IsDBNull(DataGridView4(9, Gyo - 1).Value) = False Then
-                            Controls("txtTokki" & Gyo).Text = DataGridView4(9, Gyo - 1).Value
+                        If IsDBNull(NullCheck(DataGridView4(9, Gyo - 1).Value)) = False Then
+                            Controls("txtTokki" & Gyo).Text = NullCheck(DataGridView4(9, Gyo - 1).Value)
                         End If
                     End If
                 Next
-                cmbKikann.Text = DataGridView4(6, 0).Value
-                YmdBox1.setADStr(DataGridView4(10, 0).Value)
+                cmbKikann.Text = NullCheck(DataGridView4(6, 0).Value)
+                YmdBox1.setADStr(NullCheck(DataGridView4(10, 0).Value))
             End If
         End If
 
@@ -713,565 +716,565 @@ line2:
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + 3).Value = DataGridView6(7, r).Value
+                    If NullCheck(DataGridView6(5, r).Value) = 1 Then
+                        oSheet.Range("I" & name - 2).Value = NullCheck(DataGridView6(6, r).Value)
+                        oSheet.Range("G" & name - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name - 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 2 Then
+                        oSheet.Range("G" & name).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name - 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 3 Then
+                        oSheet.Range("G" & name + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 4 Then
+                        oSheet.Range("G" & name + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 5 Then
+                        oSheet.Range("G" & name + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 6 Then
+                        oSheet.Range("I" & name - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + 3).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 7 Then
+                        oSheet.Range("I" & name).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 8 Then
+                        oSheet.Range("I" & name + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 9 Then
+                        oSheet.Range("I" & name + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 10 Then
+                        oSheet.Range("I" & name + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 11 Then
+                        oSheet.Range("K" & name - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 12 Then
+                        oSheet.Range("K" & name).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 13 Then
+                        oSheet.Range("K" & name + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 14 Then
+                        oSheet.Range("K" & name + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 15 Then
+                        oSheet.Range("K" & name + 3).Value = NullCheck(DataGridView6(7, r).Value)
                     End If
                 Next
 
                 '森の家
-                oSheet.Range("D" & name + (66 * 1)).Value = DataGridView3(5, count).Value
-                oSheet.Range("D" & name + (66 * 1 - 1)).Value = DataGridView3(6, count).Value
+                oSheet.Range("D" & name + (66 * 1)).Value = NullCheck(DataGridView3(5, count).Value)
+                oSheet.Range("D" & name + (66 * 1 - 1)).Value = NullCheck(DataGridView3(6, count).Value)
 
-                If DataGridView3(5, count).Value = "" Then
+                If NullCheck(DataGridView3(5, count).Value) = "" Then
                     id = 0
                 Else
-                    id = DataGridView3(4, count).Value
+                    id = NullCheck(DataGridView3(4, count).Value)
                 End If
 
                 Dim TableMori As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(5, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & NullCheck(DataGridView3(5, count).Value) & "' order by Gyo"
                 Adapter.Fill(TableMori)
                 DataGridView6.DataSource = TableMori
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 1) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 1) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 1) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 1)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 1) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 1) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 1)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 1) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 1) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 1) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 1) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 1) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 1) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 1)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 1) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 1) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 1) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 1) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 1)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 1) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 1) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 1) + 3).Value = DataGridView6(7, r).Value
+                    If NullCheck(DataGridView6(5, r).Value) = 1 Then
+                        oSheet.Range("I" & name + (66 * 1) - 2).Value = NullCheck(DataGridView6(6, r).Value)
+                        oSheet.Range("G" & name + (66 * 1) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 1) - 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 2 Then
+                        oSheet.Range("G" & name + (66 * 1)).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 1) - 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 3 Then
+                        oSheet.Range("G" & name + (66 * 1) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 1)).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 4 Then
+                        oSheet.Range("G" & name + (66 * 1) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 1) + 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 5 Then
+                        oSheet.Range("G" & name + (66 * 1) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 1) + 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 6 Then
+                        oSheet.Range("I" & name + (66 * 1) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 1) + 3).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 7 Then
+                        oSheet.Range("I" & name + (66 * 1)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 8 Then
+                        oSheet.Range("I" & name + (66 * 1) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 9 Then
+                        oSheet.Range("I" & name + (66 * 1) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 10 Then
+                        oSheet.Range("I" & name + (66 * 1) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 11 Then
+                        oSheet.Range("K" & name + (66 * 1) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 12 Then
+                        oSheet.Range("K" & name + (66 * 1)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 13 Then
+                        oSheet.Range("K" & name + (66 * 1) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 14 Then
+                        oSheet.Range("K" & name + (66 * 1) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 15 Then
+                        oSheet.Range("K" & name + (66 * 1) + 3).Value = NullCheck(DataGridView6(7, r).Value)
                     End If
                 Next
 
                 '星の家
-                oSheet.Range("D" & name + (66 * 2)).Value = DataGridView3(8, count).Value
-                oSheet.Range("D" & name + (66 * 2 - 1)).Value = DataGridView3(9, count).Value
+                oSheet.Range("D" & name + (66 * 2)).Value = NullCheck(DataGridView3(8, count).Value)
+                oSheet.Range("D" & name + (66 * 2 - 1)).Value = NullCheck(DataGridView3(9, count).Value)
 
-                If DataGridView3(8, count).Value = "" Then
+                If NullCheck(DataGridView3(8, count).Value) = "" Then
                     id = 0
                 Else
-                    id = DataGridView3(7, count).Value
+                    id = NullCheck(DataGridView3(7, count).Value)
                 End If
 
                 Dim TableHosi As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(8, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & NullCheck(DataGridView3(8, count).Value) & "' order by Gyo"
                 Adapter.Fill(TableHosi)
                 DataGridView6.DataSource = TableHosi
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 2) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 2) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 2) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 2)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 2) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 2) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 2)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 2) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 2) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 2) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 2) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 2) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 2) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 2)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 2) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 2) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 2) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 2) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 2)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 2) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 2) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 2) + 3).Value = DataGridView6(7, r).Value
+                    If NullCheck(DataGridView6(5, r).Value) = 1 Then
+                        oSheet.Range("I" & name + (66 * 2) - 2).Value = NullCheck(DataGridView6(6, r).Value)
+                        oSheet.Range("G" & name + (66 * 2) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 2) - 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 2 Then
+                        oSheet.Range("G" & name + (66 * 2)).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 2) - 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 3 Then
+                        oSheet.Range("G" & name + (66 * 2) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 2)).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 4 Then
+                        oSheet.Range("G" & name + (66 * 2) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 2) + 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 5 Then
+                        oSheet.Range("G" & name + (66 * 2) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 2) + 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 6 Then
+                        oSheet.Range("I" & name + (66 * 2) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 2) + 3).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 7 Then
+                        oSheet.Range("I" & name + (66 * 2)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 8 Then
+                        oSheet.Range("I" & name + (66 * 2) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 9 Then
+                        oSheet.Range("I" & name + (66 * 2) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 10 Then
+                        oSheet.Range("I" & name + (66 * 2) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 11 Then
+                        oSheet.Range("K" & name + (66 * 2) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 12 Then
+                        oSheet.Range("K" & name + (66 * 2)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 13 Then
+                        oSheet.Range("K" & name + (66 * 2) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 14 Then
+                        oSheet.Range("K" & name + (66 * 2) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 15 Then
+                        oSheet.Range("K" & name + (66 * 2) + 3).Value = NullCheck(DataGridView6(7, r).Value)
                     End If
                 Next
 
                 '月の家
-                oSheet.Range("D" & name + (66 * 3)).Value = DataGridView3(11, count).Value
-                oSheet.Range("D" & name + (66 * 3 - 1)).Value = DataGridView3(12, count).Value
+                oSheet.Range("D" & name + (66 * 3)).Value = NullCheck(DataGridView3(11, count).Value)
+                oSheet.Range("D" & name + (66 * 3 - 1)).Value = NullCheck(DataGridView3(12, count).Value)
 
-                If DataGridView3(11, count).Value = "" Then
+                If NullCheck(DataGridView3(11, count).Value) = "" Then
                     id = 0
                 Else
-                    id = DataGridView3(10, count).Value
+                    id = NullCheck(DataGridView3(10, count).Value)
                 End If
 
                 Dim Tabletuki As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(11, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & NullCheck(DataGridView3(11, count).Value) & "' order by Gyo"
                 Adapter.Fill(Tabletuki)
                 DataGridView6.DataSource = Tabletuki
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 3) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 3) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 3) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 3)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 3) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 3) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 3)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 3) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 3) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 3) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 3) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 3) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 3) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 3)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 3) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 3) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 3) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 3) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 3)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 3) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 3) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 3) + 3).Value = DataGridView6(7, r).Value
+                    If NullCheck(DataGridView6(5, r).Value) = 1 Then
+                        oSheet.Range("I" & name + (66 * 3) - 2).Value = NullCheck(DataGridView6(6, r).Value)
+                        oSheet.Range("G" & name + (66 * 3) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 3) - 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 2 Then
+                        oSheet.Range("G" & name + (66 * 3)).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 3) - 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 3 Then
+                        oSheet.Range("G" & name + (66 * 3) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 3)).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 4 Then
+                        oSheet.Range("G" & name + (66 * 3) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 3) + 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 5 Then
+                        oSheet.Range("G" & name + (66 * 3) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 3) + 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 6 Then
+                        oSheet.Range("I" & name + (66 * 3) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 3) + 3).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 7 Then
+                        oSheet.Range("I" & name + (66 * 3)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 8 Then
+                        oSheet.Range("I" & name + (66 * 3) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 9 Then
+                        oSheet.Range("I" & name + (66 * 3) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 10 Then
+                        oSheet.Range("I" & name + (66 * 3) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 11 Then
+                        oSheet.Range("K" & name + (66 * 3) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 12 Then
+                        oSheet.Range("K" & name + (66 * 3)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 13 Then
+                        oSheet.Range("K" & name + (66 * 3) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 14 Then
+                        oSheet.Range("K" & name + (66 * 3) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 15 Then
+                        oSheet.Range("K" & name + (66 * 3) + 3).Value = NullCheck(DataGridView6(7, r).Value)
                     End If
                 Next
 
                 '花の家
-                oSheet.Range("D" & name + (66 * 4)).Value = DataGridView3(14, count).Value
-                oSheet.Range("D" & name + (66 * 4 - 1)).Value = DataGridView3(15, count).Value
+                oSheet.Range("D" & name + (66 * 4)).Value = NullCheck(DataGridView3(14, count).Value)
+                oSheet.Range("D" & name + (66 * 4 - 1)).Value = NullCheck(DataGridView3(15, count).Value)
 
-                If DataGridView3(14, count).Value = "" Then
+                If NullCheck(DataGridView3(14, count).Value) = "" Then
                     id = 0
                 Else
-                    id = DataGridView3(13, count).Value
+                    id = NullCheck(DataGridView3(13, count).Value)
                 End If
 
                 Dim TableHana As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(14, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & NullCheck(DataGridView3(14, count).Value) & "' order by Gyo"
                 Adapter.Fill(TableHana)
                 DataGridView6.DataSource = TableHana
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 4) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 4) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 4) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 4)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 4) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 4) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 4)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 4) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 4) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 4) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 4) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 4) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 4) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 4)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 4) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 4) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 4) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 4) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 4)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 4) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 4) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 4) + 3).Value = DataGridView6(7, r).Value
+                    If NullCheck(DataGridView6(5, r).Value) = 1 Then
+                        oSheet.Range("I" & name + (66 * 4) - 2).Value = NullCheck(DataGridView6(6, r).Value)
+                        oSheet.Range("G" & name + (66 * 4) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 4) - 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 2 Then
+                        oSheet.Range("G" & name + (66 * 4)).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 4) - 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 3 Then
+                        oSheet.Range("G" & name + (66 * 4) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 4)).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 4 Then
+                        oSheet.Range("G" & name + (66 * 4) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 4) + 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 5 Then
+                        oSheet.Range("G" & name + (66 * 4) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 4) + 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 6 Then
+                        oSheet.Range("I" & name + (66 * 4) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 4) + 3).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 7 Then
+                        oSheet.Range("I" & name + (66 * 4)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 8 Then
+                        oSheet.Range("I" & name + (66 * 4) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 9 Then
+                        oSheet.Range("I" & name + (66 * 4) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 10 Then
+                        oSheet.Range("I" & name + (66 * 4) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 11 Then
+                        oSheet.Range("K" & name + (66 * 4) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 12 Then
+                        oSheet.Range("K" & name + (66 * 4)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 13 Then
+                        oSheet.Range("K" & name + (66 * 4) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 14 Then
+                        oSheet.Range("K" & name + (66 * 4) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 15 Then
+                        oSheet.Range("K" & name + (66 * 4) + 3).Value = NullCheck(DataGridView6(7, r).Value)
                     End If
                 Next
 
                 '丘の家
-                oSheet.Range("D" & name + (66 * 5)).Value = DataGridView3(17, count).Value
-                oSheet.Range("D" & name + (66 * 5 - 1)).Value = DataGridView3(18, count).Value
+                oSheet.Range("D" & name + (66 * 5)).Value = NullCheck(DataGridView3(17, count).Value)
+                oSheet.Range("D" & name + (66 * 5 - 1)).Value = NullCheck(DataGridView3(18, count).Value)
 
-                If DataGridView3(17, count).Value = "" Then
+                If NullCheck(DataGridView3(17, count).Value) = "" Then
                     id = 0
                 Else
-                    id = DataGridView3(16, count).Value
+                    id = NullCheck(DataGridView3(16, count).Value)
                 End If
 
                 Dim TableOka As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(17, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & NullCheck(DataGridView3(17, count).Value) & "' order by Gyo"
                 Adapter.Fill(TableOka)
                 DataGridView6.DataSource = TableOka
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 5) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 5) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 5) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 5)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 5) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 5) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 5)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 5) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 5) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 5) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 5) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 5) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 5) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 5)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 5) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 5) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 5) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 5) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 5)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 5) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 5) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 5) + 3).Value = DataGridView6(7, r).Value
+                    If NullCheck(DataGridView6(5, r).Value) = 1 Then
+                        oSheet.Range("I" & name + (66 * 5) - 2).Value = NullCheck(DataGridView6(6, r).Value)
+                        oSheet.Range("G" & name + (66 * 5) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 5) - 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 2 Then
+                        oSheet.Range("G" & name + (66 * 5)).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 5) - 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 3 Then
+                        oSheet.Range("G" & name + (66 * 5) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 5)).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 4 Then
+                        oSheet.Range("G" & name + (66 * 5) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 5) + 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 5 Then
+                        oSheet.Range("G" & name + (66 * 5) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 5) + 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 6 Then
+                        oSheet.Range("I" & name + (66 * 5) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 5) + 3).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 7 Then
+                        oSheet.Range("I" & name + (66 * 5)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 8 Then
+                        oSheet.Range("I" & name + (66 * 5) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 9 Then
+                        oSheet.Range("I" & name + (66 * 5) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 10 Then
+                        oSheet.Range("I" & name + (66 * 5) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 11 Then
+                        oSheet.Range("K" & name + (66 * 5) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 12 Then
+                        oSheet.Range("K" & name + (66 * 5)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 13 Then
+                        oSheet.Range("K" & name + (66 * 5) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 14 Then
+                        oSheet.Range("K" & name + (66 * 5) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 15 Then
+                        oSheet.Range("K" & name + (66 * 5) + 3).Value = NullCheck(DataGridView6(7, r).Value)
                     End If
                 Next
 
                 '虹の家
-                oSheet.Range("D" & name + (66 * 6)).Value = DataGridView3(20, count).Value
-                oSheet.Range("D" & name + (66 * 6 - 1)).Value = DataGridView3(21, count).Value
+                oSheet.Range("D" & name + (66 * 6)).Value = NullCheck(DataGridView3(20, count).Value)
+                oSheet.Range("D" & name + (66 * 6 - 1)).Value = NullCheck(DataGridView3(21, count).Value)
 
-                If DataGridView3(20, count).Value = "" Then
+                If NullCheck(DataGridView3(20, count).Value) = "" Then
                     id = 0
                 Else
-                    id = DataGridView3(19, count).Value
+                    id = NullCheck(DataGridView3(19, count).Value)
                 End If
 
                 Dim TableNiji As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(20, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & NullCheck(DataGridView3(20, count).Value) & "' order by Gyo"
                 Adapter.Fill(TableNiji)
                 DataGridView6.DataSource = TableNiji
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 6) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 6) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 6) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 6)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 6) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 6) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 6)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 6) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 6) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 6) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 6) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 6) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 6) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 6)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 6) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 6) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 6) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 6) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 6)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 6) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 6) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 6) + 3).Value = DataGridView6(7, r).Value
+                    If NullCheck(DataGridView6(5, r).Value) = 1 Then
+                        oSheet.Range("I" & name + (66 * 6) - 2).Value = NullCheck(DataGridView6(6, r).Value)
+                        oSheet.Range("G" & name + (66 * 6) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 6) - 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 2 Then
+                        oSheet.Range("G" & name + (66 * 6)).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 6) - 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 3 Then
+                        oSheet.Range("G" & name + (66 * 6) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 6)).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 4 Then
+                        oSheet.Range("G" & name + (66 * 6) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 6) + 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 5 Then
+                        oSheet.Range("G" & name + (66 * 6) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 6) + 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 6 Then
+                        oSheet.Range("I" & name + (66 * 6) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 6) + 3).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 7 Then
+                        oSheet.Range("I" & name + (66 * 6)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 8 Then
+                        oSheet.Range("I" & name + (66 * 6) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 9 Then
+                        oSheet.Range("I" & name + (66 * 6) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 10 Then
+                        oSheet.Range("I" & name + (66 * 6) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 11 Then
+                        oSheet.Range("K" & name + (66 * 6) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 12 Then
+                        oSheet.Range("K" & name + (66 * 6)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 13 Then
+                        oSheet.Range("K" & name + (66 * 6) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 14 Then
+                        oSheet.Range("K" & name + (66 * 6) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 15 Then
+                        oSheet.Range("K" & name + (66 * 6) + 3).Value = NullCheck(DataGridView6(7, r).Value)
                     End If
                 Next
 
                 '光の家
-                oSheet.Range("D" & name + (66 * 7)).Value = DataGridView3(23, count).Value
-                oSheet.Range("D" & name + (66 * 7 - 1)).Value = DataGridView3(24, count).Value
+                oSheet.Range("D" & name + (66 * 7)).Value = NullCheck(DataGridView3(23, count).Value)
+                oSheet.Range("D" & name + (66 * 7 - 1)).Value = NullCheck(DataGridView3(24, count).Value)
 
-                If DataGridView3(23, count).Value = "" Then
+                If NullCheck(DataGridView3(23, count).Value) = "" Then
                     id = 0
                 Else
-                    id = DataGridView3(22, count).Value
+                    id = NullCheck(DataGridView3(22, count).Value)
                 End If
 
                 Dim TableHikari As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(23, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & NullCheck(DataGridView3(23, count).Value) & "' order by Gyo"
                 Adapter.Fill(TableHikari)
                 DataGridView6.DataSource = TableHikari
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 7) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 7) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 7) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 7)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 7) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 7) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 7)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 7) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 7) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 7) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 7) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 7) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 7) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 7)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 7) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 7) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 7) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 7) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 7)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 7) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 7) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 7) + 3).Value = DataGridView6(7, r).Value
+                    If NullCheck(DataGridView6(5, r).Value) = 1 Then
+                        oSheet.Range("I" & name + (66 * 7) - 2).Value = NullCheck(DataGridView6(6, r).Value)
+                        oSheet.Range("G" & name + (66 * 7) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 7) - 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 2 Then
+                        oSheet.Range("G" & name + (66 * 7)).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 7) - 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 3 Then
+                        oSheet.Range("G" & name + (66 * 7) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 7)).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 4 Then
+                        oSheet.Range("G" & name + (66 * 7) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 7) + 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 5 Then
+                        oSheet.Range("G" & name + (66 * 7) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 7) + 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 6 Then
+                        oSheet.Range("I" & name + (66 * 7) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 7) + 3).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 7 Then
+                        oSheet.Range("I" & name + (66 * 7)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 8 Then
+                        oSheet.Range("I" & name + (66 * 7) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 9 Then
+                        oSheet.Range("I" & name + (66 * 7) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 10 Then
+                        oSheet.Range("I" & name + (66 * 7) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 11 Then
+                        oSheet.Range("K" & name + (66 * 7) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 12 Then
+                        oSheet.Range("K" & name + (66 * 7)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 13 Then
+                        oSheet.Range("K" & name + (66 * 7) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 14 Then
+                        oSheet.Range("K" & name + (66 * 7) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 15 Then
+                        oSheet.Range("K" & name + (66 * 7) + 3).Value = NullCheck(DataGridView6(7, r).Value)
                     End If
                 Next
 
                 '雪の家
-                oSheet.Range("D" & name + (66 * 8)).Value = DataGridView3(26, count).Value
-                oSheet.Range("D" & name + (66 * 8 - 1)).Value = DataGridView3(27, count).Value
+                oSheet.Range("D" & name + (66 * 8)).Value = NullCheck(DataGridView3(26, count).Value)
+                oSheet.Range("D" & name + (66 * 8 - 1)).Value = NullCheck(DataGridView3(27, count).Value)
 
-                If DataGridView3(26, count).Value = "" Then
+                If NullCheck(DataGridView3(26, count).Value) = "" Then
                     id = 0
                 Else
-                    id = DataGridView3(25, count).Value
+                    id = NullCheck(DataGridView3(25, count).Value)
                 End If
 
                 Dim TableYuki As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(26, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & NullCheck(DataGridView3(26, count).Value) & "' order by Gyo"
                 Adapter.Fill(TableYuki)
                 DataGridView6.DataSource = TableYuki
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 8) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 8) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 8) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 8)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 8) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 8) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 8)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 8) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 8) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 8) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 8) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 8) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 8) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 8)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 8) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 8) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 8) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 8) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 8)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 8) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 8) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 8) + 3).Value = DataGridView6(7, r).Value
+                    If NullCheck(DataGridView6(5, r).Value) = 1 Then
+                        oSheet.Range("I" & name + (66 * 8) - 2).Value = NullCheck(DataGridView6(6, r).Value)
+                        oSheet.Range("G" & name + (66 * 8) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 8) - 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 2 Then
+                        oSheet.Range("G" & name + (66 * 8)).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 8) - 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 3 Then
+                        oSheet.Range("G" & name + (66 * 8) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 8)).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 4 Then
+                        oSheet.Range("G" & name + (66 * 8) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 8) + 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 5 Then
+                        oSheet.Range("G" & name + (66 * 8) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 8) + 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 6 Then
+                        oSheet.Range("I" & name + (66 * 8) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 8) + 3).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 7 Then
+                        oSheet.Range("I" & name + (66 * 8)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 8 Then
+                        oSheet.Range("I" & name + (66 * 8) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 9 Then
+                        oSheet.Range("I" & name + (66 * 8) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 10 Then
+                        oSheet.Range("I" & name + (66 * 8) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 11 Then
+                        oSheet.Range("K" & name + (66 * 8) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 12 Then
+                        oSheet.Range("K" & name + (66 * 8)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 13 Then
+                        oSheet.Range("K" & name + (66 * 8) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 14 Then
+                        oSheet.Range("K" & name + (66 * 8) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 15 Then
+                        oSheet.Range("K" & name + (66 * 8) + 3).Value = NullCheck(DataGridView6(7, r).Value)
                     End If
                 Next
 
                 '風の家
-                oSheet.Range("D" & name + (66 * 9)).Value = DataGridView3(29, count).Value
-                oSheet.Range("D" & name + (66 * 9 - 1)).Value = DataGridView3(30, count).Value
+                oSheet.Range("D" & name + (66 * 9)).Value = NullCheck(DataGridView3(29, count).Value)
+                oSheet.Range("D" & name + (66 * 9 - 1)).Value = NullCheck(DataGridView3(30, count).Value)
 
-                If DataGridView3(29, count).Value = "" Then
+                If NullCheck(DataGridView3(29, count).Value) = "" Then
                     id = 0
                 Else
-                    id = DataGridView3(28, count).Value
+                    id = NullCheck(DataGridView3(28, count).Value)
                 End If
 
                 Dim TableKaze As New DataTable
                 '対象となる人のデータを表示
-                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & DataGridView3(29, count).Value & "' order by Gyo"
+                SQLCm.CommandText = "select * from Kensin WHERE Id = " & id & "AND Nam = '" & NullCheck(DataGridView3(29, count).Value) & "' order by Gyo"
                 Adapter.Fill(TableKaze)
                 DataGridView6.DataSource = TableKaze
 
                 '個人データをエクセルに出力
                 For r As Integer = 0 To DataGridView6.Rows.Count - 1
-                    If DataGridView6(5, r).Value = 1 Then
-                        oSheet.Range("I" & name + (66 * 9) - 2).Value = DataGridView6(6, r).Value
-                        oSheet.Range("G" & name + (66 * 9) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 9) - 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 2 Then
-                        oSheet.Range("G" & name + (66 * 9)).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 9) - 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 3 Then
-                        oSheet.Range("G" & name + (66 * 9) + 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 9)).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 4 Then
-                        oSheet.Range("G" & name + (66 * 9) + 2).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 9) + 1).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 5 Then
-                        oSheet.Range("G" & name + (66 * 9) + 3).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 9) + 2).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 6 Then
-                        oSheet.Range("I" & name + (66 * 9) - 1).Value = DataGridView6(7, r).Value
-                        oSheet.Range("M" & name + (66 * 9) + 3).Value = DataGridView6(8, r).Value
-                    ElseIf DataGridView6(5, r).Value = 7 Then
-                        oSheet.Range("I" & name + (66 * 9)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 8 Then
-                        oSheet.Range("I" & name + (66 * 9) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 9 Then
-                        oSheet.Range("I" & name + (66 * 9) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 10 Then
-                        oSheet.Range("I" & name + (66 * 9) + 3).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 11 Then
-                        oSheet.Range("K" & name + (66 * 9) - 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 12 Then
-                        oSheet.Range("K" & name + (66 * 9)).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 13 Then
-                        oSheet.Range("K" & name + (66 * 9) + 1).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 14 Then
-                        oSheet.Range("K" & name + (66 * 9) + 2).Value = DataGridView6(7, r).Value
-                    ElseIf DataGridView6(5, r).Value = 15 Then
-                        oSheet.Range("K" & name + (66 * 9) + 3).Value = DataGridView6(7, r).Value
+                    If NullCheck(DataGridView6(5, r).Value) = 1 Then
+                        oSheet.Range("I" & name + (66 * 9) - 2).Value = NullCheck(DataGridView6(6, r).Value)
+                        oSheet.Range("G" & name + (66 * 9) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 9) - 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 2 Then
+                        oSheet.Range("G" & name + (66 * 9)).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 9) - 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 3 Then
+                        oSheet.Range("G" & name + (66 * 9) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 9)).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 4 Then
+                        oSheet.Range("G" & name + (66 * 9) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 9) + 1).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 5 Then
+                        oSheet.Range("G" & name + (66 * 9) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 9) + 2).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 6 Then
+                        oSheet.Range("I" & name + (66 * 9) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                        oSheet.Range("M" & name + (66 * 9) + 3).Value = NullCheck(DataGridView6(8, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 7 Then
+                        oSheet.Range("I" & name + (66 * 9)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 8 Then
+                        oSheet.Range("I" & name + (66 * 9) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 9 Then
+                        oSheet.Range("I" & name + (66 * 9) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 10 Then
+                        oSheet.Range("I" & name + (66 * 9) + 3).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 11 Then
+                        oSheet.Range("K" & name + (66 * 9) - 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 12 Then
+                        oSheet.Range("K" & name + (66 * 9)).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 13 Then
+                        oSheet.Range("K" & name + (66 * 9) + 1).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 14 Then
+                        oSheet.Range("K" & name + (66 * 9) + 2).Value = NullCheck(DataGridView6(7, r).Value)
+                    ElseIf NullCheck(DataGridView6(5, r).Value) = 15 Then
+                        oSheet.Range("K" & name + (66 * 9) + 3).Value = NullCheck(DataGridView6(7, r).Value)
                     End If
                 Next
 
