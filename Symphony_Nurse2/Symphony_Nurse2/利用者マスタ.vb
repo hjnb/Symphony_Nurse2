@@ -1,4 +1,6 @@
 ﻿Imports System.Data.OleDb
+Imports System.Runtime.InteropServices
+Imports Microsoft.Office.Interop
 
 Public Class 利用者マスタ
 
@@ -10,6 +12,10 @@ Public Class 利用者マスタ
 
     'テキストボックスのマウスダウンイベント制御用
     Private mdFlag As Boolean = False
+
+    'Private Const EXCEL_PASS As String = "\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls"
+    Private Const EXCEL_PASS As String = "C:\Users\yoshi\Desktop\Nurse2.xls"
+    Private Const EXCEL_SHEET_NAME As String = "利用者"
 
     '行ヘッダーのカレントセルを表す三角マークを非表示に設定する為のクラス。
     Public Class dgvRowHeaderCell
@@ -188,6 +194,85 @@ Public Class 利用者マスタ
         kaigoBox.Text = ""
     End Sub
 
+    Private Function getNowWarekiTime() As String
+        Dim NEXT_ERA_CHAR As String = "X"
+        Dim eraText As String = ""
+        Dim monthText As String = ""
+        Dim dateText As String = ""
+        Dim now As DateTime = DateTime.Now
+        Dim year As Integer = now.Year
+        Dim month As Integer = now.Month
+        Dim day As Integer = now.Day
+        Dim time As String = now.ToString("HH:mm")
+
+        If year = 2018 Then
+            eraText = "H30"
+        ElseIf year = 2019 Then
+            If month >= 5 Then
+                eraText = NEXT_ERA_CHAR & "01"
+            Else
+                eraText = "H31"
+            End If
+        ElseIf year >= 2020 Then
+            eraText = NEXT_ERA_CHAR & If(year - 2018 < 10, "0" & (year - 2018), year - 2018)
+        End If
+
+        monthText = If(month < 10, "0" & month, month)
+        dateText = If(day < 10, "0" & day, day)
+
+        Return eraText & "/" & monthText & "/" & dateText & " " & time
+    End Function
+
+    Private Sub copyAndPasteExcelCell(oSheet As Object, rowCount As Integer)
+        If rowCount <= 60 Then
+            Return
+        End If
+
+        'クリップボードにコピーする
+        Dim xlCopyRange As Excel.Range = oSheet.Cells.Range("B1:K64")
+        xlCopyRange.Copy()
+
+        '件数に応じてペースト
+        Dim loopCount As Integer = (rowCount - 1) \ 60
+        Dim baseNum As Integer = 64
+        Dim targetRowNum As Integer
+        For i As Integer = 1 To loopCount
+            targetRowNum = (baseNum * i) + 1
+            'ペースト
+            Dim xlPasteRange As Excel.Range = oSheet.Range("B" & targetRowNum)
+            oSheet.Paste(xlPasteRange)
+            '行の高さ設定
+            oSheet.Range(targetRowNum & ":" & targetRowNum).RowHeight = 5.25
+            oSheet.Range((targetRowNum + 1) & ":" & (targetRowNum + 1)).RowHeight = 21.75
+        Next
+    End Sub
+
+    Private Sub writeUserMasterData(oSheet As Object, rowCount As Integer)
+        Dim initNum As Integer = 4
+        Dim plusBaseNum As Integer = 64
+        Dim loopCount As Integer = (rowCount - 1) \ 60
+
+        For i As Integer = 0 To loopCount
+            Dim targetStartNum As Integer = initNum + (plusBaseNum * i)
+            Dim targetEndNum As Integer = targetStartNum + 59
+            For targetNum As Integer = targetStartNum To targetEndNum
+                Dim rowIndex As Integer = targetNum - (3 + 4 * i) - 1
+                If rowIndex + 1 > rowCount Then
+                    Return
+                End If
+                oSheet.Range("B" & targetNum).Value = rowIndex + 1 'No
+                oSheet.Range("C" & targetNum).Value = checkDBNullValue(dgvUserMaster("Id", rowIndex).Value) '利用者ID
+                oSheet.Range("D" & targetNum).Value = checkDBNullValue(dgvUserMaster("Nam", rowIndex).Value) '氏名
+                oSheet.Range("E" & targetNum).Value = checkDBNullValue(dgvUserMaster("Kana", rowIndex).Value) 'カナ
+                oSheet.Range("F" & targetNum).Value = checkDBNullValue(dgvUserMaster("Sex", rowIndex).Value) '性別
+                oSheet.Range("G" & targetNum).Value = checkDBNullValue(dgvUserMaster("Birth", rowIndex).Value) '生年月日
+                oSheet.Range("H" & targetNum).Value = checkDBNullValue(dgvUserMaster("Age", rowIndex).Value) '年齢
+                oSheet.Range("I" & targetNum).Value = checkDBNullValue(dgvUserMaster("Kaigo", rowIndex).Value) '介護度
+                oSheet.Range("J" & targetNum).Value = checkDBNullValue(dgvUserMaster("Dsp", rowIndex).FormattedValue) '表示
+            Next
+        Next
+    End Sub
+
     Private Sub btnRegist_Click(sender As System.Object, e As System.EventArgs) Handles btnRegist.Click
         Dim nam As String = namBox.Text
         Dim kana As String = StrConv(kanaBox.Text, VbStrConv.Narrow) '半角へ変換
@@ -331,6 +416,52 @@ Public Class 利用者マスタ
     End Sub
 
     Private Sub btnPrint_Click(sender As System.Object, e As System.EventArgs) Handles btnPrint.Click
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheet As Object
+
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open(EXCEL_PASS)
+        oSheet = objWorkBook.Worksheets(EXCEL_SHEET_NAME)
+
+        '年月日と時刻部分の書き込み
+        oSheet.Range("E2").Value = getNowWarekiTime()
+
+        'B4～J4列の**テキストを消す
+        For i As Integer = Asc("B") To Asc("J")
+            oSheet.Range(Chr(i) & 4).Value = ""
+        Next
+
+        '利用者マスタの件数取得
+        Dim rowCount As Integer = dgvUserMaster.Rows.Count
+        
+        '件数に応じてシートにコピペ
+        copyAndPasteExcelCell(oSheet, rowCount)
+
+        '書き込み処理
+        writeUserMasterData(oSheet, rowCount)
+
+        '変更保存確認ダイアログ非表示
+        objExcel.DisplayAlerts = False
+
+        '印刷
+        If TopForm.rbtnPrint.Checked = True Then
+            oSheet.PrintOut()
+        ElseIf TopForm.rbtnPreview.Checked = True Then
+            objExcel.Visible = True
+            oSheet.PrintPreview(1)
+        End If
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
 
     End Sub
 
@@ -340,7 +471,7 @@ Public Class 利用者マスタ
 
     Private Sub dgvUserMaster_CellFormatting(sender As Object, e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles dgvUserMaster.CellFormatting
         If dgvUserMaster.Columns(e.ColumnIndex).Name = "Dsp" Then
-            If e.Value = "1" Then
+            If checkDBNullValue(e.Value) = "1" Then
                 e.Value = "○"
             Else
                 e.Value = ""

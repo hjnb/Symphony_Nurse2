@@ -43,6 +43,7 @@ Partial Class 利用者マスタ
         Me.dgvUserMaster = New System.Windows.Forms.DataGridView()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
+        Me.printProgressBar = New System.Windows.Forms.ProgressBar()
         CType(Me.dgvUserMaster, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -216,9 +217,12 @@ Partial Class 利用者マスタ
         '
         'birthYmdBox
         '
+        Me.birthYmdBox.boxType = 0
         Me.birthYmdBox.DateText = ""
+        Me.birthYmdBox.EraLabelText = "H30"
         Me.birthYmdBox.EraText = ""
         Me.birthYmdBox.Location = New System.Drawing.Point(343, 84)
+        Me.birthYmdBox.MonthLabelText = "05"
         Me.birthYmdBox.MonthText = ""
         Me.birthYmdBox.Name = "birthYmdBox"
         Me.birthYmdBox.Size = New System.Drawing.Size(88, 24)
@@ -253,11 +257,19 @@ Partial Class 利用者マスタ
         Me.Label9.TabIndex = 14
         Me.Label9.Text = "ﾀﾞﾌﾞﾙｸﾘｯｸした項目名で並べます"
         '
+        'printProgressBar
+        '
+        Me.printProgressBar.Location = New System.Drawing.Point(499, 108)
+        Me.printProgressBar.Name = "printProgressBar"
+        Me.printProgressBar.Size = New System.Drawing.Size(100, 23)
+        Me.printProgressBar.TabIndex = 15
+        '
         '利用者マスタ
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(662, 599)
+        Me.Controls.Add(Me.printProgressBar)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.dgvUserMaster)
@@ -308,4 +320,5 @@ Partial Class 利用者マスタ
     Friend WithEvents dgvUserMaster As System.Windows.Forms.DataGridView
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents printProgressBar As System.Windows.Forms.ProgressBar
 End Class
