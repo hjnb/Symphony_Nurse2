@@ -82,6 +82,8 @@ Public Class 利用者マスタ
         '選択行設定
         dgvUserMaster.Rows(selectedRowIndex).Selected = True
 
+        idBox.Focus()
+
     End Sub
 
     Private Sub settingDgv(dgv As DataGridView)

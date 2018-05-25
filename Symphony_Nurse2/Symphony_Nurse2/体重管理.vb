@@ -656,28 +656,67 @@ Public Class 体重管理
             End If
             e.SuppressKeyPress = True
         ElseIf e.KeyCode = Keys.Back Then
-            If currentSelectionStart > decimalPointSelectionStart Then
-                '小数部の削除
-                If currentSelectionStart = maxSelectionStart - 2 Then
-                    '小数第一位
-                    tb.Text = inputIntStr & "." & "0" & inputDecimalStr.Substring(1, 1)
-                    tb.SelectionStart = currentSelectionStart - 1
-                    tb.SelectionLength = 0
-                ElseIf currentSelectionStart = maxSelectionStart - 1 OrElse currentSelectionStart = maxSelectionStart Then
-                    '小数第二位
-                    tb.Text = inputIntStr & "." & inputDecimalStr.Substring(0, 1) & "0"
-                    tb.SelectionStart = decimalPointSelectionStart + 1
-                    tb.Select(tb.SelectionStart, 1)
+            Dim selectionLength As Integer = tb.SelectionLength
+            Dim selectionEnd As Integer = currentSelectionStart + selectionLength
+
+            If selectionLength = tb.Text.Length Then
+                '全選択の場合
+                tb.Text = "0.00"
+                tb.SelectionStart = 1
+            ElseIf selectionEnd > decimalPointSelectionStart + 1 Then
+                '小数部分も選択している状態
+                If selectionLength = 1 Then
+                    '選択部分が一か所の場合
+                    If currentSelectionStart = maxSelectionStart - 2 Then
+                        '小数第一位
+                        tb.Text = inputIntStr & "." & "0" & inputDecimalStr.Substring(1, 1)
+                        tb.SelectionStart = currentSelectionStart - 1
+                        tb.SelectionLength = 0
+                    ElseIf currentSelectionStart = maxSelectionStart - 1 OrElse currentSelectionStart = maxSelectionStart Then
+                        '小数第二位
+                        tb.Text = inputIntStr & "." & inputDecimalStr.Substring(0, 1) & "0"
+                        tb.SelectionStart = decimalPointSelectionStart + 1
+                        tb.Select(tb.SelectionStart, 1)
+                    End If
+                Else
+                    If selectionEnd = maxSelectionStart - 1 Then
+                        '小数第一位
+                        tb.Text = inputIntStr & "." & "0" & inputDecimalStr.Substring(1, 1)
+                        tb.Select(selectionEnd - 1, 1)
+                    Else
+                        '小数第二位
+                        tb.Text = inputIntStr & "." & inputDecimalStr.Substring(0, 1) & "0"
+                        tb.Select(selectionEnd - 1, 1)
+                    End If
                 End If
             Else
-                '整数部の削除
-                If currentSelectionStart <> 0 Then
-                    If inputIntStr.Length = 1 AndAlso currentSelectionStart = decimalPointSelectionStart Then
+                '小数部分が選ばれていない場合
+                If selectionLength = 0 Then
+                    '選択部分がない場合
+                    If currentSelectionStart <> 0 Then
+                        If inputIntStr.Length = 1 AndAlso currentSelectionStart = decimalPointSelectionStart Then
+                            tb.Text = "0." & inputDecimalStr
+                            tb.SelectionStart = currentSelectionStart
+                        Else
+                            tb.Text = inputIntStr.Remove(currentSelectionStart - 1, 1) & "." & inputDecimalStr
+                            tb.SelectionStart = currentSelectionStart - 1
+                        End If
+                    End If
+                Else
+                    '選択されている場合
+
+                    '小数点も選択されている場合
+                    If selectionEnd > decimalPointSelectionStart Then
+                        selectionLength -= 1
+                    End If
+
+                    If selectionLength = inputIntStr.Length Then
+                        '整数部が全選択の場合
                         tb.Text = "0." & inputDecimalStr
-                        tb.SelectionStart = currentSelectionStart
+                        tb.SelectionStart = 1
                     Else
-                        tb.Text = inputIntStr.Remove(currentSelectionStart - 1, 1) & "." & inputDecimalStr
-                        tb.SelectionStart = currentSelectionStart - 1
+                        tb.Text = inputIntStr.Remove(currentSelectionStart, selectionLength) & "." & inputDecimalStr
+                        tb.SelectionStart = currentSelectionStart
                     End If
                 End If
             End If
@@ -691,7 +730,7 @@ Public Class 体重管理
         Dim tb As TextBox = CType(sender, TextBox)
         Dim currentSelectionStart As Integer = tb.SelectionStart
         Dim maxSelectionStart As Integer = tb.Text.Length
-        tb.SelectionLength = 0
+
         If currentSelectionStart = maxSelectionStart Then
             tb.Select(currentSelectionStart - 1, 1)
         ElseIf currentSelectionStart = maxSelectionStart - 2 OrElse currentSelectionStart = maxSelectionStart - 1 Then
