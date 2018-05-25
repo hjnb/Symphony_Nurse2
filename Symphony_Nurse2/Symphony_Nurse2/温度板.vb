@@ -576,7 +576,12 @@ Public Class 温度板
         objExcel.Visible = True
 
         '印刷
-        oSheet.PrintPreview(1)
+        If TopForm.rbtnPreview.Checked = True Then
+            oSheet.PrintPreview(1)
+        ElseIf TopForm.rbtnPrint.Checked = True Then
+            oSheet.Printout(1)
+        End If
+
 
         ' EXCEL解放
         objExcel.Quit()
@@ -647,8 +652,11 @@ Public Class 温度板
         ' エクセル表示
         objExcel.Visible = True
 
-        '印刷
-        oSheet.PrintPreview(1)
+        If TopForm.rbtnPreview.Checked = True Then
+            oSheet.PrintPreview(1)
+        ElseIf TopForm.rbtnPrint.Checked = True Then
+            oSheet.Printout(1)
+        End If
 
         ' EXCEL解放
         objExcel.Quit()
@@ -736,7 +744,11 @@ Public Class 温度板
         objExcel.Visible = True
 
         '印刷
-        oSheet.PrintPreview(1)
+        If TopForm.rbtnPreview.Checked = True Then
+            oSheet.PrintPreview(1)
+        ElseIf TopForm.rbtnPrint.Checked = True Then
+            oSheet.Printout(1)
+        End If
 
         ' EXCEL解放
         objExcel.Quit()
@@ -840,7 +852,11 @@ Public Class 温度板
         objExcel.Visible = True
 
         '印刷
-        oSheet.PrintPreview(1)
+        If TopForm.rbtnPreview.Checked = True Then
+            oSheet.PrintPreview(1)
+        ElseIf TopForm.rbtnPrint.Checked = True Then
+            oSheet.Printout(1)
+        End If
 
         ' EXCEL解放
         objExcel.Quit()
@@ -960,7 +976,11 @@ Public Class 温度板
         objExcel.Visible = True
 
         '印刷
-        oSheet.PrintPreview(1)
+        If TopForm.rbtnPreview.Checked = True Then
+            oSheet.PrintPreview(1)
+        ElseIf TopForm.rbtnPrint.Checked = True Then
+            oSheet.Printout(1)
+        End If
 
         ' EXCEL解放
         objExcel.Quit()
@@ -1096,7 +1116,11 @@ Public Class 温度板
         objExcel.Visible = True
 
         '印刷
-        oSheet.PrintPreview(1)
+        If TopForm.rbtnPreview.Checked = True Then
+            oSheet.PrintPreview(1)
+        ElseIf TopForm.rbtnPrint.Checked = True Then
+            oSheet.Printout(1)
+        End If
 
         ' EXCEL解放
         objExcel.Quit()
@@ -1248,7 +1272,11 @@ Public Class 温度板
         objExcel.Visible = True
 
         '印刷
-        oSheet.PrintPreview(1)
+        If TopForm.rbtnPreview.Checked = True Then
+            oSheet.PrintPreview(1)
+        ElseIf TopForm.rbtnPrint.Checked = True Then
+            oSheet.Printout(1)
+        End If
 
         ' EXCEL解放
         objExcel.Quit()
@@ -1416,7 +1444,11 @@ Public Class 温度板
         objExcel.Visible = True
 
         '印刷
-        oSheet.PrintPreview(1)
+        If TopForm.rbtnPreview.Checked = True Then
+            oSheet.PrintPreview(1)
+        ElseIf TopForm.rbtnPrint.Checked = True Then
+            oSheet.Printout(1)
+        End If
 
         ' EXCEL解放
         objExcel.Quit()
@@ -1599,7 +1631,11 @@ Public Class 温度板
         objExcel.Visible = True
 
         '印刷
-        oSheet.PrintPreview(1)
+        If TopForm.rbtnPreview.Checked = True Then
+            oSheet.PrintPreview(1)
+        ElseIf TopForm.rbtnPrint.Checked = True Then
+            oSheet.Printout(1)
+        End If
 
         ' EXCEL解放
         objExcel.Quit()
@@ -1798,7 +1834,11 @@ Public Class 温度板
         objExcel.Visible = True
 
         '印刷
-        oSheet.PrintPreview(1)
+        If TopForm.rbtnPreview.Checked = True Then
+            oSheet.PrintPreview(1)
+        ElseIf TopForm.rbtnPrint.Checked = True Then
+            oSheet.Printout(1)
+        End If
 
         ' EXCEL解放
         objExcel.Quit()
@@ -2015,7 +2055,11 @@ Public Class 温度板
         objExcel.Visible = True
 
         '印刷
-        oSheet2.printpreview(1)
+        If TopForm.rbtnPreview.Checked = True Then
+            oSheet2.PrintPreview(1)
+        ElseIf TopForm.rbtnPrint.Checked = True Then
+            oSheet2.Printout(1)
+        End If
 
         ' EXCEL解放
         objExcel.Quit()
