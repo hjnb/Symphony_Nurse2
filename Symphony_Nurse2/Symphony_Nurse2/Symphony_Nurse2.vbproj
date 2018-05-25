@@ -56,6 +56,9 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 10.0\Visual Studio Tools for Office\PIA\Office14\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Symphony_Nurse2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <ExecutableExtension>.exe</ExecutableExtension>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -85,6 +88,9 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExDataGridView.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TopForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -177,6 +183,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ユニット居室.resx">
+      <DependentUpon>ユニット居室.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="体重管理.resx">
       <DependentUpon>体重管理.vb</DependentUpon>
