@@ -1,6 +1,10 @@
 ﻿Imports System.Data.OleDb
+Imports System.Runtime.InteropServices
 
 Public Class 体重管理
+
+    '平成の次の文字列
+    Private Const NEXT_ERA_TEXT = "仮仮"
 
     '選択している名前保持用
     Private selectedNam As String = ""
@@ -42,6 +46,10 @@ Public Class 体重管理
 
     '前月比のセルスタイル
     Private cmprColumnCellStyle As DataGridViewCellStyle
+
+    'Private Const EXCEL_PASS As String = "\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls"
+    Private Const EXCEL_PASS As String = "C:\Users\yoshi\Desktop\Nurse2.xls"
+    Private Const EXCEL_SHEET_NAME As String = "体重"
 
     '行ヘッダーのカレントセルを表す三角マークを非表示に設定する為のクラス。
     Public Class dgvRowHeaderCell
@@ -219,7 +227,7 @@ Public Class 体重管理
             Dim row As DataRow
             Dim rowCountPlus As Integer = If(type = 2, 30, 0)
             Dim div As Integer = If(rbtnHonkan.Checked, 1, 2)
-            
+
             For i As Integer = rowCount + 1 + rowCountPlus To MAX_ROW_COUNT + rowCountPlus
                 row = dt.NewRow()
                 row("Ym") = dspYmBox.getADStr4Ym()
@@ -573,9 +581,9 @@ Public Class 体重管理
         SQLCm.Parameters.Clear()
         SQLCm.Parameters.Add("@ym", OleDbType.Char).Value = ymStr
         SQLCm.Parameters.Add("@div", OleDbType.Integer).Value = div
-        cn.Open()
+        Cn.Open()
         SQLCm.ExecuteNonQuery()
-        cn.Close()
+        Cn.Close()
     End Sub
 
     Private Sub dataGridViewTextBox_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs)
@@ -902,10 +910,220 @@ Public Class 体重管理
     End Sub
 
     Private Sub btnPrint_Click(sender As System.Object, e As System.EventArgs) Handles btnPrint.Click
+        Dim objExcel As Object
+        Dim objWorkBooks As Object
+        Dim objWorkBook As Object
+        Dim oSheet As Object
 
+        objExcel = CreateObject("Excel.Application")
+        objWorkBooks = objExcel.Workbooks
+        objWorkBook = objWorkBooks.Open(EXCEL_PASS)
+        oSheet = objWorkBook.Worksheets(EXCEL_SHEET_NAME)
+
+        '年月の書き込み
+        oSheet.Range("B2").Value = getPrintTitleStr()
+
+        'ショートステイ
+        oSheet.Range("H33").Value = "ショートステイ"
+
+        '**テキストを消す
+        oSheet.Range("C8").Value = ""
+        oSheet.Range("C22").Value = ""
+        oSheet.Range("H35").Value = ""
+
+        '書き込み処理
+        write2FData(oSheet) '2F
+        write3FAndSSData(oSheet) '3F,ショートステイ
+
+        '変更保存確認ダイアログ非表示
+        objExcel.DisplayAlerts = False
+
+        '印刷
+        If TopForm.rbtnPrint.Checked = True Then
+            oSheet.PrintOut()
+        ElseIf TopForm.rbtnPreview.Checked = True Then
+            objExcel.Visible = True
+            oSheet.PrintPreview(1)
+        End If
+
+        ' EXCEL解放
+        objExcel.Quit()
+        Marshal.ReleaseComObject(oSheet)
+        Marshal.ReleaseComObject(objWorkBook)
+        Marshal.ReleaseComObject(objExcel)
+        oSheet = Nothing
+        objWorkBook = Nothing
+        objExcel = Nothing
     End Sub
 
+    Private Sub write2FData(osheet As Object)
+        Dim soraMMdd As String = ymdBoxUnit1.MonthText & "/" & ymdBoxUnit1.DateText
+        Dim moriMMdd As String = ymdBoxUnit2.MonthText & "/" & ymdBoxUnit2.DateText
+        Dim hosiMMdd As String = ymdBoxUnit3.MonthText & "/" & ymdBoxUnit3.DateText
+        Dim row As DataGridViewRow
+        Dim cellIndex As Integer
+
+        '空の家 or 丘の家
+        For i As Integer = 0 To 9
+            row = dgvUnitLeft.Rows(i)
+            cellIndex = 22 + i
+            osheet.Range("B" & cellIndex).Value = row.Cells("Room").Value
+            If checkDBNullValue(row.Cells("Nam").Value) = "" Then
+                osheet.Range("C" & cellIndex).Value = ""
+                osheet.Range("D" & cellIndex).Value = ""
+                osheet.Range("E" & cellIndex).Value = ""
+            Else
+                If checkDBNullValue(row.Cells("Weit").Value) = 0 Then
+                    osheet.Range("C" & cellIndex).Value = row.Cells("Nam").Value
+                    osheet.Range("D" & cellIndex).Value = ""
+                    osheet.Range("E" & cellIndex).Value = ""
+                Else
+                    osheet.Range("C" & cellIndex).Value = row.Cells("Nam").Value
+                    osheet.Range("D" & cellIndex).Value = row.Cells("Weit").Value
+                    osheet.Range("E" & cellIndex).Value = row.Cells("Cmpr").Value
+                End If
+            End If
+            osheet.Range("F" & cellIndex).Value = soraMMdd
+        Next
+
+        '森の家 or 虹の家
+        For i As Integer = 10 To 19
+            row = dgvUnitLeft.Rows(i)
+            cellIndex = 22 + i - 10
+            osheet.Range("G" & cellIndex).Value = row.Cells("Room").Value
+            If checkDBNullValue(row.Cells("Nam").Value) = "" Then
+                osheet.Range("H" & cellIndex).Value = ""
+                osheet.Range("I" & cellIndex).Value = ""
+                osheet.Range("J" & cellIndex).Value = ""
+            Else
+                If checkDBNullValue(row.Cells("Weit").Value) = 0 Then
+                    osheet.Range("H" & cellIndex).Value = row.Cells("Nam").Value
+                    osheet.Range("I" & cellIndex).Value = ""
+                    osheet.Range("J" & cellIndex).Value = ""
+                Else
+                    osheet.Range("H" & cellIndex).Value = row.Cells("Nam").Value
+                    osheet.Range("I" & cellIndex).Value = row.Cells("Weit").Value
+                    osheet.Range("J" & cellIndex).Value = row.Cells("Cmpr").Value
+                End If
+            End If
+            osheet.Range("K" & cellIndex).Value = moriMMdd
+        Next
+
+        '星の家 or 光の家
+        For i As Integer = 20 To 29
+            row = dgvUnitLeft.Rows(i)
+            cellIndex = 35 + i - 20
+            osheet.Range("B" & cellIndex).Value = row.Cells("Room").Value
+            If checkDBNullValue(row.Cells("Nam").Value) = "" Then
+                osheet.Range("C" & cellIndex).Value = ""
+                osheet.Range("D" & cellIndex).Value = ""
+                osheet.Range("E" & cellIndex).Value = ""
+            Else
+                If checkDBNullValue(row.Cells("Weit").Value) = 0 Then
+                    osheet.Range("C" & cellIndex).Value = row.Cells("Nam").Value
+                    osheet.Range("D" & cellIndex).Value = ""
+                    osheet.Range("E" & cellIndex).Value = ""
+                Else
+                    osheet.Range("C" & cellIndex).Value = row.Cells("Nam").Value
+                    osheet.Range("D" & cellIndex).Value = row.Cells("Weit").Value
+                    osheet.Range("E" & cellIndex).Value = row.Cells("Cmpr").Value
+                End If
+            End If
+            osheet.Range("F" & cellIndex).Value = hosiMMdd
+        Next
+    End Sub
+
+    Private Sub write3FAndSSData(osheet As Object)
+        Dim tukiMMdd As String = ymdBoxUnit4.MonthText & "/" & ymdBoxUnit4.DateText
+        Dim hanaMMdd As String = ymdBoxUnit5.MonthText & "/" & ymdBoxUnit5.DateText
+        Dim umiMMdd As String = If(ymdBoxUnit6.Visible, ymdBoxUnit6.MonthText & "/" & ymdBoxUnit6.DateText, "")
+        Dim row As DataGridViewRow
+        Dim cellIndex As Integer
+
+        '月の家 or 雪の家
+        For i As Integer = 0 To 9
+            row = dgvUnitRight.Rows(i)
+            cellIndex = 8 + i
+            osheet.Range("B" & cellIndex).Value = row.Cells("Room").Value
+            If checkDBNullValue(row.Cells("Nam").Value) = "" Then
+                osheet.Range("C" & cellIndex).Value = ""
+                osheet.Range("D" & cellIndex).Value = ""
+                osheet.Range("E" & cellIndex).Value = ""
+            Else
+                If checkDBNullValue(row.Cells("Weit").Value) = 0 Then
+                    osheet.Range("C" & cellIndex).Value = row.Cells("Nam").Value
+                    osheet.Range("D" & cellIndex).Value = ""
+                    osheet.Range("E" & cellIndex).Value = ""
+                Else
+                    osheet.Range("C" & cellIndex).Value = row.Cells("Nam").Value
+                    osheet.Range("D" & cellIndex).Value = row.Cells("Weit").Value
+                    osheet.Range("E" & cellIndex).Value = row.Cells("Cmpr").Value
+                End If
+            End If
+            osheet.Range("F" & cellIndex).Value = tukiMMdd
+        Next
+
+        '花の家 or 風の家
+        For i As Integer = 10 To 19
+            row = dgvUnitRight.Rows(i)
+            cellIndex = 8 + i - 10
+            osheet.Range("G" & cellIndex).Value = row.Cells("Room").Value
+            If checkDBNullValue(row.Cells("Nam").Value) = "" Then
+                osheet.Range("H" & cellIndex).Value = ""
+                osheet.Range("I" & cellIndex).Value = ""
+                osheet.Range("J" & cellIndex).Value = ""
+            Else
+                If checkDBNullValue(row.Cells("Weit").Value) = 0 Then
+                    osheet.Range("H" & cellIndex).Value = row.Cells("Nam").Value
+                    osheet.Range("I" & cellIndex).Value = ""
+                    osheet.Range("J" & cellIndex).Value = ""
+                Else
+                    osheet.Range("H" & cellIndex).Value = row.Cells("Nam").Value
+                    osheet.Range("I" & cellIndex).Value = row.Cells("Weit").Value
+                    osheet.Range("J" & cellIndex).Value = row.Cells("Cmpr").Value
+                End If
+            End If
+            osheet.Range("K" & cellIndex).Value = hanaMMdd
+        Next
+
+        '海の家（ショートステイ）
+        For i As Integer = 20 To 29
+            row = dgvUnitRight.Rows(i)
+            cellIndex = 35 + i - 20
+            If checkDBNullValue(row.Cells("Nam").Value) = "" Then
+                osheet.Range("H" & cellIndex).Value = ""
+                osheet.Range("I" & cellIndex).Value = ""
+                osheet.Range("J" & cellIndex).Value = ""
+                osheet.Range("K" & cellIndex).Value = ""
+            Else
+                If checkDBNullValue(row.Cells("Weit").Value) = 0 Then
+                    osheet.Range("H" & cellIndex).Value = row.Cells("Nam").Value
+                    osheet.Range("I" & cellIndex).Value = ""
+                    osheet.Range("J" & cellIndex).Value = ""
+                    osheet.Range("K" & cellIndex).Value = ""
+                Else
+                    osheet.Range("H" & cellIndex).Value = row.Cells("Nam").Value
+                    osheet.Range("I" & cellIndex).Value = row.Cells("Weit").Value
+                    osheet.Range("J" & cellIndex).Value = row.Cells("Cmpr").Value
+                    osheet.Range("K" & cellIndex).Value = umiMMdd
+                End If
+            End If
+        Next
+    End Sub
+
+    Private Function getPrintTitleStr() As String
+        Dim eraChar As String = dspYmBox.EraLabelText.Substring(0, 1)
+        Dim eraNum As Integer = CInt(dspYmBox.EraLabelText.Substring(1, 2))
+        Dim monthNum As Integer = CInt(dspYmBox.MonthLabelText)
+        Dim typeText As String = If(rbtnHonkan.Checked, "本館", "ｱﾈｯｸｽ")
+        Dim eraText As String = If(eraChar = "H", "平成", NEXT_ERA_TEXT)
+        Return eraText & " " & eraNum & " 年 " & monthNum & " 月 " & "体重測定  (" & typeText & ")"
+    End Function
+
     Private Sub dspYmBox_LabelTextChage(sender As Object, e As System.EventArgs) Handles dspYmBox.YmLabelTextChage
+        '左上の名前ラベルのクリア
+        selectUserLabel.Text = ""
+
         Dim currentYmStr As String = dspYmBox.getADStr4Ym()
         Dim rbtnText As String = If(rbtnHonkan.Checked, "本館", "ｱﾈｯｸｽ")
         If rbtnText = "本館" Then
