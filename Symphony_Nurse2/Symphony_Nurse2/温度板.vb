@@ -3,81 +3,89 @@ Imports System.Runtime.InteropServices
 Imports Microsoft.Office.Interop
 Imports Microsoft.Office.Core
 Public Class 温度板
-
+    Dim d As Boolean = False
     Private Sub 温度板_Click(sender As Object, e As System.EventArgs) Handles Me.Click
-        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
-        Dim SQLCm As OleDbCommand = Cn.CreateCommand
-        Dim Adapter As New OleDbDataAdapter(SQLCm)
-        Dim Table As New DataTable
+        If lblID.Text = TopForm.userId.Text AndAlso lblName.Text = TopForm.userNam.Text Then
 
-        lblName.Text = TopForm.userNam.Text
-        lblID.Text = TopForm.userId.Text
+        Else
+            Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+            Dim SQLCm As OleDbCommand = Cn.CreateCommand
+            Dim Adapter As New OleDbDataAdapter(SQLCm)
+            Dim Table As New DataTable
 
-        With DataGridView1
-            .AllowUserToAddRows = False '行追加禁止
-            .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
-            .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
-            .AllowUserToDeleteRows = False
-            .RowHeadersVisible = False '行ヘッダー削除
-            .ReadOnly = True '編集禁止
-            .SelectionMode = DataGridViewSelectionMode.FullRowSelect 'クリック時に行選択
-            .MultiSelect = False
-            .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
-            .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
-            .RowTemplate.Height = 18
-            .BackgroundColor = Color.FromKnownColor(KnownColor.Control)
-        End With
+            lblName.Text = TopForm.userNam.Text
+            lblID.Text = TopForm.userId.Text
 
-        SQLCm.CommandText = "SELECT autono, Id, Ymd AS 日付, Hm AS 時刻, Tanto As 記載者, Ondo AS 体温, Myaku As 脈, AtuU As 血圧（上）, AtuL As 血圧（下）, Ketu As 血糖値, Weight As 体重, Height As 身長, Syoti As 処置, Val As 補記 FROM OndoD WHERE Id = " & Val(lblID.Text) & " ORDER BY Ymd, Hm"
-        Adapter.Fill(Table)
-        DataGridView1.DataSource = Table
+            With DataGridView1
+                .AllowUserToAddRows = False '行追加禁止
+                .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
+                .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
+                .AllowUserToDeleteRows = False
+                .RowHeadersVisible = False '行ヘッダー削除
+                .ReadOnly = True '編集禁止
+                .SelectionMode = DataGridViewSelectionMode.FullRowSelect 'クリック時に行選択
+                .MultiSelect = False
+                .RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing
+                .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
+                .RowTemplate.Height = 18
+                .BackgroundColor = Color.FromKnownColor(KnownColor.Control)
+            End With
+
+            SQLCm.CommandText = "SELECT autono, Id, Ymd AS 日付, Hm AS 時刻, Tanto As 記載者, Ondo AS 体温, Myaku As 脈, AtuU As 血圧（上）, AtuL As 血圧（下）, Ketu As 血糖値, Weight As 体重, Height As 身長, Syoti As 処置, Val As 補記 FROM OndoD WHERE Id = " & Val(lblID.Text) & " ORDER BY Ymd, Hm"
+            Adapter.Fill(Table)
+            DataGridView1.DataSource = Table
 
 
-        '表示設定
-        With DataGridView1
-            '文字を中央に表示
-            .Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns(3).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns(8).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns(9).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns(10).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns(11).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '表示設定
+            With DataGridView1
+                '文字を中央に表示
+                .Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns(3).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns(8).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns(9).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns(10).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns(11).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
 
-            '幅
-            .Columns(2).Width = 70
-            .Columns(3).Width = 40
-            .Columns(4).Width = 60
-            .Columns(5).Width = 60
-            .Columns(6).Width = 40
-            .Columns(7).Width = 75
-            .Columns(8).Width = 75
-            .Columns(9).Width = 60
-            .Columns(10).Width = 60
-            .Columns(11).Width = 60
-            .Columns(12).Width = 200
-            .Columns(13).Width = 70
+                '幅
+                .Columns(2).Width = 70
+                .Columns(3).Width = 40
+                .Columns(4).Width = 60
+                .Columns(5).Width = 60
+                .Columns(6).Width = 40
+                .Columns(7).Width = 75
+                .Columns(8).Width = 75
+                .Columns(9).Width = 60
+                .Columns(10).Width = 60
+                .Columns(11).Width = 60
+                .Columns(12).Width = 200
+                .Columns(13).Width = 70
 
-            '非表示
-            .Columns("autono").Visible = False
-            .Columns("Id").Visible = False
-        End With
+                '非表示
+                .Columns("autono").Visible = False
+                .Columns("Id").Visible = False
+            End With
 
-        'スクロールバーを一番下に持っていく
-        DataGridView1.FirstDisplayedScrollingRowIndex = DataGridView1.Rows.Count - 1
+            If DataGridView1.Rows.Count > 0 Then
+                'スクロールバーを一番下に持っていく
+                DataGridView1.FirstDisplayedScrollingRowIndex = DataGridView1.Rows.Count - 1
+            End If
 
-        KeyPreview = True
 
-        Dim SQLCm2 As OleDbCommand = Cn.CreateCommand
-        Dim Adapter2 As New OleDbDataAdapter(SQLCm2)
-        Dim Table2 As New DataTable
+            KeyPreview = True
 
-        SQLCm2.CommandText = "SELECT * FROM SyotiM ORDER BY Dsp, Bunrui1, Bunrui2, Bunrui3 DESC"
-        Adapter2.Fill(Table2)
-        DataGridView2.DataSource = Table2
+            Dim SQLCm2 As OleDbCommand = Cn.CreateCommand
+            Dim Adapter2 As New OleDbDataAdapter(SQLCm2)
+            Dim Table2 As New DataTable
+
+            SQLCm2.CommandText = "SELECT * FROM SyotiM ORDER BY Dsp, Bunrui1, Bunrui2, Bunrui3 DESC"
+            Adapter2.Fill(Table2)
+            DataGridView2.DataSource = Table2
+        End If
+
     End Sub
 
     Private Sub 温度板_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
@@ -176,8 +184,10 @@ Public Class 温度板
             .Columns("Id").Visible = False
         End With
 
-        'スクロールバーを一番下に持っていく
-        DataGridView1.FirstDisplayedScrollingRowIndex = DataGridView1.Rows.Count - 1
+        If DataGridView1.Rows.Count > 0 Then
+            'スクロールバーを一番下に持っていく
+            DataGridView1.FirstDisplayedScrollingRowIndex = DataGridView1.Rows.Count - 1
+        End If
 
         KeyPreview = True
 
@@ -205,7 +215,7 @@ Public Class 温度板
 
     Private Sub DataGridView1_CellFormatting(sender As Object, e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles DataGridView1.CellFormatting
         If DataGridView1.Columns(e.ColumnIndex).Name = "日付" Then
-            If e.RowIndex > 0 AndAlso DataGridView1(e.ColumnIndex, e.RowIndex - 1).Value = e.Value Then
+            If e.RowIndex > 0 AndAlso NullCheck(DataGridView1(e.ColumnIndex, e.RowIndex - 1).Value) = NullCheck(e.Value) Then
                 e.Value = ""
                 e.FormattingApplied = True
             End If
@@ -2113,7 +2123,7 @@ Public Class 温度板
 
     End Sub
 
-    Private Sub textBoxinput_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles txtTaionn.KeyDown, txtMyaku.KeyDown, txtKetuatuUe.KeyDown, txtKetuatuSita.KeyDown, txtKettouti.KeyDown, txtSinntyou.KeyDown, txtTaijuu.KeyDown
+    Private Sub textBoxinput_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles txtTaionn.KeyDown, txtMyaku.KeyDown, txtKetuatuUe.KeyDown, txtKetuatuSita.KeyDown, txtKettouti.KeyDown, txtSinntyou.KeyDown
         'アクティブなコントロールを取得
         Dim cControl As TextBox = Me.ActiveControl  'イベント発生は指定のテキストボックスのときだけなのでTextBox型で宣言
 
@@ -2125,19 +2135,256 @@ Public Class 温度板
             '数字の処理
         ElseIf e.KeyCode = Keys.Decimal OrElse e.KeyCode = 190 Then
             '小数点の処理
-        ElseIf cControl.SelectionLength > 0 AndAlso e.KeyCode = Keys.Delete Then    'アクティブなコントロールで選択されている文字数が1文字以上且つDelキーが押されたとき
-            If cControl.Name = "txtTaijuu" AndAlso Val(txtTaijuu.Text) = 0 Then     'アクティブなコントロールがtxtTaijuuでテキストの中身が0のとき
+        ElseIf e.KeyCode = Keys.Delete Then    'Delキーが押されたとき
+            'If cControl.Name = "txtTaijuu" AndAlso Val(txtTaijuu.Text) = 0 Then     'アクティブなコントロールがtxtTaijuuでテキストの中身が0のとき
+            '    e.SuppressKeyPress = True   '何もしない
+            'ElseIf cControl.Name = "txtTaijuu" AndAlso Val(txtTaijuu.Text) <> 0 Then     'アクティブなコントロールがtxtTaijuuでテキストの中身が0ではないとき
+            '    txtTaijuu.Text = "0.00"     '値を0.00にする
+            '    e.SuppressKeyPress = True
+            'Else
+            '    'Delの処理
+            'End If
+        Else
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+
+    Private Sub txtTaijuu_Click(sender As Object, e As System.EventArgs) Handles txtTaijuu.Click
+        If d = False Then
+            If txtTaijuu.Text = "" Then
+                txtTaijuu.Text = "0.00"
+                txtTaijuu.SelectionStart = 1
+            Else
+                txtTaijuu.SelectionStart = txtTaijuu.Text.Length - 3
+            End If
+        ElseIf d = True Then
+            Dim tb As TextBox = CType(sender, TextBox)
+            Dim currentSelectionStart As Integer = tb.SelectionStart
+            Dim maxSelectionStart As Integer = tb.Text.Length
+            If currentSelectionStart = maxSelectionStart Then
+                tb.Select(currentSelectionStart - 1, 1)
+            ElseIf currentSelectionStart = maxSelectionStart - 2 OrElse currentSelectionStart = maxSelectionStart - 1 Then
+                tb.Select(currentSelectionStart, 1)
+            End If
+        End If
+
+        d = True
+    End Sub
+
+    Private Sub txtTaijuu_Enter(sender As Object, e As System.EventArgs) Handles txtTaijuu.Enter
+        d = False
+    End Sub
+
+    Private Sub dataGridViewTextBox_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles txtTaijuu.KeyDown
+        Dim tb As TextBox = CType(sender, TextBox)
+        Dim inputIntStr As String = tb.Text.Split(".")(0) '整数部
+        Dim inputDecimalStr As String = tb.Text.Split(".")(1) '小数部
+        Dim maxSelectionStart As Integer = tb.Text.Length '最大値
+        Dim currentSelectionStart As Integer = tb.SelectionStart '現在選択位置
+        Dim decimalPointSelectionStart As Integer = maxSelectionStart - 3 ' 小数点の位置
+
+        If e.KeyCode = Windows.Forms.Keys.Left Then
+            'カーソルを左に動かす
+            If currentSelectionStart <> 0 Then
+                tb.SelectionStart -= 1
+                If currentSelectionStart = maxSelectionStart - 1 OrElse currentSelectionStart = maxSelectionStart Then
+                    tb.SelectionStart = maxSelectionStart - 2
+                    tb.Select(tb.SelectionStart, 1)
+                Else
+                    tb.SelectionLength = 0
+                End If
+            End If
+            e.SuppressKeyPress = True
+        ElseIf e.KeyCode = Windows.Forms.Keys.Right Then
+            'カーソルを右に動かす
+            If currentSelectionStart <> maxSelectionStart Then
+                tb.SelectionStart += 1
+                If currentSelectionStart = decimalPointSelectionStart Then
+                    tb.Select(tb.SelectionStart, 1)
+                ElseIf currentSelectionStart = maxSelectionStart - 2 OrElse currentSelectionStart = maxSelectionStart - 1 Then
+                    tb.Select(maxSelectionStart - 1, 1)
+                End If
+            End If
+            e.SuppressKeyPress = True
+        ElseIf (Keys.NumPad0 <= e.KeyCode AndAlso e.KeyCode <= Keys.NumPad9) OrElse (Keys.D0 <= e.KeyCode AndAlso e.KeyCode <= Keys.D9) Then
+            Dim keyDownChar As String = If(Keys.NumPad0 <= e.KeyCode, Chr(e.KeyCode - 48), Chr(e.KeyCode))
+            '数字の入力
+            If currentSelectionStart > decimalPointSelectionStart Then
+                '小数部の入力
+                If currentSelectionStart = maxSelectionStart - 2 Then
+                    '小数第一位
+                    tb.Text = inputIntStr & "." & keyDownChar & inputDecimalStr.Substring(1, 1)
+                    tb.SelectionStart = currentSelectionStart + 1
+                    tb.Select(tb.SelectionStart, 1)
+                ElseIf currentSelectionStart = maxSelectionStart - 1 OrElse currentSelectionStart = maxSelectionStart Then
+                    '小数第二位
+                    tb.Text = inputIntStr & "." & inputDecimalStr.Substring(0, 1) & keyDownChar
+                    tb.SelectionStart = currentSelectionStart
+                    tb.Select(tb.SelectionStart, 1)
+                End If
+            Else
+                '整数部の入力
+                If inputIntStr.Length < 3 Then
+                    If inputIntStr = "0" Then
+                        tb.Text = keyDownChar & "." & inputDecimalStr
+                        tb.SelectionStart = 1
+                    Else
+                        If Not (currentSelectionStart = 0 AndAlso keyDownChar = "0") Then
+                            tb.Text = inputIntStr.Insert(currentSelectionStart, keyDownChar) & "." & inputDecimalStr
+                            tb.SelectionStart = currentSelectionStart + 1
+                        End If
+                    End If
+                End If
+            End If
+            e.SuppressKeyPress = True
+        ElseIf e.KeyCode = Keys.Decimal OrElse e.KeyCode = Keys.OemPeriod Then
+            '小数点の入力
+            If currentSelectionStart = decimalPointSelectionStart Then
+                tb.SelectionStart += 1
+                tb.Select(tb.SelectionStart, 1)
+            End If
+            e.SuppressKeyPress = True
+        ElseIf e.KeyCode = Keys.Back Then
+            Dim selectionLength As Integer = tb.SelectionLength
+            Dim selectionEnd As Integer = currentSelectionStart + selectionLength
+
+            If selectionLength = tb.Text.Length Then
+                '全選択の場合
+                tb.Text = "0.00"
+                tb.SelectionStart = 1
+            ElseIf selectionEnd > decimalPointSelectionStart + 1 Then
+                '小数部分も選択している状態
+                If selectionLength = 1 Then
+                    '選択部分が一か所の場合
+                    If currentSelectionStart = maxSelectionStart - 2 Then
+                        '小数第一位
+                        tb.Text = inputIntStr & "." & "0" & inputDecimalStr.Substring(1, 1)
+                        tb.SelectionStart = currentSelectionStart - 1
+                        tb.SelectionLength = 0
+                    ElseIf currentSelectionStart = maxSelectionStart - 1 OrElse currentSelectionStart = maxSelectionStart Then
+                        '小数第二位
+                        tb.Text = inputIntStr & "." & inputDecimalStr.Substring(0, 1) & "0"
+                        tb.SelectionStart = decimalPointSelectionStart + 1
+                        tb.Select(tb.SelectionStart, 1)
+                    End If
+                Else
+                    If selectionEnd = maxSelectionStart - 1 Then
+                        '小数第一位
+                        tb.Text = inputIntStr & "." & "0" & inputDecimalStr.Substring(1, 1)
+                        tb.Select(selectionEnd - 1, 1)
+                    Else
+                        '小数第二位
+                        tb.Text = inputIntStr & "." & inputDecimalStr.Substring(0, 1) & "0"
+                        tb.Select(selectionEnd - 1, 1)
+                    End If
+                End If
+            Else
+                '小数部分が選ばれていない場合
+                If selectionLength = 0 Then
+                    '選択部分がない場合
+                    If currentSelectionStart <> 0 Then
+                        If inputIntStr.Length = 1 AndAlso currentSelectionStart = decimalPointSelectionStart Then
+                            tb.Text = "0." & inputDecimalStr
+                            tb.SelectionStart = currentSelectionStart
+                        Else
+                            tb.Text = inputIntStr.Remove(currentSelectionStart - 1, 1) & "." & inputDecimalStr
+                            tb.SelectionStart = currentSelectionStart - 1
+                        End If
+                    End If
+                Else
+                    '選択されている場合
+
+                    '小数点も選択されている場合
+                    If selectionEnd > decimalPointSelectionStart Then
+                        selectionLength -= 1
+                    End If
+
+                    If selectionLength = inputIntStr.Length Then
+                        '整数部が全選択の場合
+                        tb.Text = "0." & inputDecimalStr
+                        tb.SelectionStart = 1
+                    Else
+                        tb.Text = inputIntStr.Remove(currentSelectionStart, selectionLength) & "." & inputDecimalStr
+                        tb.SelectionStart = currentSelectionStart
+                    End If
+                End If
+            End If
+            e.SuppressKeyPress = True
+        ElseIf e.KeyCode = Keys.Delete Then    'Delキーが押されたとき
+            Dim selectionLength As Integer = tb.SelectionLength
+            Dim selectionEnd As Integer = currentSelectionStart + selectionLength
+
+            If Val(txtTaijuu.Text) = 0 Then     'テキストの中身が0のとき
                 e.SuppressKeyPress = True   '何もしない
-            ElseIf cControl.Name = "txtTaijuu" AndAlso Val(txtTaijuu.Text) <> 0 Then     'アクティブなコントロールがtxtTaijuuでテキストの中身が0ではないとき
+            ElseIf Val(txtTaijuu.Text) <> 0 AndAlso txtTaijuu.SelectionLength = maxSelectionStart Then     'テキストの中身が0ではない且つ文字を全選択しているとき
                 txtTaijuu.Text = "0.00"     '値を0.00にする
                 e.SuppressKeyPress = True
+            ElseIf selectionEnd > decimalPointSelectionStart + 1 Then
+                '小数部分も選択している状態
+                If selectionLength = 1 Then
+                    '選択部分が一か所の場合
+                    If currentSelectionStart = maxSelectionStart - 2 Then
+                        '小数第一位
+                        tb.Text = inputIntStr & "." & "0" & Strings.Right(inputDecimalStr, 1)
+                        tb.SelectionStart = currentSelectionStart
+                        tb.Select(tb.SelectionStart, 0)
+                        tb.SelectionLength = 1
+                        e.SuppressKeyPress = True
+                    ElseIf currentSelectionStart = maxSelectionStart - 1 OrElse currentSelectionStart = maxSelectionStart Then
+                        '小数第二位
+                        tb.Text = inputIntStr & "." & Strings.Left(inputDecimalStr, 1) & "0"
+                        tb.SelectionStart = decimalPointSelectionStart + 2
+                        tb.Select(tb.SelectionStart, 1)
+                        e.SuppressKeyPress = True
+                    End If
+                Else
+                    If selectionEnd = maxSelectionStart - 1 Then
+                        '小数第一位
+                        tb.Text = inputIntStr & "." & "0" & inputDecimalStr.Substring(1, 1)
+                        tb.Select(selectionEnd - 1, 1)
+                        e.SuppressKeyPress = True
+                    Else
+                        '小数第二位
+                        tb.Text = inputIntStr & "." & inputDecimalStr.Substring(0, 1) & "0"
+                        tb.Select(selectionEnd - 1, 1)
+                        e.SuppressKeyPress = True
+                    End If
+                End If
             Else
-                '文字が選択されてDelキーが押された処理
+                '小数部分が選ばれていない場合
+                If selectionLength = 0 Then
+                    '選択部分がない場合
+                    If currentSelectionStart <> decimalPointSelectionStart Then     '小数点の前の位置以外でDelを押されたとき
+                        If inputIntStr.Length = 1 Then
+                            tb.Text = "0." & inputDecimalStr
+                            tb.SelectionStart = currentSelectionStart
+                            e.SuppressKeyPress = True
+                        Else
+                            'Delの処理
+                        End If
+                    Else    '小数点の前の位置でDelを押されたとき
+                        e.SuppressKeyPress = True   'なにもしない
+                    End If
+                Else
+                    '選択されている場合
+                    '小数点も選択されている場合
+                    If selectionEnd > decimalPointSelectionStart Then
+                        selectionLength -= 1
+                    End If
+                    If selectionLength = inputIntStr.Length Then
+                        '整数部が全選択の場合
+                        tb.Text = "0." & inputDecimalStr
+                        tb.SelectionStart = 1
+                    Else
+                        tb.Text = inputIntStr.Remove(currentSelectionStart, selectionLength) & "." & inputDecimalStr
+                        tb.SelectionStart = currentSelectionStart
+                    End If
+                    e.SuppressKeyPress = True
+                End If
             End If
         Else
             e.SuppressKeyPress = True
         End If
     End Sub
 
-    
 End Class

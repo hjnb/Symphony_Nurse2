@@ -347,7 +347,6 @@ line1:
                 .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする
                 .AllowUserToResizeRows = False '行の高さをユーザーが変更できないようにする
                 .AllowUserToDeleteRows = False
-                '.RowHeadersVisible = False '行ヘッダー削除
                 .ColumnHeadersVisible = False '列ヘッダー削除
                 .ReadOnly = True '編集禁止
                 .SelectionMode = DataGridViewSelectionMode.FullRowSelect 'クリック時に行選択
@@ -368,31 +367,6 @@ line1:
                 .Columns(0).Visible = False
                 .Columns(1).Width = 100
             End With
-
-            'For i As Integer = 1 To 15
-            '    CType(Controls("cmbSaiketu" & i), ComboBox).Items.Clear()
-            'Next
-
-            'For i As Integer = 1 To 6
-            '    CType(Controls("cmbKennsa" & i), ComboBox).Items.Clear()
-            'Next
-
-            'For i As Integer = 1 To 15
-            '    For r As Integer = 0 To DataGridView2.Rows.Count - 1
-            '        If DataGridView2(0, r).Value = 0 Then
-            '            CType(Controls("cmbSaiketu" & i), ComboBox).Items.Add(DataGridView2(1, r).Value)
-            '        End If
-            '    Next
-            'Next
-
-            'For i As Integer = 1 To 6
-            '    For r As Integer = 0 To DataGridView2.Rows.Count - 1
-            '        If DataGridView2(0, r).Value = 1 Then
-            '            CType(Controls("cmbKennsa" & i), ComboBox).Items.Add(DataGridView2(1, r).Value)
-            '        End If
-            '    Next
-            'Next
-
         End If
     End Sub
 
