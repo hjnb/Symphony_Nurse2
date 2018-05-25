@@ -386,6 +386,7 @@ Public Class 処置マスタ
     Private Sub cmbCategory1_SelectedValueChanged(sender As Object, e As System.EventArgs) Handles cmbCategory1.SelectedValueChanged
         If canChangeCategory1Event = True Then
             displayTreatingMasterData(dgvTreatingMaster, cmbCategory1.Text)
+            dspBox.Focus()
         End If
     End Sub
 

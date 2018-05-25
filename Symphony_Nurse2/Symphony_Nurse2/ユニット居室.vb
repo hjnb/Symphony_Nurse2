@@ -478,6 +478,10 @@ Public Class ユニット居室
             dgvUnit("SKana", e.RowIndex).Value = selectedKana
             dgvUnit("SoraID", e.RowIndex).Value = selectedID
         End If
+
+        If e.RowIndex Mod 11 <> 0 AndAlso dgvUnit.Columns(e.ColumnIndex).Name = "Sora" Then
+            dgvUnit.BeginEdit(True)
+        End If
     End Sub
 
     Private Sub dgvUnit_CellPainting(sender As Object, e As System.Windows.Forms.DataGridViewCellPaintingEventArgs) Handles dgvUnit.CellPainting

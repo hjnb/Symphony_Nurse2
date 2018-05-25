@@ -193,9 +193,11 @@ Public Class 諸マスタ
 
         If itemName = "" Then
             MsgBox("項目を選択して下さい。", , "登録エラー")
+            cmbItem.Focus()
             Return
         ElseIf content = "" Then
             MsgBox("内容を入力して下さい。", , "登録エラー")
+            contentBox.Focus()
             Return
         End If
 
@@ -230,6 +232,8 @@ Public Class 諸マスタ
 
         '再表示
         displayVariousMasterData(cmbItem.Text)
+
+        contentBox.Focus()
     End Sub
 
     Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
@@ -238,9 +242,11 @@ Public Class 諸マスタ
 
         If itemName = "" Then
             MsgBox("項目を選択して下さい。", , "削除エラー")
+            cmbItem.Focus()
             Return
         ElseIf content = "" Then
             MsgBox("内容を入力して下さい。", , "削除エラー")
+            contentBox.Focus()
             Return
         End If
 
@@ -272,6 +278,8 @@ Public Class 諸マスタ
 
                 '再表示
                 displayVariousMasterData(cmbItem.Text)
+
+                contentBox.Focus()
             Else
                 Cn.Close()
             End If
@@ -280,6 +288,7 @@ Public Class 諸マスタ
             reader.Close()
             Cn.Close()
             MsgBox("登録されていません。", , "削除エラー")
+            cmbItem.Focus()
             Return
         End If
     End Sub

@@ -286,21 +286,27 @@ Public Class 利用者マスタ
         '入力チェック
         If nam = "" Then
             MsgBox("漢字氏名を入力して下さい。", , "登録エラー")
+            namBox.Focus()
             Return
         ElseIf kana = "" Then
             MsgBox("カナ氏名を入力して下さい。", , "登録エラー")
+            kanaBox.Focus()
             Return
         ElseIf sex = "" Then
             MsgBox("性別を入力して下さい。", , "登録エラー")
+            sexBox.Focus()
             Return
         ElseIf birth = "" Then
             MsgBox("生年月日を入力して下さい。", , "登録エラー")
+            birthYmdBox.Focus()
             Return
         ElseIf kaigo <> "" AndAlso IsNumeric(kaigo) = False Then
             MsgBox("介護度を正しく入力して下さい。", , "登録エラー")
+            kaigoBox.Focus()
             Return
         ElseIf idBox.Text <> "" AndAlso IsNumeric(idBox.Text) = False Then
             MsgBox("IDは数値を入力してください。", , "登録エラー")
+            idBox.Focus()
             Return
         End If
 
