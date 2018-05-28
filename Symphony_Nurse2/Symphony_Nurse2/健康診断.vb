@@ -463,6 +463,9 @@ line1:
         If YmdBox1.getADStr() = "" Then
             MsgBox("日付を入力してください。")
             Return
+        ElseIf lblID.Text = "" Then
+            MsgBox("利用者を選択してください。")
+            Return
         End If
 
         If DataGridView4.Rows.Count <> 0 Then

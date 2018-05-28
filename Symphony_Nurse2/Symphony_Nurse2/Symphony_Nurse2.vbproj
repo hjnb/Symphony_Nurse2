@@ -87,7 +87,6 @@
     <Compile Include="ExDataGridView.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Range.vb" />
     <Compile Include="TopForm.vb">
       <SubType>Form</SubType>
     </Compile>
