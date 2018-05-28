@@ -5,8 +5,6 @@ Public Class 利用者選択
     Private Sub 利用者選択_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         searchIdBox.Focus()
 
-        '入力されたid, Namでエンターで検索する部分作成
-
         'フォームの設定
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -39,10 +37,12 @@ Public Class 利用者選択
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
         Dim Adapter As New OleDbDataAdapter(SQLCm)
-        Dim Table As New DataTable
-        SQLCm.CommandText = "select Id, Nam, Kana, Dsp, Sex, Birth, Kaigo from KihonM where Dsp=1 order by Kana"
-        Adapter.Fill(Table)
-        dgvUser.DataSource = Table
+        Dim dt As New DataTable
+        SQLCm.CommandText = "select Id, Nam, Kana, Dsp, Sex, Birth, Kaigo from KihonM order by Kana"
+        Adapter.Fill(dt)
+        dgvUser.DataSource = dt
+
+        dgvUser.CurrentRow.Selected = False
 
         '表示設定
         With dgvUser
@@ -60,19 +60,30 @@ Public Class 利用者選択
             .Columns("Birth").Visible = False
             .Columns("Kaigo").Visible = False
 
+            For Each row As DataGridViewRow In dgvUser.Rows
+                If IsDBNull(row.Cells("Dsp").Value) OrElse row.Cells("Dsp").Value = 0 Then
+                    row.Visible = False
+                End If
+            Next
         End With
+        'Me.Activate()
+        'searchIdBox.Focus()
 
     End Sub
 
+    Private Function checkDBNullValue(dgvCellValue As Object) As String
+        Return If(IsDBNull(dgvCellValue), "", dgvCellValue)
+    End Function
+
     Private Sub dgvUser_CellMouseClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvUser.CellMouseClick
         Dim parentForm As TopForm = CType(Me.Owner, TopForm)
-        Dim id As String = dgvUser("Id", e.RowIndex).Value
-        Dim nam As String = dgvUser("Nam", e.RowIndex).Value
-        Dim kana As String = dgvUser("Kana", e.RowIndex).Value
-        Dim dsp As String = dgvUser("Dsp", e.RowIndex).Value
-        Dim sex As String = dgvUser("Sex", e.RowIndex).Value
-        Dim birth As String = dgvUser("Birth", e.RowIndex).Value
-        Dim kaigo As String = dgvUser("Kaigo", e.RowIndex).Value
+        Dim id As String = checkDBNullValue(dgvUser("Id", e.RowIndex).Value)
+        Dim nam As String = checkDBNullValue(dgvUser("Nam", e.RowIndex).Value)
+        Dim kana As String = checkDBNullValue(dgvUser("Kana", e.RowIndex).Value)
+        Dim dsp As String = checkDBNullValue(dgvUser("Dsp", e.RowIndex).Value)
+        Dim sex As String = checkDBNullValue(dgvUser("Sex", e.RowIndex).Value)
+        Dim birth As String = checkDBNullValue(dgvUser("Birth", e.RowIndex).Value)
+        Dim kaigo As String = checkDBNullValue(dgvUser("Kaigo", e.RowIndex).Value)
 
         'idとNamを表示
         searchIdBox.Text = id
@@ -87,5 +98,77 @@ Public Class 利用者選択
         parentForm.userBirth.Text = birth
         parentForm.userKaigo.Text = kaigo
 
+    End Sub
+
+    Private Sub searchIdBox_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles searchIdBox.KeyDown
+        'エンターキー押下時、IDで検索
+        If e.KeyCode = Keys.Enter Then
+            Dim parentForm As TopForm = CType(Me.Owner, TopForm)
+            Dim id As Integer = CInt(searchIdBox.Text)
+            Dim dt As DataTable = CType(dgvUser.DataSource, DataTable)
+            Dim searchResult() As DataRow = dt.Select("Id = " & id)
+            If searchResult.Length = 1 Then
+                '入力されたIDが存在する場合
+                searchNamBox.Text = searchResult(0).Item("Nam")
+
+                '親フォームに反映
+                parentForm.userId.Text = id
+                parentForm.userNam.Text = searchResult(0).Item("Nam")
+                parentForm.userKana.Text = searchResult(0).Item("Kana")
+                parentForm.userDsp.Text = searchResult(0).Item("Dsp")
+                parentForm.userSex.Text = searchResult(0).Item("Sex")
+                parentForm.userBirth.Text = searchResult(0).Item("Birth")
+                parentForm.userKaigo.Text = searchResult(0).Item("Kaigo")
+            Else
+                '存在しない場合
+                searchIdBox.Text = ""
+                searchNamBox.Text = ""
+
+                '親フォームに反映
+                parentForm.userId.Text = ""
+                parentForm.userNam.Text = ""
+                parentForm.userKana.Text = ""
+                parentForm.userDsp.Text = ""
+                parentForm.userSex.Text = ""
+                parentForm.userBirth.Text = ""
+                parentForm.userKaigo.Text = ""
+            End If
+        End If
+    End Sub
+
+    Private Sub searchNamBox_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs) Handles searchNamBox.KeyDown
+        'エンターキー押下時、氏名で検索
+        If e.KeyCode = Keys.Enter Then
+            Dim parentForm As TopForm = CType(Me.Owner, TopForm)
+            Dim nam As String = searchNamBox.Text
+            Dim dt As DataTable = CType(dgvUser.DataSource, DataTable)
+            Dim searchResult() As DataRow = dt.Select("Nam = '" & nam & "'")
+            If searchResult.Length = 1 Then
+                '入力された氏名が存在する場合
+                searchIdBox.Text = searchResult(0).Item("Id")
+
+                '親フォームに反映
+                parentForm.userId.Text = searchResult(0).Item("Id")
+                parentForm.userNam.Text = nam
+                parentForm.userKana.Text = searchResult(0).Item("Kana")
+                parentForm.userDsp.Text = searchResult(0).Item("Dsp")
+                parentForm.userSex.Text = searchResult(0).Item("Sex")
+                parentForm.userBirth.Text = searchResult(0).Item("Birth")
+                parentForm.userKaigo.Text = searchResult(0).Item("Kaigo")
+            Else
+                '存在しない場合
+                searchIdBox.Text = ""
+                searchNamBox.Text = ""
+
+                '親フォームに反映
+                parentForm.userId.Text = ""
+                parentForm.userNam.Text = ""
+                parentForm.userKana.Text = ""
+                parentForm.userDsp.Text = ""
+                parentForm.userSex.Text = ""
+                parentForm.userBirth.Text = ""
+                parentForm.userKaigo.Text = ""
+            End If
+        End If
     End Sub
 End Class
