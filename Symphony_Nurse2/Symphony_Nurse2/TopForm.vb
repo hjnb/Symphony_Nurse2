@@ -33,15 +33,16 @@ Public Class TopForm
     Private Sub TopForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         '画面最大化
         Me.WindowState = FormWindowState.Maximized
+    End Sub
 
+    Private Sub TopForm_Shown(sender As Object, e As System.EventArgs) Handles Me.Shown
         '利用者選択フォーム表示
         selectUserForm = New 利用者選択()
         selectUserForm.Owner = Me
-        'フォーム内フォームのやり方
+        'フォーム内フォームのやり方()
         'selectUserForm.TopLevel = False
         'Me.Controls.Add(selectUserForm)
         selectUserForm.Show()
-
     End Sub
 
     Private Sub 終了ToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles 終了ToolStripMenuItem.Click

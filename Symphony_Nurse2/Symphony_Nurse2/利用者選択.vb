@@ -2,9 +2,10 @@
 
 Public Class 利用者選択
 
-    Private Sub 利用者選択_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        searchIdBox.Focus()
+    'テキストボックスのマウスダウンイベント制御用
+    Private mdFlag As Boolean = False
 
+    Private Sub 利用者選択_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         'フォームの設定
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -31,6 +32,7 @@ Public Class 利用者選択
             .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
             .RowTemplate.Height = 18
             .BackgroundColor = Color.FromKnownColor(KnownColor.Control)
+            .ShowCellToolTips = False
         End With
 
         'データ取得、表示
@@ -41,8 +43,6 @@ Public Class 利用者選択
         SQLCm.CommandText = "select Id, Nam, Kana, Dsp, Sex, Birth, Kaigo from KihonM order by Kana"
         Adapter.Fill(dt)
         dgvUser.DataSource = dt
-
-        dgvUser.CurrentRow.Selected = False
 
         '表示設定
         With dgvUser
@@ -60,14 +60,49 @@ Public Class 利用者選択
             .Columns("Birth").Visible = False
             .Columns("Kaigo").Visible = False
 
+            'Dsp=1の最初に出現する行を選択させる
+            For Each row As DataGridViewRow In dgvUser.Rows
+                If Not IsDBNull(row.Cells("Dsp").Value) AndAlso row.Cells("Dsp").Value = 1 Then
+                    dgvUser.CurrentCell = dgvUser("Nam", row.Index)
+                    Exit For
+                End If
+            Next
+
+            'Dsp=0の行を非表示にする
             For Each row As DataGridViewRow In dgvUser.Rows
                 If IsDBNull(row.Cells("Dsp").Value) OrElse row.Cells("Dsp").Value = 0 Then
                     row.Visible = False
                 End If
             Next
+
         End With
-        'Me.Activate()
-        'searchIdBox.Focus()
+
+        '検索ID,名前ボックスの設定
+        searchIdBox.TextAlign = HorizontalAlignment.Center
+        searchNamBox.TextAlign = HorizontalAlignment.Left
+
+        '親フォームに利用者選択の情報があり、且つ、dgvに存在する場合は設定
+        Dim parentForm As TopForm = CType(Me.Owner, TopForm)
+        Dim nam As String = parentForm.userNam.Text
+        Dim searchResult() As DataRow = dt.Select("Nam = '" & nam & "'")
+        If searchResult.Length = 1 Then
+            searchIdBox.Text = parentForm.userId.Text
+            searchNamBox.Text = parentForm.userNam.Text
+        Else
+            searchIdBox.Text = ""
+            searchNamBox.Text = ""
+
+            parentForm.userId.Text = ""
+            parentForm.userNam.Text = ""
+            parentForm.userKana.Text = ""
+            parentForm.userDsp.Text = ""
+            parentForm.userBirth.Text = ""
+            parentForm.userSex.Text = ""
+            parentForm.userKaigo.Text = ""
+        End If
+
+        '検索IDボックスにフォーカス
+        searchIdBox.Focus()
 
     End Sub
 
@@ -104,7 +139,7 @@ Public Class 利用者選択
         'エンターキー押下時、IDで検索
         If e.KeyCode = Keys.Enter Then
             Dim parentForm As TopForm = CType(Me.Owner, TopForm)
-            Dim id As Integer = CInt(searchIdBox.Text)
+            Dim id As Integer = If(IsNumeric(searchIdBox.Text), CInt(searchIdBox.Text), -1)
             Dim dt As DataTable = CType(dgvUser.DataSource, DataTable)
             Dim searchResult() As DataRow = dt.Select("Id = " & id)
             If searchResult.Length = 1 Then
@@ -169,6 +204,20 @@ Public Class 利用者選択
                 parentForm.userBirth.Text = ""
                 parentForm.userKaigo.Text = ""
             End If
+        End If
+    End Sub
+
+    Private Sub textBox_Enter(sender As Object, e As System.EventArgs) Handles searchIdBox.Enter, searchNamBox.Enter
+        Dim tb As TextBox = CType(sender, TextBox)
+        tb.SelectAll()
+        mdFlag = True
+    End Sub
+
+    Private Sub textBox_MouseDown(sender As Object, e As System.Windows.Forms.MouseEventArgs) Handles searchIdBox.MouseDown, searchNamBox.MouseDown
+        If mdFlag = True Then
+            Dim tb As TextBox = CType(sender, TextBox)
+            tb.SelectAll()
+            mdFlag = False
         End If
     End Sub
 End Class
