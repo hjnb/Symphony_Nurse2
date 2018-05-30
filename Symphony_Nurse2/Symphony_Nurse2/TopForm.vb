@@ -3,8 +3,11 @@
 Public Class TopForm
 
     'データベースのパス
-    Public DB_Nurse2 As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.mdb"
-    'Public DB_Nurse2 As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & My.Application.Info.DirectoryPath & "\Nurse2.mdb"
+    Public dbFilePath As String = My.Application.Info.DirectoryPath & "\Nurse2.mdb"
+    Public DB_Nurse2 As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & dbFilePath
+
+    'エクセルのパス
+    Public excelFilePass As String = My.Application.Info.DirectoryPath & "\Nurse2.xls"
 
     '.iniファイルのパス
     Public iniFilePath As String = My.Application.Info.DirectoryPath & "\Nurse2.ini"
@@ -35,6 +38,25 @@ Public Class TopForm
     End Sub
 
     Private Sub TopForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        'データベース、エクセル、構成ファイルの存在チェック
+        If Not System.IO.File.Exists(dbFilePath) Then
+            MsgBox("データベースファイルが存在しません。ファイルを配置して下さい。")
+            Me.Close()
+            Exit Sub
+        End If
+
+        If Not System.IO.File.Exists(excelFilePass) Then
+            MsgBox("エクセルファイルが存在しません。ファイルを配置して下さい。")
+            Me.Close()
+            Exit Sub
+        End If
+
+        If Not System.IO.File.Exists(iniFilePath) Then
+            MsgBox("構成ファイルが存在しません。ファイルを配置して下さい。")
+            Me.Close()
+            Exit Sub
+        End If
+
         '画面最大化
         Me.WindowState = FormWindowState.Maximized
     End Sub
