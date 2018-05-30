@@ -2,8 +2,12 @@
 
 Public Class TopForm
 
-    'とりあえずのデータベースのパス
+    'データベースのパス
     Public DB_Nurse2 As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.mdb"
+    'Public DB_Nurse2 As String = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & My.Application.Info.DirectoryPath & "\Nurse2.mdb"
+
+    '.iniファイルのパス
+    Public iniFilePath As String = My.Application.Info.DirectoryPath & "\Nurse2.ini"
 
     '後でちゃんと名前考える
     Public selectUserForm As 利用者選択

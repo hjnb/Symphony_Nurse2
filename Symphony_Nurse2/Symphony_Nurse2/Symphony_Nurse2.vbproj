@@ -87,6 +87,12 @@
     <Compile Include="ExDataGridView.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="passwordForm.Designer.vb">
+      <DependentUpon>passwordForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="passwordForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TopForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +177,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="passwordForm.resx">
+      <DependentUpon>passwordForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TopForm.resx">
       <DependentUpon>TopForm.vb</DependentUpon>
     </EmbeddedResource>
