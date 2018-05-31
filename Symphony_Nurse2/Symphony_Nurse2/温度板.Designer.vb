@@ -253,12 +253,12 @@ Partial Class 温度板
         Me.txtTaijuu.Name = "txtTaijuu"
         Me.txtTaijuu.Size = New System.Drawing.Size(48, 19)
         Me.txtTaijuu.TabIndex = 222
+        Me.txtTaijuu.Text = "0.00"
         Me.txtTaijuu.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'cmbSyoti
         '
         Me.cmbSyoti.FormattingEnabled = True
-        Me.cmbSyoti.Items.AddRange(New Object() {"治療プラン", "処置", "薬剤内服"})
         Me.cmbSyoti.Location = New System.Drawing.Point(113, 219)
         Me.cmbSyoti.Name = "cmbSyoti"
         Me.cmbSyoti.Size = New System.Drawing.Size(103, 20)
@@ -364,7 +364,7 @@ Partial Class 温度板
         '
         'AdBox1
         '
-        Me.AdBox1.dateText = "25"
+        Me.AdBox1.dateText = "29"
         Me.AdBox1.Location = New System.Drawing.Point(71, 15)
         Me.AdBox1.monthText = "05"
         Me.AdBox1.Name = "AdBox1"

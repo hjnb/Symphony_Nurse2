@@ -74,16 +74,7 @@ Public Class 温度板
                 DataGridView1.FirstDisplayedScrollingRowIndex = DataGridView1.Rows.Count - 1
             End If
 
-
             KeyPreview = True
-
-            Dim SQLCm2 As OleDbCommand = Cn.CreateCommand
-            Dim Adapter2 As New OleDbDataAdapter(SQLCm2)
-            Dim Table2 As New DataTable
-
-            SQLCm2.CommandText = "SELECT * FROM SyotiM ORDER BY Dsp, Bunrui1, Bunrui2, Bunrui3 DESC"
-            Adapter2.Fill(Table2)
-            DataGridView2.DataSource = Table2
         End If
 
     End Sub
@@ -190,27 +181,6 @@ Public Class 温度板
         End If
 
         KeyPreview = True
-
-        Dim SQLCm2 As OleDbCommand = Cn.CreateCommand
-        Dim Adapter2 As New OleDbDataAdapter(SQLCm2)
-        Dim Table2 As New DataTable
-
-        SQLCm2.CommandText = "SELECT * FROM SyotiM ORDER BY Dsp, Bunrui1, Bunrui2, Bunrui3 DESC"
-        Adapter2.Fill(Table2)
-        DataGridView2.DataSource = Table2
-
-        Dim SQLCm3 As OleDbCommand = Cn.CreateCommand
-        Dim Adapter3 As New OleDbDataAdapter(SQLCm3)
-        Dim Table3 As New DataTable
-
-        SQLCm3.CommandText = "SELECT * FROM EtcM WHERE Komoku = '記載者' ORDER BY autono"
-        Adapter3.Fill(Table3)
-        DataGridView3.DataSource = Table3
-
-        For i As Integer = 0 To DataGridView3.Rows.Count - 2
-            cmbKisaisya.Items.Add(DataGridView3(2, i).Value)
-        Next
-
     End Sub
 
     Private Sub DataGridView1_CellFormatting(sender As Object, e As System.Windows.Forms.DataGridViewCellFormattingEventArgs) Handles DataGridView1.CellFormatting
@@ -238,13 +208,57 @@ Public Class 温度板
         txtKetuatuUe.Text = NullCheck(DataGridView1(7, r).Value)
         txtKetuatuSita.Text = NullCheck(DataGridView1(8, r).Value)
         txtKettouti.Text = NullCheck(DataGridView1(9, r).Value)
-        txtSinntyou.Text = NullCheck(DataGridView1(10, r).Value)
-        txtTaijuu.Text = NullCheck(DataGridView1(11, r).Value)
+        txtTaijuu.Text = NullCheck(DataGridView1(10, r).Value)
+        txtSinntyou.Text = NullCheck(DataGridView1(11, r).Value)
         txtSyoti1.Text = NullCheck(DataGridView1(12, r).Value)
         txtSyoti2.Text = NullCheck(DataGridView1(13, r).Value)
     End Sub
 
+    Private Sub cmbKisaisyaItemAdd(sender As Object, e As System.EventArgs) Handles cmbKisaisya.GotFocus
+        cmbKisaisya.Items.Clear()
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm3 As OleDbCommand = Cn.CreateCommand
+        Dim Adapter3 As New OleDbDataAdapter(SQLCm3)
+        Dim Table3 As New DataTable
+
+        SQLCm3.CommandText = "SELECT * FROM EtcM WHERE Komoku = '記載者' ORDER BY autono"
+        Adapter3.Fill(Table3)
+        DataGridView3.DataSource = Table3
+
+        For i As Integer = 0 To DataGridView3.Rows.Count - 2
+            cmbKisaisya.Items.Add(DataGridView3(2, i).Value)
+        Next
+    End Sub
+
+    Private Sub cmbSyotiItemAdd(sender As Object, e As System.EventArgs) Handles cmbSyoti.GotFocus
+        'クリア
+        cmbSyoti.Items.Clear()
+
+        'コンボボックスのリスト取得、設定
+        Dim reader As System.Data.OleDb.OleDbDataReader
+        Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+        Dim SQLCm As OleDbCommand = Cn.CreateCommand
+        SQLCm.CommandText = "select distinct Bunrui1 from SyotiM order by Bunrui1"
+        Cn.Open()
+        reader = SQLCm.ExecuteReader()
+        While reader.Read() = True
+            cmbSyoti.Items.Add(reader("Bunrui1"))
+        End While
+        reader.Close()
+        Cn.Close()
+
+        Dim SQLCm2 As OleDbCommand = Cn.CreateCommand
+        Dim Adapter2 As New OleDbDataAdapter(SQLCm2)
+        Dim Table2 As New DataTable
+
+        SQLCm2.CommandText = "SELECT * FROM SyotiM ORDER BY Dsp, Bunrui1, Bunrui2, Bunrui3 DESC"
+        Adapter2.Fill(Table2)
+        DataGridView2.DataSource = Table2
+
+    End Sub
+
     Private Sub cmbSyoti_TextChanged(sender As Object, e As System.EventArgs) Handles cmbSyoti.TextChanged
+
         If cmbSyoti.Text = "治療プラン" Then
             lstSyoti.Items.Clear()
             For i As Integer = 0 To DataGridView2.Rows.Count - 1
@@ -270,8 +284,15 @@ Public Class 温度板
                     lstSyoti.Items.Add(DataGridView2(3, i).Value)
                 End If
             Next
+        ElseIf cmbSyoti.Text = "" Then
+            lstSyoti.Items.Clear()
         Else
             lstSyoti.Items.Clear()
+            For i As Integer = 0 To DataGridView2.Rows.Count - 1
+                If DataGridView2(1, i).Value = cmbSyoti.Text Then
+                    lstSyoti.Items.Add(DataGridView2(3, i).Value)
+                End If
+            Next
         End If
     End Sub
 
@@ -372,23 +393,24 @@ Public Class 温度板
             Return
         End If
 
-        If AdBox1.getADStr() <> DataGridView1("日付", selectedRowIndex).Value OrElse TimeBox1.GetTime() <> DataGridView1("時刻", selectedRowIndex).Value AndAlso MessageBox.Show("データを削除しますか？", "削除確認", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.No Then
+        If (AdBox1.getADStr() <> DataGridView1("日付", selectedRowIndex).Value OrElse TimeBox1.GetTime() <> DataGridView1("時刻", selectedRowIndex).Value) AndAlso MessageBox.Show("選択行のデータを削除しますか？", "削除確認", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.No Then
             Return
         Else
-            Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
-            Dim SQLCm As OleDbCommand = Cn.CreateCommand
-            Dim SQL As String = ""
-            SQL = "DELETE FROM OndoD WHERE (Id = " & lblID.Text & ") AND (Ymd ='" & DataGridView1("日付", selectedRowIndex).Value & "') AND (Hm = '" & DataGridView1("時刻", selectedRowIndex).Value & "')"
-            SQLCm.CommandText = SQL
-            Cn.Open()
-            SQLCm.ExecuteNonQuery()
-            Cn.Close()
+            If MsgBox("削除してよろしいですか？", MsgBoxStyle.YesNo + vbExclamation, "削除確認") = MsgBoxResult.Yes Then
+                Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
+                Dim SQLCm As OleDbCommand = Cn.CreateCommand
+                Dim SQL As String = ""
+                SQL = "DELETE FROM OndoD WHERE (Id = " & lblID.Text & ") AND (Ymd ='" & DataGridView1("日付", selectedRowIndex).Value & "') AND (Hm = '" & DataGridView1("時刻", selectedRowIndex).Value & "')"
+                SQLCm.CommandText = SQL
+                Cn.Open()
+                SQLCm.ExecuteNonQuery()
+                Cn.Close()
 
-            SQLCm.Dispose()
-            Cn.Dispose()
+                SQLCm.Dispose()
+                Cn.Dispose()
 
-            MsgBox("削除しました")
-            btnKousinn.PerformClick()
+                btnKousinn.PerformClick()
+            End If
         End If
     End Sub
 
@@ -2143,7 +2165,7 @@ Public Class 温度板
     End Sub
 
     Private Sub btnKuria_Click(sender As System.Object, e As System.EventArgs) Handles btnKuria.Click
-        AdBox1.clearText()
+        AdBox1.setADStr(Today.ToString("yyyy/MM/dd"))
         cmbKisaisya.Text = ""
         txtTaionn.Text = ""
         txtMyaku.Text = ""
@@ -2219,7 +2241,7 @@ Public Class 温度板
         d = False
     End Sub
 
-    Private Sub dataGridViewTextBox_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles txtTaijuu.KeyDown
+    Private Sub TaijuuTextBox_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles txtTaijuu.KeyDown
         Dim tb As TextBox = CType(sender, TextBox)
         Dim inputIntStr As String = tb.Text.Split(".")(0) '整数部
         Dim inputDecimalStr As String = tb.Text.Split(".")(1) '小数部
@@ -2431,4 +2453,5 @@ Public Class 温度板
         End If
     End Sub
 
+    
 End Class

@@ -184,6 +184,10 @@ line1:
         SQLCm5.CommandText = "select Md1, Md2, Md4 from BshtMd order by Md1, Md2, Md4"
         Adapter5.Fill(Table5)
         DataGridView5.DataSource = Table5
+
+        lblHeya.Text = ""
+        lblName.Text = ""
+        YmdBox1.setADStr(Today.ToString("yyyy/MM/dd"))
     End Sub
 
     Private Function NullCheck(cellvalue As Object) As String

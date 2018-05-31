@@ -196,6 +196,11 @@ line1:
                 End If
             Next
         Next
+
+        lblHeya.Text = ""
+        lblName.Text = ""
+        lblHurigana.Text = ""
+        YmdBox1.setADStr(Today.ToString("yyyy/MM/dd"))
     End Sub
 
     Private Function NullCheck(cellvalue As Object) As String
