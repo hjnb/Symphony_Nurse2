@@ -151,7 +151,7 @@ Public Class TopForm
         
     End Sub
 
-    Private Sub ＤＢ整理ToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ＤＢ整理ToolStripMenuItem.Click
+    Private Sub ＤＢ整理ToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
 
     End Sub
 

@@ -14,7 +14,7 @@ Public Class 健康診断
 
     Private Sub 健康診断_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Me.StartPosition = FormStartPosition.Manual
-        Me.DesktopLocation = New Point(0, 50)
+        Me.DesktopLocation = New Point(0, 55)
 
         With DataGridView1
             .RowTemplate.Height = 18
@@ -645,6 +645,11 @@ line2:
     End Sub
 
     Private Sub btnInnsatu_Click(sender As System.Object, e As System.EventArgs) Handles btnInnsatu.Click
+        Dim passForm As Form = New passwordForm(TopForm.iniFilePath, 3)
+        If passForm.ShowDialog() <> Windows.Forms.DialogResult.OK Then
+            Return
+        End If
+
         ProgressBar1.Visible = True
         ProgressBar1.Maximum = 10
         ProgressBar1.Minimum = 0
@@ -659,7 +664,7 @@ line2:
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("健康診断新")
 

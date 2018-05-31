@@ -35,7 +35,6 @@ Partial Class TopForm
         Me.ユニット居室ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.諸ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.画面印刷ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ＤＢ整理ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.印刷設定ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.終了ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.userId = New System.Windows.Forms.TextBox()
@@ -52,7 +51,7 @@ Partial Class TopForm
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.利用者選択ToolStripMenuItem, Me.看護日誌ToolStripMenuItem, Me.体重管理ToolStripMenuItem, Me.健康診断ToolStripMenuItem, Me.マスタ登録ToolStripMenuItem, Me.画面印刷ToolStripMenuItem, Me.ＤＢ整理ToolStripMenuItem, Me.印刷設定ToolStripMenuItem, Me.終了ToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.利用者選択ToolStripMenuItem, Me.看護日誌ToolStripMenuItem, Me.体重管理ToolStripMenuItem, Me.健康診断ToolStripMenuItem, Me.マスタ登録ToolStripMenuItem, Me.画面印刷ToolStripMenuItem, Me.印刷設定ToolStripMenuItem, Me.終了ToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(817, 24)
@@ -133,12 +132,6 @@ Partial Class TopForm
         Me.画面印刷ToolStripMenuItem.Size = New System.Drawing.Size(67, 20)
         Me.画面印刷ToolStripMenuItem.Text = "画面印刷"
         '
-        'ＤＢ整理ToolStripMenuItem
-        '
-        Me.ＤＢ整理ToolStripMenuItem.Name = "ＤＢ整理ToolStripMenuItem"
-        Me.ＤＢ整理ToolStripMenuItem.Size = New System.Drawing.Size(67, 20)
-        Me.ＤＢ整理ToolStripMenuItem.Text = "ＤＢ整理"
-        '
         '印刷設定ToolStripMenuItem
         '
         Me.印刷設定ToolStripMenuItem.Name = "印刷設定ToolStripMenuItem"
@@ -157,6 +150,7 @@ Partial Class TopForm
         Me.userId.Name = "userId"
         Me.userId.Size = New System.Drawing.Size(100, 19)
         Me.userId.TabIndex = 1
+        Me.userId.Visible = False
         '
         'userNam
         '
@@ -164,6 +158,7 @@ Partial Class TopForm
         Me.userNam.Name = "userNam"
         Me.userNam.Size = New System.Drawing.Size(100, 19)
         Me.userNam.TabIndex = 2
+        Me.userNam.Visible = False
         '
         'userDsp
         '
@@ -171,6 +166,7 @@ Partial Class TopForm
         Me.userDsp.Name = "userDsp"
         Me.userDsp.Size = New System.Drawing.Size(100, 19)
         Me.userDsp.TabIndex = 4
+        Me.userDsp.Visible = False
         '
         'userKana
         '
@@ -178,6 +174,7 @@ Partial Class TopForm
         Me.userKana.Name = "userKana"
         Me.userKana.Size = New System.Drawing.Size(100, 19)
         Me.userKana.TabIndex = 3
+        Me.userKana.Visible = False
         '
         'userBirth
         '
@@ -185,6 +182,7 @@ Partial Class TopForm
         Me.userBirth.Name = "userBirth"
         Me.userBirth.Size = New System.Drawing.Size(100, 19)
         Me.userBirth.TabIndex = 6
+        Me.userBirth.Visible = False
         '
         'userSex
         '
@@ -192,6 +190,7 @@ Partial Class TopForm
         Me.userSex.Name = "userSex"
         Me.userSex.Size = New System.Drawing.Size(100, 19)
         Me.userSex.TabIndex = 5
+        Me.userSex.Visible = False
         '
         'userKaigo
         '
@@ -199,6 +198,7 @@ Partial Class TopForm
         Me.userKaigo.Name = "userKaigo"
         Me.userKaigo.Size = New System.Drawing.Size(100, 19)
         Me.userKaigo.TabIndex = 7
+        Me.userKaigo.Visible = False
         '
         'rbtnPrint
         '
@@ -210,6 +210,7 @@ Partial Class TopForm
         Me.rbtnPrint.TabStop = True
         Me.rbtnPrint.Text = "印刷"
         Me.rbtnPrint.UseVisualStyleBackColor = True
+        Me.rbtnPrint.Visible = False
         '
         'rbtnPreview
         '
@@ -222,6 +223,7 @@ Partial Class TopForm
         Me.rbtnPreview.TabStop = True
         Me.rbtnPreview.Text = "プレビュー"
         Me.rbtnPreview.UseVisualStyleBackColor = True
+        Me.rbtnPreview.Visible = False
         '
         'TopForm
         '
@@ -254,7 +256,6 @@ Partial Class TopForm
     Friend WithEvents 健康診断ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents マスタ登録ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 画面印刷ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ＤＢ整理ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 印刷設定ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 終了ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 温度板ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem

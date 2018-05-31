@@ -89,7 +89,7 @@ Public Class 温度板
 
     Private Sub 温度板_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Me.StartPosition = FormStartPosition.Manual
-        Me.DesktopLocation = New Point(210, 50)
+        Me.DesktopLocation = New Point(210, 55)
 
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
@@ -415,6 +415,10 @@ Public Class 温度板
     End Sub
 
     Private Sub btnInnsatu_Click(sender As System.Object, e As System.EventArgs) Handles btnInnsatu.Click
+        Dim passForm As Form = New passwordForm(TopForm.iniFilePath, 3)
+        If passForm.ShowDialog() <> Windows.Forms.DialogResult.OK Then
+            Return
+        End If
 
         'Page(countrowDGV1 \ 48 + 1)
         'MsgBox(countrowDGV1)
@@ -469,7 +473,7 @@ Public Class 温度板
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("温度板 (" & c & ")")
 
@@ -566,7 +570,7 @@ Public Class 温度板
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("温度板")
 
@@ -624,7 +628,7 @@ Public Class 温度板
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("温度板 (2)")
 
@@ -699,7 +703,7 @@ Public Class 温度板
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("温度板 (3)")
 
@@ -791,7 +795,7 @@ Public Class 温度板
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("温度板 (4)")
 
@@ -899,7 +903,7 @@ Public Class 温度板
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("温度板 (5)")
 
@@ -1023,7 +1027,7 @@ Public Class 温度板
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("温度板 (6)")
 
@@ -1163,7 +1167,7 @@ Public Class 温度板
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("温度板 (7)")
 
@@ -1319,7 +1323,7 @@ Public Class 温度板
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("温度板 (8)")
 
@@ -1490,7 +1494,7 @@ Public Class 温度板
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("温度板 (9)")
 
@@ -1677,7 +1681,7 @@ Public Class 温度板
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("温度板 (10)")
 
@@ -1899,7 +1903,7 @@ Public Class 温度板
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open("\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls")
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheets = objWorkBook.Worksheets
         oSheet = objWorkBook.Worksheets("グラフ新")
         oSheet2 = objWorkBook.Worksheets("グラフ新 (2)")

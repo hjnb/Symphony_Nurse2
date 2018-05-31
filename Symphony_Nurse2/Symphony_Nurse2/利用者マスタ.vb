@@ -13,8 +13,6 @@ Public Class 利用者マスタ
     'テキストボックスのマウスダウンイベント制御用
     Private mdFlag As Boolean = False
 
-    Private Const EXCEL_PASS As String = "\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\Nurse2.xls"
-    'Private Const EXCEL_PASS As String = "C:\Users\yoshi\Desktop\Nurse2.xls"
     Private Const EXCEL_SHEET_NAME As String = "利用者"
 
     '行ヘッダーのカレントセルを表す三角マークを非表示に設定する為のクラス。
@@ -431,7 +429,7 @@ Public Class 利用者マスタ
 
         objExcel = CreateObject("Excel.Application")
         objWorkBooks = objExcel.Workbooks
-        objWorkBook = objWorkBooks.Open(EXCEL_PASS)
+        objWorkBook = objWorkBooks.Open(TopForm.excelFilePass)
         oSheet = objWorkBook.Worksheets(EXCEL_SHEET_NAME)
 
         '年月日と時刻部分の書き込み

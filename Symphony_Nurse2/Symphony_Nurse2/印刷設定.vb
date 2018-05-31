@@ -3,6 +3,11 @@
     Private p As TopForm
 
     Private Sub 印刷設定_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        Me.Left = 210
+        Me.Top = 55
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
+
         p = CType(Me.Owner, TopForm)
         If p.rbtnPreview.Checked = True Then
             Me.rbtnPreview.Checked = True
