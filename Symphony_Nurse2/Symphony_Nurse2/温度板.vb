@@ -351,6 +351,9 @@ Public Class 温度板
         Dim Table As DataTable = DirectCast(DataGridView1.DataSource, DataTable)
         Dim Row As DataRow = Table.NewRow
 
+        If lblID.Text = "" Then
+            lblID.Text = "0"
+        End If
         Row("Id") = lblID.Text
         Row("日付") = AdBox1.getADStr()
         Row("時刻") = TimeBox1.GetTime()
@@ -404,6 +407,9 @@ Public Class 温度板
                 Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
                 Dim SQLCm As OleDbCommand = Cn.CreateCommand
                 Dim SQL As String = ""
+                If lblID.Text = "" Then
+                    lblID.Text = "0"
+                End If
                 SQL = "DELETE FROM OndoD WHERE (Id = " & lblID.Text & ") AND (Ymd ='" & DataGridView1("日付", selectedRowIndex).Value & "') AND (Hm = '" & DataGridView1("時刻", selectedRowIndex).Value & "')"
                 SQLCm.CommandText = SQL
                 Cn.Open()
@@ -2173,7 +2179,7 @@ Public Class 温度板
     End Sub
 
     Private Sub btnKuria_Click(sender As System.Object, e As System.EventArgs) Handles btnKuria.Click
-        AdBox1.setADStr(Today.ToString("yyyy/MM/dd"))
+        'AdBox1.setADStr(Today.ToString("yyyy/MM/dd"))
         cmbKisaisya.Text = ""
         txtTaionn.Text = ""
         txtMyaku.Text = ""
