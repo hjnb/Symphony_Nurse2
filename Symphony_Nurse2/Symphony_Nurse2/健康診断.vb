@@ -18,6 +18,8 @@ Public Class 健康診断
         Me.MinimizeBox = False
         Me.MaximizeBox = False
 
+        TopForm.EnableDoubleBuffering(DataGridView1)
+
         With DataGridView1
             .RowTemplate.Height = 18
             .AllowUserToAddRows = False '行追加禁止
@@ -348,6 +350,7 @@ line1:
         If DataGridView2.Rows.Count > 1 Then
 
         Else
+            TopForm.EnableDoubleBuffering(DataGridView2)
             With DataGridView2
                 .RowTemplate.Height = 16
                 .AllowUserToAddRows = False '行追加禁止

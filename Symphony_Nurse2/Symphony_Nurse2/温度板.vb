@@ -16,6 +16,8 @@ Public Class 温度板
             lblName.Text = TopForm.userNam.Text
             lblID.Text = TopForm.userId.Text
 
+            TopForm.EnableDoubleBuffering(DataGridView1)
+
             With DataGridView1
                 .AllowUserToAddRows = False '行追加禁止
                 .AllowUserToResizeColumns = False '列の幅をユーザーが変更できないようにする

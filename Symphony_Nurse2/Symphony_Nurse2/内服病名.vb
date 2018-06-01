@@ -18,6 +18,7 @@ Public Class 内服病名
         Me.MinimizeBox = False
         Me.MaximizeBox = False
 
+        TopForm.EnableDoubleBuffering(DataGridView1)
         With DataGridView1
             .RowTemplate.Height = 18
             .AllowUserToAddRows = False '行追加禁止
@@ -33,6 +34,7 @@ Public Class 内服病名
             .ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         End With
 
+        TopForm.EnableDoubleBuffering(DataGridView2)
         With DataGridView2
             .RowTemplate.Height = 16
             .AllowUserToAddRows = False '行追加禁止
