@@ -90,6 +90,8 @@ Public Class 温度板
     Private Sub 温度板_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Me.StartPosition = FormStartPosition.Manual
         Me.DesktopLocation = New Point(210, 55)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
 
         Dim Cn As New OleDbConnection(TopForm.DB_Nurse2)
         Dim SQLCm As OleDbCommand = Cn.CreateCommand

@@ -15,6 +15,8 @@ Public Class 内服病名
     Private Sub 内服病名_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         Me.StartPosition = FormStartPosition.Manual
         Me.DesktopLocation = New Point(0, 55)
+        Me.MinimizeBox = False
+        Me.MaximizeBox = False
 
         With DataGridView1
             .RowTemplate.Height = 18

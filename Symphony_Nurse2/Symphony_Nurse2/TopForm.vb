@@ -65,9 +65,6 @@ Public Class TopForm
         '利用者選択フォーム表示
         selectUserForm = New 利用者選択()
         selectUserForm.Owner = Me
-        'フォーム内フォームのやり方()
-        'selectUserForm.TopLevel = False
-        'Me.Controls.Add(selectUserForm)
         selectUserForm.Show()
     End Sub
 
@@ -148,11 +145,7 @@ Public Class TopForm
     End Sub
 
     Private Sub 画面印刷ToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles 画面印刷ToolStripMenuItem.Click
-        
-    End Sub
-
-    Private Sub ＤＢ整理ToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs)
-
+        PrintForm()
     End Sub
 
     Private Sub 印刷設定ToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles 印刷設定ToolStripMenuItem.Click
@@ -163,4 +156,43 @@ Public Class TopForm
         End If
     End Sub
 
+    Private memoryImage As Bitmap
+
+    Public Function getCaptureImage() As Bitmap
+        'Bitmapの作成
+        Dim bmp As New Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height)
+        'Graphicsの作成
+        Dim g As Graphics = Graphics.FromImage(bmp)
+        g.CopyFromScreen(New Point(Me.Left + 8, Me.Top), New Point(0, 0), New Size(Me.Width - 16, Me.Height - 16))
+        '解放
+        g.Dispose()
+
+        Return bmp
+    End Function
+
+    Public Sub PrintForm()
+        'フォームのイメージを取得する
+        memoryImage = getCaptureImage()
+        'フォームのイメージを印刷する
+        Dim PrintDocument As New System.Drawing.Printing.PrintDocument
+        PrintDocument.DefaultPageSettings.Landscape = True
+        AddHandler PrintDocument.PrintPage, AddressOf PrintDocument_PrintPage
+        PrintDocument.Print()
+        memoryImage.Dispose()
+    End Sub
+
+    Private Sub PrintDocument_PrintPage(ByVal sender As Object, ByVal e As System.Drawing.Printing.PrintPageEventArgs)
+        '拡大率を指定
+        Dim zoom As Double = 1
+        Dim padding As Double = 20
+        If memoryImage.Width > e.Graphics.VisibleClipBounds.Width Then
+            zoom = e.Graphics.VisibleClipBounds.Width / memoryImage.Width
+        End If
+
+        If (memoryImage.Height + padding) * zoom > e.Graphics.VisibleClipBounds.Height Then
+            zoom = e.Graphics.VisibleClipBounds.Height / (memoryImage.Height + padding)
+        End If
+
+        e.Graphics.DrawImage(memoryImage, 0, CInt(padding), CInt(memoryImage.Width * zoom), CInt(memoryImage.Height * zoom))
+    End Sub
 End Class

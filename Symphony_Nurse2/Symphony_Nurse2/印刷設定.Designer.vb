@@ -52,7 +52,7 @@ Partial Class 印刷設定
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(284, 80)
+        Me.ClientSize = New System.Drawing.Size(180, 77)
         Me.Controls.Add(Me.rbtnPreview)
         Me.Controls.Add(Me.rbtnPrint)
         Me.Name = "印刷設定"
