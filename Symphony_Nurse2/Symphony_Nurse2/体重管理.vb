@@ -196,6 +196,12 @@ Public Class 体重管理
 
         '表示後設定
         settingDgvUnitColumns(dgvUnitRight)
+
+        '氏名ラベル
+        selectUserLabel.Text = ""
+
+        '選択氏名保持
+        selectedNam = ""
     End Sub
 
     Private Sub addRoomColumn(dt As DataTable)
