@@ -290,7 +290,7 @@ Public Class 利用者マスタ
             MsgBox("カナ氏名を入力して下さい。", , "登録エラー")
             kanaBox.Focus()
             Return
-        ElseIf sex = "" Then
+        ElseIf Not (sex = "男" OrElse sex = "女") Then
             MsgBox("性別を入力して下さい。", , "登録エラー")
             sexBox.Focus()
             Return
