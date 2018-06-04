@@ -1163,7 +1163,7 @@ Public Class 体重管理
         Return eraText & " " & eraNum & " 年 " & monthNum & " 月 " & "体重測定  (" & typeText & ")"
     End Function
 
-    Private Sub dspYmBox_LabelTextChage(sender As Object, e As System.EventArgs) Handles dspYmBox.YmLabelTextChage
+    Private Sub dspYmBox_LabelTextChage(sender As Object, e As System.EventArgs) Handles dspYmBox.YmLabelTextChange
         '左上の名前ラベルのクリア
         selectUserLabel.Text = ""
 
