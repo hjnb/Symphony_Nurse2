@@ -211,15 +211,19 @@ Public Class 処置マスタ
         '入力チェック
         If category1 = "" Then
             MsgBox("分類１を入力して下さい。", , "登録エラー")
+            cmbCategory1.Focus()
             Return
         ElseIf dspBox.Text = "" Then
             MsgBox("表示順を入力して下さい。", , "登録エラー")
+            dspBox.Focus()
             Return
         ElseIf IsNumeric(dspBox.Text) = False Then
             MsgBox("表示順は数値を入力して下さい。", , "登録エラー")
+            dspBox.Focus()
             Return
         ElseIf category2 = "" Then
             MsgBox("分類２を入力して下さい。", , "登録エラー")
+            category2Box.Focus()
             Return
         End If
 
@@ -282,9 +286,11 @@ Public Class 処置マスタ
         '入力チェック
         If category1 = "" Then
             MsgBox("分類１がありません。", , "削除エラー")
+            cmbCategory1.Focus()
             Return
         ElseIf category2 = "" Then
             MsgBox("分類２がありません。", , "削除エラー")
+            category2Box.Focus()
             Return
         End If
 
