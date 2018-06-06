@@ -261,11 +261,13 @@ Public Class 体重管理
         weitColumnCellStyle = New DataGridViewCellStyle()
         weitColumnCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
         weitColumnCellStyle.Format = "##0.00"
+        weitColumnCellStyle.Font = New Font("MS UI Gothic", 9, FontStyle.Bold)
 
         '前月比のセルスタイル
         cmprColumnCellStyle = New DataGridViewCellStyle()
         cmprColumnCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
         cmprColumnCellStyle.Format = "##0.00"
+        cmprColumnCellStyle.Font = New Font("MS UI Gothic", 9, FontStyle.Bold)
 
     End Sub
 
