@@ -566,6 +566,10 @@ Public Class 体重管理
                 '測定日のラベル部分設定
                 settingUnitLabel(rbtnText)
 
+                '選択の初期位置
+                dgvUnitLeft("Room", 0).Selected = True
+                dgvUnitLeft.Focus()
+
             ElseIf rbtnText = "ｱﾈｯｸｽ" Then
                 '選択年月のｱﾈｯｸｽのデータ表示
                 displayUnitLeftData(currentYmStr, 2)
@@ -573,6 +577,10 @@ Public Class 体重管理
 
                 '測定日のラベル部分設定
                 settingUnitLabel(rbtnText)
+
+                '選択の初期位置
+                dgvUnitLeft("Room", 0).Selected = True
+                dgvUnitLeft.Focus()
 
             End If
         Else
@@ -826,7 +834,7 @@ Public Class 体重管理
         reader = SQLCm.ExecuteReader()
 
         While reader.Read() = True
-            prevNamList.Add(prevNamList.Count, reader("Nam"))
+            prevNamList.Add(prevNamList.Count, checkDBNullValue(reader("Nam")))
         End While
         reader.Close()
         Cn.Close()
@@ -908,6 +916,10 @@ Public Class 体重管理
         displayUnitLeftData(currentYmStr, div)
         displayUnitRightData(currentYmStr, div)
 
+        '選択の初期位置
+        dgvUnitLeft("Room", 0).Selected = True
+        dgvUnitLeft.Focus()
+
     End Sub
 
     Private Sub btnPrevCmpr_Click(sender As System.Object, e As System.EventArgs) Handles btnPrevCmpr.Click
@@ -951,6 +963,10 @@ Public Class 体重管理
             '再表示
             displayUnitLeftData(targetYmStr, targetDiv)
             displayUnitRightData(targetYmStr, targetDiv)
+
+            '選択の初期位置
+            dgvUnitLeft("Room", 0).Selected = True
+            dgvUnitLeft.Focus()
         End If
     End Sub
 
@@ -1179,6 +1195,10 @@ Public Class 体重管理
             '測定日のラベル部分設定
             settingUnitLabel(rbtnText)
 
+            '選択の初期位置
+            dgvUnitLeft("Room", 0).Selected = True
+            dgvUnitLeft.Focus()
+
         ElseIf rbtnText = "ｱﾈｯｸｽ" Then
             '選択年月のｱﾈｯｸｽのデータ表示
             displayUnitLeftData(currentYmStr, 2)
@@ -1186,6 +1206,10 @@ Public Class 体重管理
 
             '測定日のラベル部分設定
             settingUnitLabel(rbtnText)
+
+            '選択の初期位置
+            dgvUnitLeft("Room", 0).Selected = True
+            dgvUnitLeft.Focus()
 
         End If
     End Sub

@@ -372,11 +372,6 @@ Public Class ユニット居室
 
     Private Sub settingDgvUnitColumns()
         With dgvUnit
-
-            '表示
-            '.Columns("Sora").Visible = True
-            '.Columns("RoomNum").Visible = True
-
             '非表示
             .Columns("Gyo").Visible = False
             .Columns("SoraID").Visible = False
@@ -469,6 +464,14 @@ Public Class ユニット居室
                 TextFormatFlags.HorizontalCenter Or TextFormatFlags.VerticalCenter)
             '描画が完了したことを知らせる
             e.Handled = True
+        End If
+    End Sub
+
+    Private Sub dgvUnit_CellEnter(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles dgvUnit.CellEnter
+        If dgvUnit.Columns(e.ColumnIndex).Name = "Sora" Then
+            dgvUnit.ImeMode = Windows.Forms.ImeMode.Hiragana
+        Else
+            dgvUnit.ImeMode = Windows.Forms.ImeMode.Disable
         End If
     End Sub
 

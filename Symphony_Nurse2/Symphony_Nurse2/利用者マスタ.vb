@@ -382,6 +382,7 @@ Public Class 利用者マスタ
     Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
         If IsNumeric(idBox.Text) = False Then
             MsgBox("利用者IDに1以上の数値を入力してください。", , "削除エラー")
+            idBox.Focus()
             Return
         End If
 
@@ -399,6 +400,7 @@ Public Class 利用者マスタ
         If reader.Read() = False Then
             reader.Close()
             MsgBox("登録されていません。", , "削除エラー")
+            idBox.Focus()
             Cn.Close()
             Cn.Dispose()
             Return
