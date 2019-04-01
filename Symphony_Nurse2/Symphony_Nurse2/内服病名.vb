@@ -593,7 +593,7 @@ line1:
                 '空の家
                 oSheet.Range("C" & name).Value = DataGridView3(2, count).Value
 
-                If DataGridView3(2, count).Value = "" Then
+                If Util.checkDBNullValue(DataGridView3(2, count).Value) = "" Then
                     id = 0
                 Else
                     id = DataGridView3(1, count).Value
@@ -702,7 +702,7 @@ line1:
                 '森の家
                 oSheet.Range("C" & name + (85 * 1)).Value = DataGridView3(5, count).Value
 
-                If DataGridView3(5, count).Value = "" Then
+                If Util.checkDBNullValue(DataGridView3(5, count).Value) = "" Then
                     id = 0
                 Else
                     id = DataGridView3(4, count).Value
@@ -813,7 +813,7 @@ line1:
                 '星の家
                 oSheet.Range("C" & name + (85 * 2)).Value = DataGridView3(8, count).Value
 
-                If DataGridView3(8, count).Value = "" Then
+                If Util.checkDBNullValue(DataGridView3(8, count).Value) = "" Then
                     id = 0
                 Else
                     id = DataGridView3(7, count).Value
@@ -924,7 +924,7 @@ line1:
                 '月の家
                 oSheet.Range("C" & name + (85 * 3)).Value = DataGridView3(11, count).Value
 
-                If DataGridView3(11, count).Value = "" Then
+                If Util.checkDBNullValue(DataGridView3(11, count).Value) = "" Then
                     id = 0
                 Else
                     id = DataGridView3(10, count).Value
@@ -1035,7 +1035,7 @@ line1:
                 '花の家
                 oSheet.Range("C" & name + (85 * 4)).Value = DataGridView3(14, count).Value
 
-                If DataGridView3(14, count).Value = "" Then
+                If Util.checkDBNullValue(DataGridView3(14, count).Value) = "" Then
                     id = 0
                 Else
                     id = DataGridView3(13, count).Value
@@ -1146,7 +1146,7 @@ line1:
                 '丘の家
                 oSheet.Range("C" & name + (85 * 5)).Value = DataGridView3(17, count).Value
 
-                If DataGridView3(17, count).Value = "" Then
+                If Util.checkDBNullValue(DataGridView3(17, count).Value) = "" Then
                     id = 0
                 Else
                     id = DataGridView3(16, count).Value
@@ -1257,7 +1257,7 @@ line1:
                 '虹の家
                 oSheet.Range("C" & name + (85 * 6)).Value = DataGridView3(20, count).Value
 
-                If DataGridView3(20, count).Value = "" Then
+                If Util.checkDBNullValue(DataGridView3(20, count).Value) = "" Then
                     id = 0
                 Else
                     id = DataGridView3(19, count).Value
@@ -1368,7 +1368,7 @@ line1:
                 '光の家
                 oSheet.Range("C" & name + (85 * 7)).Value = DataGridView3(23, count).Value
 
-                If DataGridView3(23, count).Value = "" Then
+                If Util.checkDBNullValue(DataGridView3(23, count).Value) = "" Then
                     id = 0
                 Else
                     id = DataGridView3(22, count).Value
@@ -1479,7 +1479,7 @@ line1:
                 '雪の家
                 oSheet.Range("C" & name + (85 * 8)).Value = DataGridView3(26, count).Value
 
-                If DataGridView3(26, count).Value = "" Then
+                If Util.checkDBNullValue(DataGridView3(26, count).Value) = "" Then
                     id = 0
                 Else
                     id = DataGridView3(25, count).Value
@@ -1590,7 +1590,7 @@ line1:
                 '風の家
                 oSheet.Range("C" & name + (85 * 9)).Value = DataGridView3(29, count).Value
 
-                If DataGridView3(29, count).Value = "" Then
+                If Util.checkDBNullValue(DataGridView3(29, count).Value) = "" Then
                     id = 0
                 Else
                     id = DataGridView3(28, count).Value

@@ -195,7 +195,7 @@ Public Class 利用者マスタ
     End Sub
 
     Private Function getNowWarekiTime() As String
-        Dim NEXT_ERA_CHAR As String = "X"
+        Dim NEXT_ERA_CHAR As String = "R"
         Dim eraText As String = ""
         Dim monthText As String = ""
         Dim dateText As String = ""
