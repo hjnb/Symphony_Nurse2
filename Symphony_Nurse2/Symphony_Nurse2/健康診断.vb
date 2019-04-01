@@ -649,6 +649,15 @@ line2:
         btnKousinn.PerformClick()
     End Sub
 
+    Private Function Nenndo(yyyy As String, MM As String)
+        If Val(MM) < 4 Then
+            yyyy = Val(yyyy) - 1
+            Return yyyy
+        Else
+            Return yyyy
+        End If
+    End Function
+
     Private Sub btnInnsatu_Click(sender As System.Object, e As System.EventArgs) Handles btnInnsatu.Click
         Dim passForm As Form = New passwordForm(TopForm.iniFilePath, 3)
         If passForm.ShowDialog() <> Windows.Forms.DialogResult.OK Then
@@ -675,9 +684,10 @@ line2:
 
         Dim a As DateTime = Today
         Dim M As String = Strings.Mid(a, 6, 2)
+        Dim Nendo As String = Nenndo(Strings.Left(a, 4), M)
         For i As Integer = 2 To 596 Step 66
-            oSheet.Range("E" & i).Value = "平成30年度　健康診断予定表＜特別養護老人ホーム＞"
-            oSheet.Range("Q" & i).Value = Val(M) - 1 & "月"
+            oSheet.Range("E" & i).Value = Nendo & "年度　健康診断予定表＜特別養護老人ホーム＞"
+            oSheet.Range("Q" & i).Value = Val(M) & "月"
             oSheet.Range("Q" & i + 64).Value = "印刷日：" & a
         Next
 
@@ -694,7 +704,7 @@ line2:
                 oSheet.Range("D" & name).Value = DataGridView3(2, count).Value
                 oSheet.Range("D" & name - 1).Value = DataGridView3(3, count).Value
 
-                If DataGridView3(2, count).Value = "" Then
+                If Util.checkDBNullValue(DataGridView3(2, count).Value) = "" Then
                     id = 0
                 Else
                     id = DataGridView3(1, count).Value

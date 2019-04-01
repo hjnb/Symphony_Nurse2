@@ -4,7 +4,7 @@ Imports System.Runtime.InteropServices
 Public Class 体重管理
 
     '平成の次の文字列
-    Private Const NEXT_ERA_TEXT = "仮仮"
+    Private Const NEXT_ERA_TEXT = "令和"
 
     '選択している名前保持用
     Private selectedNam As String = ""

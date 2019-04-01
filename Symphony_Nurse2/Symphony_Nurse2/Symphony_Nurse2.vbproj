@@ -68,7 +68,7 @@
       <HintPath>\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\TimeBox.dll</HintPath>
     </Reference>
     <Reference Include="ymdBox">
-      <HintPath>\\PRIMERGYTX100S1\Hakojun\事務\さかもと\Symphony_Nurse2\ymdBox.dll</HintPath>
+      <HintPath>\\primergytx100s1\Hakojun\事務\さかもと\Visual Studio 2010\Projects\ymdBox\ymdBox\ymdBox\bin\Release\ymdBox.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +115,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Util.vb" />
     <Compile Include="ユニット居室.Designer.vb">
       <DependentUpon>ユニット居室.vb</DependentUpon>
     </Compile>
