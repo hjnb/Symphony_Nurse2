@@ -74,10 +74,10 @@ Partial Class 健康診断
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.DataGridView5 = New System.Windows.Forms.DataGridView()
-        Me.YmdBox1 = New ymdBox.ymdBox()
         Me.DataGridView6 = New System.Windows.Forms.DataGridView()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.Label13 = New System.Windows.Forms.Label()
+        Me.YmdBox1 = New ADBox2.ADBox2()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -562,19 +562,6 @@ Partial Class 健康診断
         Me.DataGridView5.Size = New System.Drawing.Size(10, 10)
         Me.DataGridView5.TabIndex = 111
         '
-        'YmdBox1
-        '
-        Me.YmdBox1.boxType = 3
-        Me.YmdBox1.DateText = ""
-        Me.YmdBox1.EraLabelText = "H30"
-        Me.YmdBox1.EraText = ""
-        Me.YmdBox1.Location = New System.Drawing.Point(347, 482)
-        Me.YmdBox1.MonthLabelText = "05"
-        Me.YmdBox1.MonthText = ""
-        Me.YmdBox1.Name = "YmdBox1"
-        Me.YmdBox1.Size = New System.Drawing.Size(145, 46)
-        Me.YmdBox1.TabIndex = 112
-        '
         'DataGridView6
         '
         Me.DataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -601,16 +588,28 @@ Partial Class 健康診断
         Me.Label13.Text = "出力中です...お待ちください..."
         Me.Label13.Visible = False
         '
+        'YmdBox1
+        '
+        Me.YmdBox1.dateText = ""
+        Me.YmdBox1.Location = New System.Drawing.Point(347, 483)
+        Me.YmdBox1.Mode = 12
+        Me.YmdBox1.monthText = ""
+        Me.YmdBox1.Name = "YmdBox1"
+        Me.YmdBox1.Size = New System.Drawing.Size(140, 45)
+        Me.YmdBox1.TabIndex = 116
+        Me.YmdBox1.textReadOnly = False
+        Me.YmdBox1.yearText = ""
+        '
         '健康診断
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(855, 718)
+        Me.Controls.Add(Me.YmdBox1)
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.ProgressBar1)
         Me.Controls.Add(Me.btnInnsatu)
         Me.Controls.Add(Me.DataGridView6)
-        Me.Controls.Add(Me.YmdBox1)
         Me.Controls.Add(Me.DataGridView5)
         Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.Label11)
@@ -726,8 +725,8 @@ Partial Class 健康診断
     Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents DataGridView5 As System.Windows.Forms.DataGridView
-    Friend WithEvents YmdBox1 As ymdBox.ymdBox
     Friend WithEvents DataGridView6 As System.Windows.Forms.DataGridView
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
     Friend WithEvents Label13 As System.Windows.Forms.Label
+    Friend WithEvents YmdBox1 As ADBox2.ADBox2
 End Class

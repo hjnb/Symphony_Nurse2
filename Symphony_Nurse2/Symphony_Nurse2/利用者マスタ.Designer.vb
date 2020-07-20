@@ -84,7 +84,7 @@ Partial Class 利用者マスタ
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
-        Me.Label4.Location = New System.Drawing.Point(23, 117)
+        Me.Label4.Location = New System.Drawing.Point(23, 120)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(49, 14)
         Me.Label4.TabIndex = 3
@@ -95,7 +95,7 @@ Partial Class 利用者マスタ
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Black
-        Me.Label5.Location = New System.Drawing.Point(23, 89)
+        Me.Label5.Location = New System.Drawing.Point(23, 91)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(35, 14)
         Me.Label5.TabIndex = 4
@@ -218,14 +218,15 @@ Partial Class 利用者マスタ
         '
         Me.birthYmdBox.boxType = 0
         Me.birthYmdBox.DateText = ""
-        Me.birthYmdBox.EraLabelText = "H30"
+        Me.birthYmdBox.EraLabelText = "R02"
         Me.birthYmdBox.EraText = ""
         Me.birthYmdBox.Location = New System.Drawing.Point(343, 84)
-        Me.birthYmdBox.MonthLabelText = "05"
+        Me.birthYmdBox.MonthLabelText = "07"
         Me.birthYmdBox.MonthText = ""
         Me.birthYmdBox.Name = "birthYmdBox"
         Me.birthYmdBox.Size = New System.Drawing.Size(88, 24)
         Me.birthYmdBox.TabIndex = 4
+        Me.birthYmdBox.textReadOnly = False
         '
         'dgvUserMaster
         '

@@ -127,11 +127,11 @@ Partial Class 内服病名
         Me.txtJikannX = New System.Windows.Forms.TextBox()
         Me.DataGridView5 = New System.Windows.Forms.DataGridView()
         Me.txtKatatiX = New System.Windows.Forms.TextBox()
-        Me.YmdBox1 = New ymdBox.ymdBox()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.DataGridView6 = New System.Windows.Forms.DataGridView()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.DataGridView7 = New System.Windows.Forms.DataGridView()
+        Me.YmdBox1 = New ADBox2.ADBox2()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -1005,19 +1005,6 @@ Partial Class 内服病名
         Me.txtKatatiX.TabIndex = 107
         Me.txtKatatiX.Visible = False
         '
-        'YmdBox1
-        '
-        Me.YmdBox1.boxType = 3
-        Me.YmdBox1.DateText = ""
-        Me.YmdBox1.EraLabelText = "H30"
-        Me.YmdBox1.EraText = ""
-        Me.YmdBox1.Location = New System.Drawing.Point(308, 491)
-        Me.YmdBox1.MonthLabelText = "05"
-        Me.YmdBox1.MonthText = ""
-        Me.YmdBox1.Name = "YmdBox1"
-        Me.YmdBox1.Size = New System.Drawing.Size(145, 46)
-        Me.YmdBox1.TabIndex = 108
-        '
         'ProgressBar1
         '
         Me.ProgressBar1.Location = New System.Drawing.Point(713, 188)
@@ -1054,17 +1041,29 @@ Partial Class 内服病名
         Me.DataGridView7.Size = New System.Drawing.Size(10, 10)
         Me.DataGridView7.TabIndex = 112
         '
+        'YmdBox1
+        '
+        Me.YmdBox1.dateText = ""
+        Me.YmdBox1.Location = New System.Drawing.Point(308, 492)
+        Me.YmdBox1.Mode = 12
+        Me.YmdBox1.monthText = ""
+        Me.YmdBox1.Name = "YmdBox1"
+        Me.YmdBox1.Size = New System.Drawing.Size(140, 45)
+        Me.YmdBox1.TabIndex = 113
+        Me.YmdBox1.textReadOnly = False
+        Me.YmdBox1.yearText = ""
+        '
         '内服病名
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(909, 643)
+        Me.Controls.Add(Me.YmdBox1)
         Me.Controls.Add(Me.btnInnsatu)
         Me.Controls.Add(Me.DataGridView7)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.DataGridView6)
         Me.Controls.Add(Me.ProgressBar1)
-        Me.Controls.Add(Me.YmdBox1)
         Me.Controls.Add(Me.txtKatatiX)
         Me.Controls.Add(Me.btnTouroku)
         Me.Controls.Add(Me.DataGridView5)
@@ -1287,9 +1286,9 @@ Partial Class 内服病名
     Friend WithEvents txtJikannX As System.Windows.Forms.TextBox
     Friend WithEvents DataGridView5 As System.Windows.Forms.DataGridView
     Friend WithEvents txtKatatiX As System.Windows.Forms.TextBox
-    Friend WithEvents YmdBox1 As ymdBox.ymdBox
     Friend WithEvents ProgressBar1 As System.Windows.Forms.ProgressBar
     Friend WithEvents DataGridView6 As System.Windows.Forms.DataGridView
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents DataGridView7 As System.Windows.Forms.DataGridView
+    Friend WithEvents YmdBox1 As ADBox2.ADBox2
 End Class
