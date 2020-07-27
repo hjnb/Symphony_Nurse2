@@ -39,10 +39,10 @@ Partial Class 利用者マスタ
         Me.kanaBox = New System.Windows.Forms.TextBox()
         Me.sexBox = New System.Windows.Forms.TextBox()
         Me.kaigoBox = New System.Windows.Forms.TextBox()
-        Me.birthYmdBox = New ymdBox.ymdBox()
         Me.dgvUserMaster = New System.Windows.Forms.DataGridView()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
+        Me.birthYmdBox = New ADBox2.ADBox2()
         CType(Me.dgvUserMaster, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -214,20 +214,6 @@ Partial Class 利用者マスタ
         Me.kaigoBox.Size = New System.Drawing.Size(50, 19)
         Me.kaigoBox.TabIndex = 5
         '
-        'birthYmdBox
-        '
-        Me.birthYmdBox.boxType = 0
-        Me.birthYmdBox.DateText = ""
-        Me.birthYmdBox.EraLabelText = "R02"
-        Me.birthYmdBox.EraText = ""
-        Me.birthYmdBox.Location = New System.Drawing.Point(343, 84)
-        Me.birthYmdBox.MonthLabelText = "07"
-        Me.birthYmdBox.MonthText = ""
-        Me.birthYmdBox.Name = "birthYmdBox"
-        Me.birthYmdBox.Size = New System.Drawing.Size(88, 24)
-        Me.birthYmdBox.TabIndex = 4
-        Me.birthYmdBox.textReadOnly = False
-        '
         'dgvUserMaster
         '
         Me.dgvUserMaster.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -257,15 +243,27 @@ Partial Class 利用者マスタ
         Me.Label9.TabIndex = 14
         Me.Label9.Text = "ﾀﾞﾌﾞﾙｸﾘｯｸした項目名で並べます"
         '
+        'birthYmdBox
+        '
+        Me.birthYmdBox.dateText = ""
+        Me.birthYmdBox.Location = New System.Drawing.Point(343, 79)
+        Me.birthYmdBox.Mode = 2
+        Me.birthYmdBox.monthText = ""
+        Me.birthYmdBox.Name = "birthYmdBox"
+        Me.birthYmdBox.Size = New System.Drawing.Size(105, 32)
+        Me.birthYmdBox.TabIndex = 4
+        Me.birthYmdBox.textReadOnly = False
+        Me.birthYmdBox.yearText = ""
+        '
         '利用者マスタ
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(662, 599)
+        Me.Controls.Add(Me.birthYmdBox)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.dgvUserMaster)
-        Me.Controls.Add(Me.birthYmdBox)
         Me.Controls.Add(Me.kaigoBox)
         Me.Controls.Add(Me.sexBox)
         Me.Controls.Add(Me.kanaBox)
@@ -308,8 +306,8 @@ Partial Class 利用者マスタ
     Friend WithEvents kanaBox As System.Windows.Forms.TextBox
     Friend WithEvents sexBox As System.Windows.Forms.TextBox
     Friend WithEvents kaigoBox As System.Windows.Forms.TextBox
-    Friend WithEvents birthYmdBox As ymdBox.ymdBox
     Friend WithEvents dgvUserMaster As System.Windows.Forms.DataGridView
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents birthYmdBox As ADBox2.ADBox2
 End Class

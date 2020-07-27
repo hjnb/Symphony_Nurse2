@@ -65,7 +65,7 @@ Public Class 利用者マスタ
         Dim SQLCm As OleDbCommand = Cn.CreateCommand
         Dim Adapter As New OleDbDataAdapter(SQLCm)
         Dim Table As New DataTable
-        SQLCm.CommandText = "select Id, Nam, Kana, Sex, Birth as BirthAD, Format(Birth, 'gee/mm/dd') as Birth, Int((Format(NOW(),'YYYYMMDD')-Format(Birth, 'YYYYMMDD'))/10000) as Age, Kaigo, Dsp from KihonM order by Kana"
+        SQLCm.CommandText = "select Id, Nam, Kana, Sex, Birth, Int((Format(NOW(),'YYYYMMDD')-Format(Birth, 'YYYYMMDD'))/10000) as Age, Kaigo, Dsp from KihonM order by Kana"
         Cn.Open()
         Adapter.Fill(Table)
         dgv.DataSource = Table
@@ -113,8 +113,6 @@ Public Class 利用者マスタ
             For Each c As DataGridViewColumn In dgv.Columns
                 c.SortMode = DataGridViewColumnSortMode.NotSortable
             Next
-
-            .Columns("BirthAD").Visible = False
 
             With .Columns("Id")
                 .HeaderText = "利用者ID"
@@ -435,7 +433,7 @@ Public Class 利用者マスタ
         oSheet = objWorkBook.Worksheets(EXCEL_SHEET_NAME)
 
         '年月日と時刻部分の書き込み
-        oSheet.Range("E2").Value = getNowWarekiTime()
+        oSheet.Range("E2").Value = Today.ToString("yyyy/MM/dd")
 
         'B4～J4列の**テキストを消す
         For i As Integer = Asc("B") To Asc("J")
@@ -506,7 +504,7 @@ Public Class 利用者マスタ
         namBox.Text = nam
         kanaBox.Text = kana
         sexBox.Text = sex
-        birthYmdBox.setWarekiStr(birth)
+        birthYmdBox.setADStr(birth)
         kaigoBox.Text = kaigo
         If dsp = 0 Then
             rbtnNotDisplay.Checked = True
@@ -543,10 +541,10 @@ Public Class 利用者マスタ
     Private Sub dgvUserMaster_ColumnHeaderMouseDoubleClick(sender As Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles dgvUserMaster.ColumnHeaderMouseDoubleClick
         Dim targetColumn As DataGridViewColumn = dgvUserMaster.Columns(e.ColumnIndex)
         If targetColumn.Name = "Birth" OrElse targetColumn.Name = "Age" Then
-            targetColumn = dgvUserMaster.Columns("BirthAD")
+            targetColumn = dgvUserMaster.Columns("Birth")
         End If
 
-        If targetColumn.Name = "Id" OrElse targetColumn.Name = "BirthAD" Then
+        If targetColumn.Name = "Id" OrElse targetColumn.Name = "Birth" Then
             dgvUserMaster.Sort(targetColumn, System.ComponentModel.ListSortDirection.Descending)
         Else
             dgvUserMaster.Sort(targetColumn, System.ComponentModel.ListSortDirection.Ascending)
