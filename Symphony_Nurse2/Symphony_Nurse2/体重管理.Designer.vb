@@ -40,18 +40,18 @@ Partial Class 体重管理
         Me.labelUnit5 = New System.Windows.Forms.Label()
         Me.labelUnit6 = New System.Windows.Forms.Label()
         Me.labelUnit4 = New System.Windows.Forms.Label()
-        Me.ymdBoxUnit1 = New ymdBox.ymdBox()
-        Me.ymdBoxUnit3 = New ymdBox.ymdBox()
-        Me.ymdBoxUnit2 = New ymdBox.ymdBox()
-        Me.ymdBoxUnit5 = New ymdBox.ymdBox()
-        Me.ymdBoxUnit6 = New ymdBox.ymdBox()
-        Me.ymdBoxUnit4 = New ymdBox.ymdBox()
-        Me.dspYmBox = New ymdBox.ymdBox()
-        Me.dgvUnitRight = New Symphony_Nurse2.ExDataGridView()
+        Me.ymdBoxUnit1 = New ADBox2.ADBox2()
+        Me.ymdBoxUnit2 = New ADBox2.ADBox2()
+        Me.ymdBoxUnit3 = New ADBox2.ADBox2()
+        Me.ymdBoxUnit4 = New ADBox2.ADBox2()
+        Me.ymdBoxUnit5 = New ADBox2.ADBox2()
+        Me.ymdBoxUnit6 = New ADBox2.ADBox2()
         Me.dgvUnitLeft = New Symphony_Nurse2.ExDataGridView()
+        Me.dgvUnitRight = New Symphony_Nurse2.ExDataGridView()
+        Me.dspYmBox = New ADBox2.ADBox2()
         CType(Me.dgvUser, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgvUnitRight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvUnitLeft, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgvUnitRight, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgvUser
@@ -186,7 +186,7 @@ Partial Class 体重管理
         '
         Me.labelUnit3.AutoSize = True
         Me.labelUnit3.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.labelUnit3.Location = New System.Drawing.Point(316, 625)
+        Me.labelUnit3.Location = New System.Drawing.Point(316, 628)
         Me.labelUnit3.Name = "labelUnit3"
         Me.labelUnit3.Size = New System.Drawing.Size(47, 13)
         Me.labelUnit3.TabIndex = 19
@@ -196,7 +196,7 @@ Partial Class 体重管理
         '
         Me.labelUnit2.AutoSize = True
         Me.labelUnit2.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.labelUnit2.Location = New System.Drawing.Point(316, 592)
+        Me.labelUnit2.Location = New System.Drawing.Point(316, 594)
         Me.labelUnit2.Name = "labelUnit2"
         Me.labelUnit2.Size = New System.Drawing.Size(47, 13)
         Me.labelUnit2.TabIndex = 20
@@ -206,7 +206,7 @@ Partial Class 体重管理
         '
         Me.labelUnit5.AutoSize = True
         Me.labelUnit5.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.labelUnit5.Location = New System.Drawing.Point(578, 592)
+        Me.labelUnit5.Location = New System.Drawing.Point(578, 594)
         Me.labelUnit5.Name = "labelUnit5"
         Me.labelUnit5.Size = New System.Drawing.Size(47, 13)
         Me.labelUnit5.TabIndex = 23
@@ -216,7 +216,7 @@ Partial Class 体重管理
         '
         Me.labelUnit6.AutoSize = True
         Me.labelUnit6.Font = New System.Drawing.Font("MS UI Gothic", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
-        Me.labelUnit6.Location = New System.Drawing.Point(578, 625)
+        Me.labelUnit6.Location = New System.Drawing.Point(578, 628)
         Me.labelUnit6.Name = "labelUnit6"
         Me.labelUnit6.Size = New System.Drawing.Size(47, 13)
         Me.labelUnit6.TabIndex = 22
@@ -234,103 +234,75 @@ Partial Class 体重管理
         '
         'ymdBoxUnit1
         '
-        Me.ymdBoxUnit1.boxType = 4
-        Me.ymdBoxUnit1.DateText = ""
-        Me.ymdBoxUnit1.EraLabelText = "H30"
-        Me.ymdBoxUnit1.EraText = ""
+        Me.ymdBoxUnit1.dateText = ""
         Me.ymdBoxUnit1.Location = New System.Drawing.Point(378, 548)
-        Me.ymdBoxUnit1.MonthLabelText = "05"
-        Me.ymdBoxUnit1.MonthText = ""
+        Me.ymdBoxUnit1.Mode = 0
+        Me.ymdBoxUnit1.monthText = ""
         Me.ymdBoxUnit1.Name = "ymdBoxUnit1"
-        Me.ymdBoxUnit1.Size = New System.Drawing.Size(145, 34)
+        Me.ymdBoxUnit1.Size = New System.Drawing.Size(160, 32)
         Me.ymdBoxUnit1.TabIndex = 100
-        '
-        'ymdBoxUnit3
-        '
-        Me.ymdBoxUnit3.boxType = 4
-        Me.ymdBoxUnit3.DateText = ""
-        Me.ymdBoxUnit3.EraLabelText = "H30"
-        Me.ymdBoxUnit3.EraText = ""
-        Me.ymdBoxUnit3.Location = New System.Drawing.Point(378, 616)
-        Me.ymdBoxUnit3.MonthLabelText = "05"
-        Me.ymdBoxUnit3.MonthText = ""
-        Me.ymdBoxUnit3.Name = "ymdBoxUnit3"
-        Me.ymdBoxUnit3.Size = New System.Drawing.Size(145, 34)
-        Me.ymdBoxUnit3.TabIndex = 102
+        Me.ymdBoxUnit1.textReadOnly = False
+        Me.ymdBoxUnit1.yearText = ""
         '
         'ymdBoxUnit2
         '
-        Me.ymdBoxUnit2.boxType = 4
-        Me.ymdBoxUnit2.DateText = ""
-        Me.ymdBoxUnit2.EraLabelText = "H30"
-        Me.ymdBoxUnit2.EraText = ""
-        Me.ymdBoxUnit2.Location = New System.Drawing.Point(378, 582)
-        Me.ymdBoxUnit2.MonthLabelText = "05"
-        Me.ymdBoxUnit2.MonthText = ""
+        Me.ymdBoxUnit2.dateText = ""
+        Me.ymdBoxUnit2.Location = New System.Drawing.Point(378, 583)
+        Me.ymdBoxUnit2.Mode = 0
+        Me.ymdBoxUnit2.monthText = ""
         Me.ymdBoxUnit2.Name = "ymdBoxUnit2"
-        Me.ymdBoxUnit2.Size = New System.Drawing.Size(145, 34)
+        Me.ymdBoxUnit2.Size = New System.Drawing.Size(160, 32)
         Me.ymdBoxUnit2.TabIndex = 101
+        Me.ymdBoxUnit2.textReadOnly = False
+        Me.ymdBoxUnit2.yearText = ""
         '
-        'ymdBoxUnit5
+        'ymdBoxUnit3
         '
-        Me.ymdBoxUnit5.boxType = 4
-        Me.ymdBoxUnit5.DateText = ""
-        Me.ymdBoxUnit5.EraLabelText = "H30"
-        Me.ymdBoxUnit5.EraText = ""
-        Me.ymdBoxUnit5.Location = New System.Drawing.Point(640, 582)
-        Me.ymdBoxUnit5.MonthLabelText = "05"
-        Me.ymdBoxUnit5.MonthText = ""
-        Me.ymdBoxUnit5.Name = "ymdBoxUnit5"
-        Me.ymdBoxUnit5.Size = New System.Drawing.Size(145, 34)
-        Me.ymdBoxUnit5.TabIndex = 104
-        '
-        'ymdBoxUnit6
-        '
-        Me.ymdBoxUnit6.boxType = 4
-        Me.ymdBoxUnit6.DateText = ""
-        Me.ymdBoxUnit6.EraLabelText = "H30"
-        Me.ymdBoxUnit6.EraText = ""
-        Me.ymdBoxUnit6.Location = New System.Drawing.Point(640, 616)
-        Me.ymdBoxUnit6.MonthLabelText = "05"
-        Me.ymdBoxUnit6.MonthText = ""
-        Me.ymdBoxUnit6.Name = "ymdBoxUnit6"
-        Me.ymdBoxUnit6.Size = New System.Drawing.Size(145, 34)
-        Me.ymdBoxUnit6.TabIndex = 105
+        Me.ymdBoxUnit3.dateText = ""
+        Me.ymdBoxUnit3.Location = New System.Drawing.Point(378, 618)
+        Me.ymdBoxUnit3.Mode = 0
+        Me.ymdBoxUnit3.monthText = ""
+        Me.ymdBoxUnit3.Name = "ymdBoxUnit3"
+        Me.ymdBoxUnit3.Size = New System.Drawing.Size(160, 32)
+        Me.ymdBoxUnit3.TabIndex = 102
+        Me.ymdBoxUnit3.textReadOnly = False
+        Me.ymdBoxUnit3.yearText = ""
         '
         'ymdBoxUnit4
         '
-        Me.ymdBoxUnit4.boxType = 4
-        Me.ymdBoxUnit4.DateText = ""
-        Me.ymdBoxUnit4.EraLabelText = "H30"
-        Me.ymdBoxUnit4.EraText = ""
+        Me.ymdBoxUnit4.dateText = ""
         Me.ymdBoxUnit4.Location = New System.Drawing.Point(640, 548)
-        Me.ymdBoxUnit4.MonthLabelText = "05"
-        Me.ymdBoxUnit4.MonthText = ""
+        Me.ymdBoxUnit4.Mode = 0
+        Me.ymdBoxUnit4.monthText = ""
         Me.ymdBoxUnit4.Name = "ymdBoxUnit4"
-        Me.ymdBoxUnit4.Size = New System.Drawing.Size(145, 34)
+        Me.ymdBoxUnit4.Size = New System.Drawing.Size(160, 32)
         Me.ymdBoxUnit4.TabIndex = 103
+        Me.ymdBoxUnit4.textReadOnly = False
+        Me.ymdBoxUnit4.yearText = ""
         '
-        'dspYmBox
+        'ymdBoxUnit5
         '
-        Me.dspYmBox.boxType = 5
-        Me.dspYmBox.DateText = ""
-        Me.dspYmBox.EraLabelText = "H30"
-        Me.dspYmBox.EraText = ""
-        Me.dspYmBox.Location = New System.Drawing.Point(222, 2)
-        Me.dspYmBox.MonthLabelText = "05"
-        Me.dspYmBox.MonthText = ""
-        Me.dspYmBox.Name = "dspYmBox"
-        Me.dspYmBox.Size = New System.Drawing.Size(95, 40)
-        Me.dspYmBox.TabIndex = 106
+        Me.ymdBoxUnit5.dateText = ""
+        Me.ymdBoxUnit5.Location = New System.Drawing.Point(640, 583)
+        Me.ymdBoxUnit5.Mode = 0
+        Me.ymdBoxUnit5.monthText = ""
+        Me.ymdBoxUnit5.Name = "ymdBoxUnit5"
+        Me.ymdBoxUnit5.Size = New System.Drawing.Size(160, 32)
+        Me.ymdBoxUnit5.TabIndex = 104
+        Me.ymdBoxUnit5.textReadOnly = False
+        Me.ymdBoxUnit5.yearText = ""
         '
-        'dgvUnitRight
+        'ymdBoxUnit6
         '
-        Me.dgvUnitRight.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvUnitRight.Location = New System.Drawing.Point(514, 44)
-        Me.dgvUnitRight.Name = "dgvUnitRight"
-        Me.dgvUnitRight.RowTemplate.Height = 21
-        Me.dgvUnitRight.Size = New System.Drawing.Size(273, 502)
-        Me.dgvUnitRight.TabIndex = 107
+        Me.ymdBoxUnit6.dateText = ""
+        Me.ymdBoxUnit6.Location = New System.Drawing.Point(640, 618)
+        Me.ymdBoxUnit6.Mode = 0
+        Me.ymdBoxUnit6.monthText = ""
+        Me.ymdBoxUnit6.Name = "ymdBoxUnit6"
+        Me.ymdBoxUnit6.Size = New System.Drawing.Size(160, 32)
+        Me.ymdBoxUnit6.TabIndex = 105
+        Me.ymdBoxUnit6.textReadOnly = False
+        Me.ymdBoxUnit6.yearText = ""
         '
         'dgvUnitLeft
         '
@@ -341,20 +313,41 @@ Partial Class 体重管理
         Me.dgvUnitLeft.Size = New System.Drawing.Size(273, 502)
         Me.dgvUnitLeft.TabIndex = 108
         '
+        'dgvUnitRight
+        '
+        Me.dgvUnitRight.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvUnitRight.Location = New System.Drawing.Point(514, 44)
+        Me.dgvUnitRight.Name = "dgvUnitRight"
+        Me.dgvUnitRight.RowTemplate.Height = 21
+        Me.dgvUnitRight.Size = New System.Drawing.Size(273, 502)
+        Me.dgvUnitRight.TabIndex = 107
+        '
+        'dspYmBox
+        '
+        Me.dspYmBox.dateText = ""
+        Me.dspYmBox.Location = New System.Drawing.Point(223, 4)
+        Me.dspYmBox.Mode = 3
+        Me.dspYmBox.monthText = ""
+        Me.dspYmBox.Name = "dspYmBox"
+        Me.dspYmBox.Size = New System.Drawing.Size(95, 32)
+        Me.dspYmBox.TabIndex = 106
+        Me.dspYmBox.textReadOnly = False
+        Me.dspYmBox.yearText = ""
+        '
         '体重管理
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(807, 653)
+        Me.ClientSize = New System.Drawing.Size(817, 656)
+        Me.Controls.Add(Me.dspYmBox)
+        Me.Controls.Add(Me.ymdBoxUnit6)
+        Me.Controls.Add(Me.ymdBoxUnit5)
+        Me.Controls.Add(Me.ymdBoxUnit4)
+        Me.Controls.Add(Me.ymdBoxUnit3)
+        Me.Controls.Add(Me.ymdBoxUnit2)
+        Me.Controls.Add(Me.ymdBoxUnit1)
         Me.Controls.Add(Me.dgvUnitLeft)
         Me.Controls.Add(Me.dgvUnitRight)
-        Me.Controls.Add(Me.dspYmBox)
-        Me.Controls.Add(Me.ymdBoxUnit5)
-        Me.Controls.Add(Me.ymdBoxUnit6)
-        Me.Controls.Add(Me.ymdBoxUnit4)
-        Me.Controls.Add(Me.ymdBoxUnit2)
-        Me.Controls.Add(Me.ymdBoxUnit3)
-        Me.Controls.Add(Me.ymdBoxUnit1)
         Me.Controls.Add(Me.labelUnit5)
         Me.Controls.Add(Me.labelUnit6)
         Me.Controls.Add(Me.labelUnit4)
@@ -376,8 +369,8 @@ Partial Class 体重管理
         Me.Name = "体重管理"
         Me.Text = "体重管理"
         CType(Me.dgvUser, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvUnitRight, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvUnitLeft, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvUnitRight, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -400,13 +393,13 @@ Partial Class 体重管理
     Friend WithEvents labelUnit5 As System.Windows.Forms.Label
     Friend WithEvents labelUnit6 As System.Windows.Forms.Label
     Friend WithEvents labelUnit4 As System.Windows.Forms.Label
-    Friend WithEvents ymdBoxUnit1 As ymdBox.ymdBox
-    Friend WithEvents ymdBoxUnit3 As ymdBox.ymdBox
-    Friend WithEvents ymdBoxUnit2 As ymdBox.ymdBox
-    Friend WithEvents ymdBoxUnit5 As ymdBox.ymdBox
-    Friend WithEvents ymdBoxUnit6 As ymdBox.ymdBox
-    Friend WithEvents ymdBoxUnit4 As ymdBox.ymdBox
-    Friend WithEvents dspYmBox As ymdBox.ymdBox
     Friend WithEvents dgvUnitRight As Symphony_Nurse2.ExDataGridView
     Friend WithEvents dgvUnitLeft As Symphony_Nurse2.ExDataGridView
+    Friend WithEvents ymdBoxUnit1 As ADBox2.ADBox2
+    Friend WithEvents ymdBoxUnit2 As ADBox2.ADBox2
+    Friend WithEvents ymdBoxUnit3 As ADBox2.ADBox2
+    Friend WithEvents ymdBoxUnit4 As ADBox2.ADBox2
+    Friend WithEvents ymdBoxUnit5 As ADBox2.ADBox2
+    Friend WithEvents ymdBoxUnit6 As ADBox2.ADBox2
+    Friend WithEvents dspYmBox As ADBox2.ADBox2
 End Class

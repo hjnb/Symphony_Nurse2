@@ -89,6 +89,9 @@ Public Class 体重管理
         '選択の初期位置
         dgvUnitLeft("Room", 0).Selected = True
         dgvUnitLeft.Focus()
+
+        dspYmBox.setADStr(Today.ToString("yyyy/MM/dd"))
+        dspYmBox.setFocus(5)
     End Sub
 
     Private Sub displayUserMasterData()
@@ -234,7 +237,7 @@ Public Class 体重管理
 
             For i As Integer = rowCount + 1 + rowCountPlus To MAX_ROW_COUNT + rowCountPlus
                 row = dt.NewRow()
-                row("Ym") = dspYmBox.getADStr4Ym()
+                row("Ym") = dspYmBox.getADymStr()
                 row("Gyo") = i
                 row("div") = div
                 dt.Rows.Add(row)
@@ -556,7 +559,7 @@ Public Class 体重管理
         Dim rbtnText As String = rbtn.Text
 
         If rbtn.Checked = True Then
-            Dim currentYmStr As String = dspYmBox.getADStr4Ym()
+            Dim currentYmStr As String = dspYmBox.getADymStr()
             rbtn.BackColor = rbtnBackColor
             If rbtnText = "本館" Then
                 '選択年月の本館のデータ表示
@@ -819,7 +822,7 @@ Public Class 体重管理
     End Sub
 
     Private Sub btnPrevNam_Click(sender As System.Object, e As System.EventArgs) Handles btnPrevNam.Click
-        Dim prevYmStr As String = dspYmBox.getPrevYmStr()
+        Dim prevYmStr As String = dspYmBox.getPrevYm()
         Dim prevNamList As New Dictionary(Of Integer, String)
         Dim div As Integer = If(rbtnHonkan.Checked, 1, 2)
 
@@ -902,7 +905,7 @@ Public Class 体重管理
         settingAddedRowState(unitLeftDt)
         settingAddedRowState(unitRightDt)
 
-        Dim currentYmStr As String = dspYmBox.getADStr4Ym()
+        Dim currentYmStr As String = dspYmBox.getADymStr()
 
         'delete
         Dim div As Integer = If(rbtnHonkan.Checked, 1, 2)
@@ -924,7 +927,7 @@ Public Class 体重管理
 
     Private Sub btnPrevCmpr_Click(sender As System.Object, e As System.EventArgs) Handles btnPrevCmpr.Click
         '前月の氏名と体重のペア取得
-        Dim prevYmStr As String = dspYmBox.getPrevYmStr()
+        Dim prevYmStr As String = dspYmBox.getPrevYm()
         Dim prevNameWeightDic As New Dictionary(Of String, Decimal)
         Dim div As Integer = If(rbtnHonkan.Checked, 1, 2)
         Dim reader As System.Data.OleDb.OleDbDataReader
@@ -955,7 +958,7 @@ Public Class 体重管理
     End Sub
 
     Private Sub btnDelete_Click(sender As System.Object, e As System.EventArgs) Handles btnDelete.Click
-        Dim targetYmStr As String = dspYmBox.getADStr4Ym()
+        Dim targetYmStr As String = dspYmBox.getADymStr()
         Dim targetDiv As Integer = If(rbtnHonkan.Checked, 1, 2)
         Dim result As DialogResult = MessageBox.Show("該当月の記録を抹消しますか？", "Nurse2", MessageBoxButtons.YesNo)
         If result = Windows.Forms.DialogResult.Yes Then
@@ -1173,19 +1176,17 @@ Public Class 体重管理
     End Sub
 
     Private Function getPrintTitleStr() As String
-        Dim eraChar As String = dspYmBox.EraLabelText.Substring(0, 1)
-        Dim eraNum As Integer = CInt(dspYmBox.EraLabelText.Substring(1, 2))
-        Dim monthNum As Integer = CInt(dspYmBox.MonthLabelText)
+        Dim eraNum As Integer = CInt(dspYmBox.yearText)
+        Dim monthNum As Integer = CInt(dspYmBox.monthText)
         Dim typeText As String = If(rbtnHonkan.Checked, "本館", "ｱﾈｯｸｽ")
-        Dim eraText As String = If(eraChar = "H", "平成", NEXT_ERA_TEXT)
-        Return eraText & " " & eraNum & " 年 " & monthNum & " 月 " & "体重測定  (" & typeText & ")"
+        Return eraNum & " 年 " & monthNum & " 月 " & "体重測定  (" & typeText & ")"
     End Function
 
-    Private Sub dspYmBox_LabelTextChage(sender As Object, e As System.EventArgs) Handles dspYmBox.YmLabelTextChange
+    Private Sub dspYmBox_TextChage(sender As Object, e As System.EventArgs) Handles dspYmBox.YmdTextChange
         '左上の名前ラベルのクリア
         selectUserLabel.Text = ""
 
-        Dim currentYmStr As String = dspYmBox.getADStr4Ym()
+        Dim currentYmStr As String = dspYmBox.getADymStr()
         Dim rbtnText As String = If(rbtnHonkan.Checked, "本館", "ｱﾈｯｸｽ")
         If rbtnText = "本館" Then
             '選択年月の本館のデータ表示
